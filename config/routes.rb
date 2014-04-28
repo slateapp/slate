@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
-  get   '/login', :to => 'pages#new', :as => :login
-  get '/auth/:provider/callback' => 'pages#create', :as => :omniauth_callback
-  get '/auth/index' =>'pages#index'
+  get '/students/login', :to => 'students#new', :as => :login
+  get '/auth/:provider/callback' => 'students#create', :as => :omniauth_callback
+  get '/auth/index' =>'students#index'
+  get '/students/logout', :to => 'students#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

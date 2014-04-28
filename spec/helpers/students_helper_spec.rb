@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 # Specs in this file have access to a helper object that includes
-# the PagesHelper. For example:
+# the StudentsHelper. For example:
 #
-# describe PagesHelper do
+# describe StudentsHelper do
 #   describe "string concat" do
 #     it "concats two strings with spaces" do
 #       expect(helper.concat_strings("this","that")).to eq("this that")
 #     end
 #   end
 # end
-describe PagesHelper do
+describe StudentsHelper do
   pending "add some examples to (or delete) #{__FILE__}"
 end
