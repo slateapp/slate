@@ -8,7 +8,13 @@ describe 'Student login with Github' do
 			expect(page).to have_content 'Login with Github'
 		end
 
-		
+		it 'should redirect student to Github login page', js: true do 
+			visit '/students/login'
+			click_link 'Login with Github'
+
+			expect(current_url).to match /github.com/
+		end
+			
 	end	
 				
 	

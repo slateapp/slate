@@ -36,6 +36,7 @@ group :development, :test do
 	gem 'factory_girl_rails'
 	gem 'poltergeist'
 	gem 'spring'
+	gem 'database_cleaner'
 
 end
 
