@@ -15,10 +15,18 @@ describe 'Student login with Github' do
 			expect(current_url).to match /github.com/
 		end
 		
-		it 'should redirect from GitHub to successful login page' do
-			visit '/students/login'
-			click_link 'Login with Github'
+		context 'mock omniauth' do
+			before { set_omniauth }
 
+			it 'should redirect from GitHub to successful login page' do
+				visit '/students/login'
+				click_link 'Login with Github'
+
+				expect(current_url).to match /select/
+				expect(page).to have_content "Hi Alex Peattie! Awesome, you've signed up."
+			end
+
+		end
 			
 	end	
 				

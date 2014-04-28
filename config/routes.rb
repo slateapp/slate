@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/auth/index' =>'students#index'
   get '/students/logout', :to => 'students#destroy'
   get '/requests' => 'requests#index'
+  get '/students/cohort/:id' => "students#cohort", :as => :get_cohort
 
   resources :requests do
   end
@@ -14,7 +15,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
   resources :teachers, only:[:index]
   resources :cohorts, only:[:new, :create]
-
+  resource :students
   # You can have the root of your site routed with "root"
   root 'pages#index'
 

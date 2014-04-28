@@ -16,4 +16,8 @@ class CohortsController < ApplicationController
       render 'new'
     end
   end
+
+  def index
+    @cohorts = Cohort.all
+  end
 end

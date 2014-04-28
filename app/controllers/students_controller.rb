@@ -14,7 +14,8 @@ class StudentsController < ApplicationController
 		    student.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
 		    student.save
 
-  		render :text => "Hi #{student.name}! Awesome, you've signed up."
+  		# render :text => "Hi #{student.name}! Awesome, you've signed up."
+  		redirect_to get_cohort_path student
   	end
   end
 
@@ -29,4 +30,6 @@ class StudentsController < ApplicationController
 	  session[:user_id] = nil
 	  render :text => "You've logged out!"
 	end
+
+
 end
