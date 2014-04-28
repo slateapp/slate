@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'devise'
 gem 'omniauth-github'
+gem 'bootstrap-sass'
 
 group :development, :test do
 
