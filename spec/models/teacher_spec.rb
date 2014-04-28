@@ -1,4 +1,5 @@
 require 'spec_helper'
 
-describe Cohort do
+describe Teacher do
+
 end
