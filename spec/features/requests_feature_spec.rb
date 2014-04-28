@@ -30,6 +30,11 @@ describe 'requests page' do
 		      expect(page).to have_content 'Help me'
 		      expect(page).to have_content 'Ruby'
 		    end
+
+		    it 'displays the current time' do
+		    	visit '/requests'
+		    	expect(page).to have_content Time.now
+		    end
 		end
 	end
 end
