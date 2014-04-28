@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get '/students/login', :to => 'students#new', :as => :login
+  get '/auth/:provider/callback' => 'students#create', :as => :omniauth_callback
+  get '/auth/index' =>'students#index'
+  get '/students/logout', :to => 'students#destroy'
   get '/requests' => 'requests#index'
 
   resources :requests do
