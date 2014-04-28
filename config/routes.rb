@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   get '/requests' => 'requests#index'
+
+  resources :requests do
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

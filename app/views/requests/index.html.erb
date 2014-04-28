@@ -1,1 +1,8 @@
-No requests
+  <% if @requests.any? %>
+    <% @requests.each do |request| %>
+            <h3><%= request.description %></h3>
+            <%= request.category %>
+     <% end %>
+   <% else %>
+    No requests
+ <% end %>
