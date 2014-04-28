@@ -36,5 +36,14 @@ describe "Teacher Dashboard" do
       visit '/teachers'
       expect(page).to have_content 'Welcome evgeny@makersacademy.com'
     end
+
+    it "should display the Dashboard after login" do
+      teacher = create :teacher
+      visit '/teachers/sign_in'
+      fill_in "Email", with: teacher.email
+      fill_in "Password", with: teacher.password
+      click_button "Sign in"
+      expect(page).to have_content 'Welcome evgeny@makersacademy.com'
+    end
   end
 end
