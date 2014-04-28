@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/auth/index' =>'students#index'
   get '/students/logout', :to => 'students#destroy'
   get '/requests' => 'requests#index'
-  get '/students/cohort/:id' => "students#cohort", :as => :get_cohort
+  get '/students/cohort' => "students#cohort", :as => :get_cohort
 
   resources :requests do
   end

@@ -22,13 +22,17 @@ describe 'Student login with Github' do
 				visit '/students/login'
 				click_link 'Login with Github'
 
-				expect(current_url).to match /select/
+				expect(current_url).to match /cohort/
 				expect(page).to have_content "Hi Alex Peattie! Awesome, you've signed up."
 			end
-
 		end
 			
 	end	
 				
 	
 end
+
+# before do
+# 	student = Student.create(email: 'alex@example.com', name: 'Alex Peattie')
+# 	student.authorizations.create(provider: 'github', uid: '1234')
+# end
