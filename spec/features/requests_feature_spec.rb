@@ -21,6 +21,15 @@ describe 'requests page' do
 				expect(page).to have_content 'Postgresql'
 			end
 		end
-	end
 
+		context 'with requests' do
+		    before { Request.create(description: 'Help me', category: 'Ruby') }
+
+		    it 'displays the request' do
+		      visit '/requests'
+		      expect(page).to have_content 'Help me'
+		      expect(page).to have_content 'Ruby'
+		    end
+		end
+	end
 end
