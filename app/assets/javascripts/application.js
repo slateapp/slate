@@ -15,3 +15,18 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap
+
+var li = '';
+$(document.body).on('click', '.del' ,function(){
+    li = $(this).parent();
+    $('#sterge').popup("open");
+});
+
+$(document.body).on('click', '#delButton' ,function(){
+    $('#sterge').popup("close");
+    li.remove();
+});
+
+$(document.body).on('click', '#giveupButton' ,function(){
+    $('#sterge').popup("close");
+});
