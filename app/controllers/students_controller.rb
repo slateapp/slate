@@ -14,7 +14,7 @@ class StudentsController < ApplicationController
 		    student.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
 		    student.save
 
-  		render :text => "Hi #{student.name}! You've signed up."
+  		render :text => "Hi #{student.name}! Awesome, you've signed up."
   	end
   end
 

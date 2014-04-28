@@ -14,6 +14,11 @@ describe 'Student login with Github' do
 
 			expect(current_url).to match /github.com/
 		end
+		
+		it 'should redirect from GitHub to successful login page' do
+			visit '/students/login'
+			click_link 'Login with Github'
+
 			
 	end	
 				
