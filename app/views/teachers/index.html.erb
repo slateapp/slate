@@ -1,3 +1,5 @@
 <%= render 'partials/teacher_menu' %>
-<h4>Welcome <%= @teacher.email %></h4>
+  <h4>Welcome <%= @teacher.email %></h4>
+  <%= label :name, "Cohort" %>
+  <%= select("cohort", "id", Cohort.all.collect {|cohort| [ cohort.name, cohort.id ] }) %>
 </div>
