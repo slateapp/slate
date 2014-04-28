@@ -22,8 +22,13 @@ class RequestsController < ApplicationController
 		end
 	end
 
-	def description
-		raise "Error description"
+	def destroy
+		@request = Request.find params[:id]
+		@request.destroy
+
+		flash[:notice] = 'Request deleted'
+
+		redirect_to '/requests'
 	end
 
 
