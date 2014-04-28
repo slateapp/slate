@@ -1,13 +1,43 @@
-<% if @requests.any? %>
-  <% @requests.each do |request| %>
-    <h3><%= request.description %></h3>
-      <%= request.category %>
-        <div class="timestamp">
+<%= link_to 'Create request', '/requests/new', class: 'btn btn-primary' %>
+
+<div class="waitingList">
+  <div class="scroll">
+    <ul>
+      <li>
+        <% if @requests.any? %>
+        <% @requests.each do |request| %>
+        <div class="waiting">
+          <h3><%= request.description %></h3>
+          <%= request.category %>
           <p><%= request.created_at %></p>
-          <p><%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %></p>
-          <p><%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %></p>
-        </div>
-    <% end %>
-<% else %>
-  No requests
-<% end %>
+          <p><%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
+            <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %></p>
+            <div class="solveTab">
+              <a class='close' href='#'>SOLVE</a>
+            </div>
+          </div>
+          <% end %>
+          <% else %>
+          No requests
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <br />
+  <h2>
+    Prototype Waiting List
+  </h2>
+  <br />
+
+
+  <script>
+
+    $(document).ready(function(){
+
+      $('.waiting').on('click', '.close', function() {
+        $(this).parent().remove();
+      })
+
+    })
+  </script>
