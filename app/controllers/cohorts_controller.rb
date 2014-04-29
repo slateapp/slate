@@ -33,6 +33,12 @@ class CohortsController < ApplicationController
     flash[:success] = "Cohort updated successfully"
     redirect_to cohorts_path
   end
+
+  def destroy
+    @cohort = Cohort.find params[:id]
+    @cohort.destroy
+    redirect_to cohorts_path
+  end
 end
 
 def cohort_params

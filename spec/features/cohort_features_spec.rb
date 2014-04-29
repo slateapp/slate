@@ -21,14 +21,24 @@ describe "Cohorts" do
       expect(page).to have_content "kdnsflnflksdfnf"
     end
 
-    it "can be edited by a teacher" do
-      create :january
-      visit '/teachers'
-      click_link "Cohorts"
-      click_link "Edit"
-      fill_in "Cohort", with: "February 2014"
-      click_button "Update Cohort"
-      expect(page).to have_content "February 2014"
+    context 'a cohort has been created' do
+      before(:each) do
+        create :january
+        visit '/teachers'
+        click_link "Cohorts"
+      end
+      
+      it "can be edited" do
+        click_link "Edit"
+        fill_in "Cohort", with: "February 2014"
+        click_button "Update Cohort"
+        expect(page).to have_content "February 2014"
+      end
+
+      it "can be deleted" do
+        click_link "Delete"
+        expect(page).not_to have_content "January"
+      end
     end
   end
 end

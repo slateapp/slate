@@ -6,6 +6,7 @@
     <tr>
       <td><%= cohort.name %></td>
       <td><%= link_to("Edit", edit_cohort_path(cohort)) %></td>
+      <td><%= link_to("Delete", cohort_path(cohort), method: :delete, data: {confirm: "Are you sure?"}) %></td>
     </tr>
   <% end %>
 </table>

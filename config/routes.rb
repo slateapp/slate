@@ -9,7 +9,7 @@ Rails.application.routes.draw do\
   get '/students/dashboard' => "students#index"
   resources :teachers, only:[:index]
   resources :students
-  resources :cohorts, only:[:new, :create, :edit, :update, :index]
+  resources :cohorts
   resources :requests
 
   devise_for :teachers
