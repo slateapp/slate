@@ -1,5 +1,5 @@
 class TeachersController < ApplicationController
-  before_action :authenticate_teacher!, only: [:dashboard]
+  before_action :authenticate_teacher!, only: [:dashboard, :update, :students, :approve_student]
   def dashboard
     @teacher = current_teacher
     @default = Cohort.find(@teacher.cohort) if @teacher.cohort
