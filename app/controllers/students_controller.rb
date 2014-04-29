@@ -34,7 +34,8 @@ class StudentsController < ApplicationController
 
   def destroy
 	  session[:student_id] = nil
-	  render :text => "You've logged out!"
+	  flash[:notice] = "You have now logged out!"
+	  redirect_to root_path
 	end
 
 	def cohort
