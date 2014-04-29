@@ -1,10 +1,17 @@
-<div class="col-md-6 text-center">
-<h1>Are you a teacher?</h1>
-<h3><%= link_to("Sign In", new_teacher_session_path) %></h3>
-<h3><%= link_to("Sign Up", new_teacher_registration_path) %></h3>
-</div>
+<div class="signInPage">
+	<div class="mainLogo">
+	<h1>Welcome to</h1>
+		<%= image_tag "sl83.png" %>
+	</div>
+	<div class="col-md-6 text-center">
+		<h1>Are you a teacher?</h1>
+		<h3><%= link_to("Sign In", new_teacher_session_path) %></h3>
+		<h3>&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+		<h3><%= link_to("Sign Up", new_teacher_registration_path) %></h3>
+	</div>
 
-<div class="col-md-6 text-center">
-<h1>Are you a student?</h1>
-<h3><%= link_to("Login with Github", '/auth/github') %></h3>
+	<div class="col-md-6 text-center">
+		<h1>Are you a student?</h1>
+		<h3><%= link_to("Sign in with Github", '/auth/github') %></h3>
+	</div>
 </div>
