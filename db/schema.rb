@@ -37,7 +37,10 @@ ActiveRecord::Schema.define(version: 20140429140255) do
     t.datetime "updated_at"
     t.text     "description"
     t.string   "category"
+    t.integer  "student_id"
   end
+
+  add_index "requests", ["student_id"], name: "index_requests_on_student_id", using: :btree
 
   create_table "students", force: true do |t|
     t.string   "name"

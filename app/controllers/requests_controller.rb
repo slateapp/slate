@@ -14,6 +14,7 @@ class RequestsController < ApplicationController
 
 	def create
 		@request = Request.new params[:request].permit(:description, :category)
+		@request.student = current_student
 
 		if @request.save
 			redirect_to '/requests', :notice => "Your request has been created."
