@@ -26,14 +26,14 @@ end
 
 describe "Teacher Dashboard" do
   specify 'should return an error not logged in as a teacher' do
-    visit '/teachers'
+    visit '/teachers/dashboard'
     expect(page).to have_content 'You need to sign in or sign up before continuing'
   end
 
   context 'logged in as teacher' do
     it "should diplay the Dashboard" do
       login_as create :teacher
-      visit '/teachers'
+      visit '/teachers/dashboard'
       expect(page).to have_content 'Welcome evgeny@makersacademy.com'
     end
 

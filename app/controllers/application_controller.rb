@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     case resource
-      when Teacher then teachers_path
+      when Teacher then dashboard_teachers_path
     end
   end
 
