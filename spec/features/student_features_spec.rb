@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Student login with Github' do 
-	context 'new studing logging in via Github' do 
+	context 'new student logging in via Github' do 
 		it 'has a login button' do
 			visit '/'
 
@@ -38,13 +38,24 @@ describe 'Student login with Github' do
 
 				expect(page).to have_content "Select cohort"
 			end
+			
+			context 'setting cohort' do
+				it 'should add cohort to student' do
+					cohort = create :february
+					visit '/'
+					click_link 'Login with Github'
+					select('February 2014', :from => 'cohort_id')
+					click_button "Submit"
+					expect(Student.last.cohort).to eq cohort
+				end
+			end
 		end
 
 		context 'previous student logs in via GitHub' do
 			before { set_omniauth }
 
 			before do
-				student = Student.create(email: 'alex@example.com', name: 'Alex Peattie')
+				student = create :student
 				student.authorizations.create(provider: 'github', uid: '1234')
 			end
 
@@ -55,6 +66,8 @@ describe 'Student login with Github' do
 				expect(current_url).to match /dashboard/
 			end
 		end
+
+
 	end
 end
 
