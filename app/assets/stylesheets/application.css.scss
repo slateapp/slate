@@ -65,6 +65,16 @@ li
 float: left;
 }
 
+.right
+{
+float: right;
+}
+
+.left
+{
+float: left;
+}
+
 .waitingList
 {
 width: 100%;
@@ -114,13 +124,24 @@ float: left;
 z-index: 60;
 }
 
+.codeSnippet
+{
+width: 250px;
+height: 72px;
+background-color: #464646;
+padding-left: 20px;
+padding-top: 12px;
+margin-top: 46px;
+margin-left: -20px;
+}
+
 .position
 {
 width: 40px;
 height: 40px;
 padding-top: 5px;
 padding-left: 15px;
-margin-top: -20px;
+margin-top: -53px;
 margin-right: -20px;
 border-top-right-radius: 5px;
 border-bottom-left-radius: 5px;
@@ -142,7 +163,7 @@ height: 50px;
 width: 250px;
 padding-left: 9px;
 background-color: #ffffff;
-margin-top: 47px;
+margin-top: -72px;
 margin-left: -20px;
 border-bottom-right-radius: 5px;
 border-bottom-left-radius: 5px;
@@ -154,8 +175,8 @@ z-index: 30;
 color: #000000;
 text-decoration: none;
 font-family: arial, sans-serif;
-margin-top: -57px;
-margin-left: 146px;
+margin-top: 15px;
+margin-left: 148px;
 float: left;
 }
 
@@ -175,10 +196,10 @@ border-color: #2B2B2B;
 
 .btn-danger
 {
-margin-top: 8px;
-margin-right: 5px;
+margin-top: 27px;
+margin-right: 15px;
 margin-bottom: 20px;
-margin-left: 0px;
+margin-left: -10px;
 }
 
 .container-fluid
