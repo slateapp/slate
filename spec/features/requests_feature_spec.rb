@@ -10,6 +10,11 @@ describe 'requests page' do
 
 	describe 'adding requests' do
 		context '1 valid post' do
+			before {
+				set_omniauth
+				visit '/'
+				click_link 'Login with Github'
+			}
 			it 'displays one request' do
 				visit '/requests/new'
 				fill_in 'Description', with: 'Migration issue'
