@@ -71,3 +71,28 @@ describe 'Student login with Github' do
 	end
 end
 
+describe 'Student signs out' do
+
+	before { set_omniauth }
+
+		before do
+				student = create :student
+				student.authorizations.create(provider: 'github', uid: '1234')
+			end
+	it 'should have a sign out button' do
+		
+
+		visit '/students/dashboard'
+
+		expect(page).to have_content "Log Out"
+	end
+
+	it 'redirect student to the sign in page' do
+		student = create :student
+		visit '/students/dashboard'
+		click_link "Log Out"
+
+		expect(current_url).to match '/'
+	end
+
+end

@@ -15,7 +15,7 @@
         <% end %>
         <% if current_student %>
           <li><%= link_to("Signed in as #{current_student.name}", students_dashboard_path) %></li>
-          <li><%# link_to("Sign Out", destroy_students_session_path, method: :delete) %></li>
+          <li><%= link_to("Logo Out", students_logout_path, method: :delete) %></li>
         <% end %>
       </ul>
   </div><!-- /.container-fluid -->
