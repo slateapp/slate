@@ -1,5 +1,12 @@
-Select your cohort:
-
-<% @cohorts.each do |cohort| %>
-	<%= cohort.name %>
-<% end %>
+<%= render 'partials/teacher_menu' %>
+<%= link_to("Add Cohort", new_cohort_path , class: "btn btn-default") %>
+<table class="table table-hover">
+  <th>Name</th><th>Actions</th>
+  <% @cohorts.each do |cohort| %>
+    <tr>
+      <td><%= cohort.name %></td>
+      <td><%= link_to("Edit", edit_cohort_path(cohort)) %></td>
+    </tr>
+  <% end %>
+</table>
+</div>
