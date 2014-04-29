@@ -31,19 +31,28 @@ describe "Teacher Dashboard" do
   end
 
   context 'logged in as teacher' do
-    it "should diplay the Dashboard" do
-      login_as create :teacher
-      visit '/teachers/dashboard'
-      expect(page).to have_content 'Welcome evgeny@makersacademy.com'
-    end
-
-    it "should display the Dashboard after login" do
-      teacher = create :teacher
+    let(:teacher) { create :teacher }
+    before(:each) do
+      create :february
       visit '/teachers/sign_in'
       fill_in "Email", with: teacher.email
       fill_in "Password", with: teacher.password
       click_button "Sign in"
+    end
+
+    it "should display the Dashboard after login" do
       expect(page).to have_content 'Welcome evgeny@makersacademy.com'
+    end
+
+    context 'displays default cohort' do
+      specify "no default specified prompts to create default" do
+        expect(page).to have_content 'Please set a default cohort'
+      end
+
+      specify "default specified displays the cohort title" do
+        click_button 'Set as default'
+        expect(page).to have_content 'February 2014'
+      end
     end
   end
 end

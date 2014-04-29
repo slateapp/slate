@@ -1,5 +1,15 @@
 <%= render 'partials/teacher_menu' %>
   <h4>Welcome <%= @teacher.email %></h4>
+  <%= form_tag teacher_path(current_teacher), method: :patch do %>
   <%= label :name, "Cohort" %>
-  <%= select("cohort", "id", Cohort.all.collect {|cohort| [ cohort.name, cohort.id ] }) %>
+    <%= select("cohort", "id", Cohort.all.collect {|cohort| [ cohort.name, cohort.id ] }) %>
+    <% if Cohort.count > 0 %>
+      <%= submit_tag 'Set as default' %>
+    <% end %>
+  <% end %>
+  <% if !@teacher.cohort %>
+    <h2>Please set a default cohort</h2>
+  <% else %>
+    <h2><%= @teacher.cohort %></h2>
+  <% end %>
 </div>

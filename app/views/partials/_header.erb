@@ -10,7 +10,7 @@
     </div>
       <ul class="nav navbar-nav navbar-right">
         <% if teacher_signed_in? %>
-          <li><%= link_to("Signed in as #{current_teacher.email}", teachers_path) %></li>
+          <li><%= link_to("Signed in as #{current_teacher.email}", dashboard_teachers_path) %></li>
           <li><%= link_to("Sign Out", destroy_teacher_session_path, method: :delete) %></li>
         <% end %>
         <% if current_student %>

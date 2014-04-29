@@ -7,7 +7,7 @@ Rails.application.routes.draw do\
   get '/requests' => 'requests#index'
   get '/students/cohort' => "students#cohort", :as => :get_cohort
   get '/students/dashboard' => "students#index"
-  resources :teachers, only:[:index] do
+  resources :teachers, only:[:update] do
     collection do
       get 'dashboard'
     end
