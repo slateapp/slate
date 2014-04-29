@@ -22,7 +22,7 @@ describe "Cohorts" do
     end
 
     it "can be edited by a teacher" do
-      create :february
+      create :january
       visit '/teachers'
       click_link "Cohorts"
       click_link "Edit"

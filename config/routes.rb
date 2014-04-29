@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do\
 
   get '/students/login', :to => 'students#new', :as => :login
   get '/auth/:provider/callback' => 'students#create', :as => :omniauth_callback

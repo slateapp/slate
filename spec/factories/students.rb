@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :student do
-    name "MyString"
-    email "MyString"
+    name "Alex Peattie"
+    email "alex@example.com"
   end
 end
