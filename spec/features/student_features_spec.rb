@@ -22,7 +22,7 @@ describe 'Student login with Github' do
 				visit '/'
 				click_link 'Login with Github'
 
-				expect(page).to have_content "Hi Alex Peattie! Awesome, you've signed up."
+				expect(page).to have_content "Hi Alex Peattie! Awesome, you've signed up!"
 			end
 
 			it 'should redirect from GitHub to successful login page' do

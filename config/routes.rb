@@ -7,16 +7,16 @@ Rails.application.routes.draw do
   get '/requests' => 'requests#index'
   get '/students/cohort' => "students#cohort", :as => :get_cohort
   get '/students/dashboard' => "students#index"
+  resources :teachers, only:[:index]
+  resources :students
+  resources :cohorts, only:[:new, :create, :edit, :update, :index]
+  resources :requests
 
-  resources :requests do
-  end
   devise_for :teachers
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-  resources :teachers, only:[:index]
-  resources :cohorts, only:[:new, :create]
-  resources :students
+
   # You can have the root of your site routed with "root"
   root 'pages#index'
 
