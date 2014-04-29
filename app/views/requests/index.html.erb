@@ -7,28 +7,29 @@
         <% if @requests.any? %>
         <% @requests.each_with_index do |request, i| %>
         <div class="waiting">
-          <div class="position">
-            <%= i+1 %>
-          </div>
-          <h3><%= current_student.name %></h3>
-          <p><%= request.created_at.strftime( '%l:%M%p %e/%m' ) %></p>
-          <p><%= request.description %></p>
+          <h3><%= request.description %></h3>
           <%= request.category %>
-          <div class="solveTab">
-            <p><%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
-              <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %></p>
+          <%= request.student.name %>
+          <%= i + 1 %>
+          <p><%= request.created_at.strftime( '%l:%M%p %e/%m' ) %></p>
+          <p><%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
+            <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %></p>
+            <div class="solveTab">
               <a class='close' href='#'>SOLVE</a>
             </div>
           </div>
           <% end %>
           <% else %>
-          <br />
-          <h3>No requests</h3>
+          No requests
           <% end %>
         </li>
       </ul>
     </div>
   </div>
+  <br />
+  <h2>
+    Prototype Waiting List
+  </h2>
   <br />
 
 
