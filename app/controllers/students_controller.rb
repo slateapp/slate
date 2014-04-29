@@ -18,10 +18,10 @@ class StudentsController < ApplicationController
 	    student.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
 	    student.save
 		# render :text => "Hi #{student.name}! Awesome, you've signed up."
-		  session[:student_id] = student.id
 			redirect_to get_cohort_path
   	end
-
+  	
+	  session[:student_id] = student.id
 
   end
 

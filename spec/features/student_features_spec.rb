@@ -3,13 +3,13 @@ require 'spec_helper'
 describe 'Student login with Github' do 
 	context 'new studing logging in via Github' do 
 		it 'has a login button' do
-			visit '/students/login'
+			visit '/'
 
 			expect(page).to have_content 'Login with Github'
 		end
 
 		it 'should redirect student to Github login page', js: true do 
-			visit '/students/login'
+			visit '/'
 			click_link 'Login with Github'
 
 			expect(current_url).to match /github.com/
@@ -18,22 +18,22 @@ describe 'Student login with Github' do
 		context 'mock omniauth' do
 			before { set_omniauth }
 
-			xit 'should redirect from GitHub to successful login page' do
-				visit '/students/login'
+			it 'should redirect from GitHub to successful login page' do
+				visit '/'
 				click_link 'Login with Github'
 
 				expect(page).to have_content "Hi Alex Peattie! Awesome, you've signed up."
 			end
 
 			it 'should redirect from GitHub to successful login page' do
-				visit '/students/login'
+				visit '/'
 				click_link 'Login with Github'
 
 				expect(current_url).to match /cohort/
 			end
 
 			it 'should be able to select a cohort' do
-				visit '/students/login'
+				visit '/'
 				click_link 'Login with Github'
 
 				expect(page).to have_content "Select cohort"
@@ -49,7 +49,7 @@ describe 'Student login with Github' do
 			end
 
 			it 'should redirect from GitHub to successful login page' do
-				visit '/students/login'
+				visit '/'
 				click_link 'Login with Github'
 
 				expect(current_url).to match /dashboard/

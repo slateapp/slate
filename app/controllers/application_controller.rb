@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_student
+    return unless session[:student_id]
   	Student.find session[:student_id]
   end
 end
