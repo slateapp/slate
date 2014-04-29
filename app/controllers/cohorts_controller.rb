@@ -1,5 +1,5 @@
 class CohortsController < ApplicationController
-  before_action :authenticate_teacher!, only: [:new, :create, :index, :edit, :update]
+  before_action :authenticate_teacher!, only: [:new, :create, :index, :edit]
   
   def index
     @cohorts = Cohort.all
@@ -27,6 +27,7 @@ class CohortsController < ApplicationController
   end
 
   def update
+    authenticate_teacher!
     @cohort = Cohort.find params[:id]
     @cohort.update cohort_params
     flash[:success] = "Cohort updated successfully"

@@ -13,5 +13,8 @@ class ApplicationController < ActionController::Base
   def current_student
     return unless session[:student_id]
   	Student.find session[:student_id]
+
+  rescue ActiveRecord::RecordNotFound
+    session[:student_id] = nil
   end
 end

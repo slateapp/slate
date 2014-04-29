@@ -39,7 +39,14 @@ class StudentsController < ApplicationController
 
 	def cohort
 		@student = current_student
+		@cohorts = Cohort.all
 	end
 
-
+	def update
+		@student = current_student
+		@cohort = Cohort.find params[:cohort][:id]
+	  @student.cohort = @cohort
+	  @student.save
+	  redirect_to students_dashboard_path
+ 	end
 end
