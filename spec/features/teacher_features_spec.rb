@@ -54,5 +54,15 @@ describe "Teacher Dashboard" do
         expect(page).to have_content 'February 2014'
       end
     end
+
+    context "approving a student" do
+      specify "is possible via the approval page" do
+        create :khush
+        click_link "Students"
+        click_link "Awaiting approval"
+        click_link "Approve"
+        expect(page).to have_content "Khushkaran Singh Bajwa has been approved!"
+      end
+    end
   end
 end

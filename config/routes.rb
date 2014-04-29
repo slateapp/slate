@@ -10,6 +10,8 @@ Rails.application.routes.draw do\
   resources :teachers, only:[:update] do
     collection do
       get 'dashboard'
+      get 'students'
+      get 'approve_student'
     end
   end
   resources :students

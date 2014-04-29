@@ -1,0 +1,17 @@
+<%= render 'partials/teacher_menu' %>
+  <h4>Students</h4>
+  
+
+<%= link_to("Awaiting approval (#{@unapproved.count})", "#") %>
+
+<table class="table table-hover">
+  <th>Name</th><th>Actions</th>
+  <% @unapproved.each do |student| %>
+    <tr>
+      <td><%= student.name %></td>
+      <td><%= link_to("Approve", approve_student_teachers_path(id: student), data: {confirm: "Are you sure?"}) %></td>
+    </tr>
+  <% end %>
+</table>
+
+</div>
