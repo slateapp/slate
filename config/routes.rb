@@ -12,6 +12,7 @@ Rails.application.routes.draw do\
       get 'dashboard'
       get 'students'
       get 'approve_student'
+      get 'unapprove_student'
     end
   end
   resources :students

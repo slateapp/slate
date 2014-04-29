@@ -33,4 +33,11 @@ class TeachersController < ApplicationController
     flash[:notice] = "#{@student.name} has been approved!"
     redirect_to students_teachers_path
   end
+
+  def unapprove_student
+    @student = Student.find params[:id]
+    @student.unapprove
+    flash[:notice] = "#{@student.name} has been unapproved!"
+    redirect_to students_teachers_path
+  end
 end

@@ -7,4 +7,9 @@ class Student < ActiveRecord::Base
     self.approved = true
     self.save
   end
+
+  def unapprove
+    self.approved = false
+    self.save
+  end
 end
