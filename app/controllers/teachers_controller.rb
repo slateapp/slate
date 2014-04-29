@@ -14,7 +14,17 @@ class TeachersController < ApplicationController
   end
 
   def students
-    @unapproved = Student.where(approved: false)
+    if params[:approved]
+      @approved = Student.where(approved: true)
+      @unapproved = Student.where(approved: false)
+      @students = @approved
+      @switch = "approved"
+    else
+      @approved = Student.where(approved: true)
+      @unapproved = Student.where(approved: false)
+      @students = @unapproved
+      @switch = "unapproved"
+    end
   end
 
   def approve_student
