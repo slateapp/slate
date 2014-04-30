@@ -72,17 +72,17 @@ end
 
 describe 'Student signs out' do
 
-	before { set_omniauth }
+	let(:student){create :student}
+	before do
+		set_omniauth
+		student.authorizations.create(provider: 'github', uid: '1234')
+		student.cohort = create :february
+		student.save
+		visit '/'
+		click_link 'Sign in with GitHub'
+	end
 
-		before do
-				student = create :student
-				student.authorizations.create(provider: 'GitHub', uid: '1234')
-			end
 	it 'should have a sign out button' do
-		
-
-		visit '/students/dashboard'
-
 		expect(page).to have_content "Sign Out"
 	end
 
