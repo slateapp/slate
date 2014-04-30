@@ -3,10 +3,10 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <a class="navbar-brand" href="/">
-        <%= image_tag "sl8.png" %>
+        <%= image_tag "sl83.png" %>
       </a>
-      <a class="navbar-brand" href="/requests">*Waiting List*</a>
-      <a class="navbar-brand" href="/students/logout">*Log Out*</a>
+      <a class="navbar-brand" href="/requests">Waiting List</a>
+      <a class="navbar-brand" href="/students/logout">Sign Out</a>
     </div>
       <ul class="nav navbar-nav navbar-right">
         <% if teacher_signed_in? %>
@@ -15,7 +15,7 @@
         <% end %>
         <% if current_student %>
           <li><%= link_to("Signed in as #{current_student.name}", students_dashboard_path) %></li>
-          <li><%# link_to("Sign Out", destroy_students_session_path, method: :delete) %></li>
+          <li><%= link_to("Logo Out", students_logout_path, method: :delete) %></li>
         <% end %>
       </ul>
   </div><!-- /.container-fluid -->

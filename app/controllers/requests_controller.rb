@@ -9,6 +9,7 @@ class RequestsController < ApplicationController
 	end
 
 	def new 
+		raise 'No' unless current_student
 		@request = Request.new
 	end
 
