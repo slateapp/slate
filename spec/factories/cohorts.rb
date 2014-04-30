@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :january, class: Cohort do
-    name "January"
+    name "January 2014"
   end
 
   factory :february, class: Cohort do

@@ -37,7 +37,7 @@ describe "Cohorts" do
 
       it "can be deleted" do
         click_link "Delete"
-        expect(page).not_to have_content "January"
+        expect(page).not_to have_content "January 2014"
       end
     end
   end

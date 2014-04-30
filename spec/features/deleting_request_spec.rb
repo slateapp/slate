@@ -24,7 +24,7 @@ describe 'deleting requests' do
 		describe "attempting to delete own request" do
 
 			it 'removes the post' do
-				alex = create(:alex)
+				alex = create(:student)
 				create(:request, student: alex)
 				visit '/requests'
 				click_link 'Delete'
