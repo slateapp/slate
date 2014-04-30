@@ -31,6 +31,10 @@ class RequestsController < ApplicationController
 
 		flash[:notice] = 'Request was successfully updated.'
 
+	rescue ActiveRecord::RecordNotFound
+		flash[:notice] = 'Error: This is not your post'
+		redirect_to '/requests'
+
 	end
 
 	def update

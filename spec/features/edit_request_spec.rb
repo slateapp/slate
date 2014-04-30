@@ -27,7 +27,7 @@ describe 'editing requests' do
 
 		describe "attempting to edit Sarah's request" do
 
-			xit 'displays error' do
+			it 'displays error' do
 				sarah = create(:sarah)
 				create(:request, student: sarah)
 				visit '/requests'
