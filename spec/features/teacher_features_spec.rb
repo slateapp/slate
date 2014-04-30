@@ -50,6 +50,7 @@ describe "Teacher Dashboard" do
       end
 
       specify "default specified displays the cohort title" do
+           visit '/cohorts'
         click_button 'Set as default'
         expect(page).to have_content 'February 2014'
       end

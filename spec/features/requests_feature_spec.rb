@@ -34,7 +34,7 @@ describe 'requests page' do
 
 		    xit 'displays the request time' do
 		    	visit '/requests'
-		    	expect(page).to have_content Time.now
+		    	expect(page).to have_content Time.strftime( '%l:%M%p %e/%m' )
 		    end
 		end
 	end
