@@ -141,6 +141,17 @@ z-index: 60;
 color: #7b7b7b;
 }
 
+.time
+{
+float: left;
+margin-right: 20px;
+}
+
+.category
+{
+float: left
+}
+
 .codeSnippet
 {
 width: 250px;
@@ -167,7 +178,6 @@ padding-left: 15px;
 margin-top: -53px;
 margin-right: -20px;
 border-top-right-radius: 5px;
-border-bottom-left-radius: 5px;
 background-color: #2980b9;
 color: #ffffff;
 font-size: 1.5em;
@@ -291,4 +301,14 @@ width: 300px;
 height: 300px;
 overflow: hidden;
 margin-top: 30px;
+}
+
+.gravatar, .gravatar img
+{
+width: 40px;
+height: 40px;
+border-bottom-left-radius: 5px;
+float: right;
+margin-top: -7px;
+margin-right: -10px;
 }
