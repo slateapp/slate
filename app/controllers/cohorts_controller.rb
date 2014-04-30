@@ -13,7 +13,7 @@ class CohortsController < ApplicationController
     @cohort = Cohort.new cohort_params
     if @cohort.save
       flash[:success] = "Cohort created successfully"
-      redirect_to dashboard_teachers_path
+      redirect_to cohorts_path
     else
       @cohort.errors.full_messages.each do |msg|
         flash[:error] = msg
