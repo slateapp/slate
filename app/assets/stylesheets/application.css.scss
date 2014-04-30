@@ -26,7 +26,7 @@ overflow-x: hidden;
 
 form, a
 {
-margin-left: 20px;
+margin-right: 20px;
 }
 
 h1
@@ -77,6 +77,11 @@ li
 float: left;
 }
 
+input
+{
+margin-bottom: 20px;
+}
+
 .right
 {
 float: right;
@@ -85,6 +90,11 @@ float: right;
 .left
 {
 float: left;
+}
+
+.indent
+{
+margin-left: 20px;
 }
 
 .waitingList
@@ -288,7 +298,10 @@ display: inline;
 }
 
 .col-md-9 h3,
-.col-md-9 h4
+.col-md-9 h4,
+.col-md-9 form,
+.col-md-9 table,
+.col-md-9 a,
 {
 	margin-top: 20px;
 	margin-left: 20px;
@@ -329,23 +342,4 @@ border-bottom-left-radius: 0;
 margin-left: 0px;
 }
 
-.waiting {
-    border: 1px solid maroon;
-    text-align: center;
-    margin: 15px;
-    height: 260px;
-    width: 180px;
-	position:relative;
-}
-.li:hover {
-width: 215px;
-height: 350px;
-margin: 0px;
-   border: 1px dotted black;
-}
-.li:hover .codeSnippet {
-    display: block;
-}
-.li:hover .waiting {
-	position:relative;
-}
+
