@@ -26,7 +26,7 @@ overflow-x: hidden;
 
 form, a
 {
-margin-left: 20px;
+margin-right: 20px;
 }
 
 h1
@@ -77,6 +77,11 @@ li
 float: left;
 }
 
+input
+{
+margin-bottom: 20px;
+}
+
 .right
 {
 float: right;
@@ -85,6 +90,11 @@ float: right;
 .left
 {
 float: left;
+}
+
+.indent
+{
+margin-left: 20px;
 }
 
 .waitingList
@@ -288,7 +298,10 @@ display: inline;
 }
 
 .col-md-9 h3,
-.col-md-9 h4
+.col-md-9 h4,
+.col-md-9 form,
+.col-md-9 table,
+.col-md-9 a,
 {
 	margin-top: 20px;
 	margin-left: 20px;
@@ -328,3 +341,5 @@ border-bottom-right-radius: 0;
 border-bottom-left-radius: 0;
 margin-left: 0px;
 }
+
+
