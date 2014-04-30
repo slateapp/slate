@@ -1,5 +1,5 @@
 <%= render 'partials/teacher_menu' %>
-  <h4>Welcome <%= @teacher.email %></h4>
+  <h4>Welcome <%= @teacher.name %></h4>
   
   <%= form_tag teacher_path(current_teacher), method: :patch do %>
     <%= label :name, "Cohort" %>
