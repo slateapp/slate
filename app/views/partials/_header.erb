@@ -14,6 +14,7 @@
           <li><%= link_to("Sign Out", destroy_teacher_session_path, method: :delete) %></li>
         <% end %>
         <% if current_student %>
+        <%= image_tag current_student.gravatar_url %>
           <li><%= link_to("Signed in as #{current_student.name}", students_dashboard_path) %></li>
           <li><%= link_to("Sign Out", students_logout_path, method: :delete) %></li>
         <% end %>
