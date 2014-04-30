@@ -73,7 +73,6 @@ describe "Teacher Dashboard" do
       end
 
       it "can edit a student" do
-        create :february
         click_link "Approve"
         click_link "Approved"
         click_link "Edit"

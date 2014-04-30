@@ -1,5 +1,5 @@
 <%= form_tag student_path(@student), method: :patch do %>
   <%= hidden_field(:teacher, :true) %>
   <%= select("cohort","id", Cohort.all.collect {|cohort| [ cohort.name, cohort.id ] }) %>
-  <%= submit_tag 'Submit' %>
+  <%= submit_tag 'Update Student' %>
 <% end %>
