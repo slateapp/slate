@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :student do
     name "Alex Peattie"
-    email "Alex@example.com"
+    email "alex@example.com"
   end
 
   factory :khush, class: Student do

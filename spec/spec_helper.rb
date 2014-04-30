@@ -73,3 +73,16 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+def sign_in_as_student_alex
+  set_omniauth
+  visit '/'
+  click_link 'Sign in with GitHub'
+end
+
+def create_request
+  visit '/requests/new'
+  fill_in 'Description', with: 'Migration issue'
+  fill_in 'Category', with: 'Postgresql'
+  click_button 'Create Request'
+end

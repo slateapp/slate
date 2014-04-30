@@ -1,18 +1,17 @@
 require 'spec_helper'
 
-describe 'Student login with Github' do 
-	context 'new student logging in via Github' do 
+describe 'Student login with GitHub' do 
+	context 'new student logging in via GitHub' do 
 		it 'has a login button' do
 			visit '/'
 
-			expect(page).to have_content 'Sign in with Github'
+			expect(page).to have_content 'Sign in with GitHub'
 		end
 
-		it 'should redirect student to Github login page', js: true do 
+		it 'should have a link to GitHub login page' do 
 			visit '/'
-			click_link 'Sign in with Github'
-
-			expect(current_url).to match /github.com/
+			find_link('Sign in with GitHub')[:href].should match /github/i
+	
 		end
 		
 		context 'mock omniauth' do
@@ -20,21 +19,21 @@ describe 'Student login with Github' do
 
 			it 'should redirect from GitHub to successful login page' do
 				visit '/'
-				click_link 'Sign in with Github'
+				click_link 'Sign in with GitHub'
 
 				expect(page).to have_content "Hi Alex Peattie! Awesome, you've signed up!"
 			end
 
 			it 'should redirect from GitHub to successful login page' do
 				visit '/'
-				click_link 'Sign in with Github'
+				click_link 'Sign in with GitHub'
 
 				expect(current_url).to match /cohort/
 			end
 
 			it 'should be able to select a cohort' do
 				visit '/'
-				click_link 'Sign in with Github'
+				click_link 'Sign in with GitHub'
 
 				expect(page).to have_content "Select cohort"
 			end
@@ -43,7 +42,7 @@ describe 'Student login with Github' do
 				it 'should add cohort to student' do
 					cohort = create :february
 					visit '/'
-					click_link 'Sign in with Github'
+					click_link 'Sign in with GitHub'
 					select('February 2014', :from => 'cohort_id')
 					click_button "Submit"
 					expect(Student.last.cohort).to eq cohort
@@ -52,17 +51,17 @@ describe 'Student login with Github' do
 		end
 
 		context 'previous student logs in via GitHub' do
-			before { set_omniauth }
-
+			let(:student){create :student}
 			before do
-				student = create :student
+				set_omniauth
 				student.authorizations.create(provider: 'github', uid: '1234')
+				student.cohort = create :february
+				student.save
 			end
 
 			it 'should redirect from GitHub to successful login page' do
 				visit '/'
-				click_link 'Sign in with Github'
-
+				click_link 'Sign in with GitHub'
 				expect(current_url).to match /dashboard/
 			end
 		end
@@ -77,7 +76,7 @@ describe 'Student signs out' do
 
 		before do
 				student = create :student
-				student.authorizations.create(provider: 'github', uid: '1234')
+				student.authorizations.create(provider: 'GitHub', uid: '1234')
 			end
 	it 'should have a sign out button' do
 		

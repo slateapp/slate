@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe 'deleting requests' do
 	it 'removes the request' do
-		create(:request)
-
-		visit '/requests'
+		# create(:request)
+		sign_in_as_student_alex
+		create_request
 		click_link 'Delete'
 
 		expect(page).to have_content 'Request deleted'

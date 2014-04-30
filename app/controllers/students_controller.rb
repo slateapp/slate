@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
 	  if @authorization
 	    # render :text => "Welcome back #{@authorization.student.name}! You have already signed up."
 	    student = @authorization.student
-	    redirect_to '/students/dashboard'
+	    redirect_to students_dashboard_path
 
 	  else
 	    student = Student.new :name => auth_hash["info"]["name"], :email => auth_hash["info"]["email"]

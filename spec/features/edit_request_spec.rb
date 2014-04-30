@@ -2,11 +2,8 @@ require 'spec_helper'
 
 describe 'editing requests' do
 	it 'edits the request' do
-		set_omniauth
-		visit '/'
-		click_link 'Sign in with Github'
-
-		create(:request)
+		sign_in_as_student_alex
+		create_request
 
 		visit '/requests'
 		click_link 'Edit'
