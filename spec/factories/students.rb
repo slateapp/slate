@@ -1,9 +1,9 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :student do
-    name "Alex Peattie"
-    email "alex@example.com"
+  factory :ross, class: Student do
+    name "Ross Hepburn"
+    email "ross@example.com"
   end
 
   factory :khush, class: Student do
