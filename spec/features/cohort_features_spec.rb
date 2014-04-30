@@ -13,7 +13,7 @@ describe "Cohorts" do
     end
 
     it "can be created by a teacher" do
-      visit '/teachers'
+      visit '/teachers/dashboard'
       click_link "Cohorts"
       click_link "Add Cohort"
       fill_in "Cohort", with: "kdnsflnflksdfnf"
@@ -24,7 +24,7 @@ describe "Cohorts" do
     context 'a cohort has been created' do
       before(:each) do
         create :january
-        visit '/teachers'
+        visit '/teachers/dashboard'
         click_link "Cohorts"
       end
       

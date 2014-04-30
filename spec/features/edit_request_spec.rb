@@ -4,7 +4,7 @@ describe 'editing requests' do
 	it 'edits the request' do
 		set_omniauth
 		visit '/'
-		click_link 'Login with Github'
+		click_link 'Sign in with Github'
 
 		create(:request)
 

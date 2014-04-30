@@ -5,12 +5,12 @@ describe 'Student login with Github' do
 		it 'has a login button' do
 			visit '/'
 
-			expect(page).to have_content 'Login with Github'
+			expect(page).to have_content 'Sign in with Github'
 		end
 
 		it 'should redirect student to Github login page', js: true do 
 			visit '/'
-			click_link 'Login with Github'
+			click_link 'Sign in with Github'
 
 			expect(current_url).to match /github.com/
 		end
@@ -20,21 +20,21 @@ describe 'Student login with Github' do
 
 			it 'should redirect from GitHub to successful login page' do
 				visit '/'
-				click_link 'Login with Github'
+				click_link 'Sign in with Github'
 
 				expect(page).to have_content "Hi Alex Peattie! Awesome, you've signed up!"
 			end
 
 			it 'should redirect from GitHub to successful login page' do
 				visit '/'
-				click_link 'Login with Github'
+				click_link 'Sign in with Github'
 
 				expect(current_url).to match /cohort/
 			end
 
 			it 'should be able to select a cohort' do
 				visit '/'
-				click_link 'Login with Github'
+				click_link 'Sign in with Github'
 
 				expect(page).to have_content "Select cohort"
 			end
@@ -43,7 +43,7 @@ describe 'Student login with Github' do
 				it 'should add cohort to student' do
 					cohort = create :february
 					visit '/'
-					click_link 'Login with Github'
+					click_link 'Sign in with Github'
 					select('February 2014', :from => 'cohort_id')
 					click_button "Submit"
 					expect(Student.last.cohort).to eq cohort
@@ -61,7 +61,7 @@ describe 'Student login with Github' do
 
 			it 'should redirect from GitHub to successful login page' do
 				visit '/'
-				click_link 'Login with Github'
+				click_link 'Sign in with Github'
 
 				expect(current_url).to match /dashboard/
 			end
@@ -84,13 +84,13 @@ describe 'Student signs out' do
 
 		visit '/students/dashboard'
 
-		expect(page).to have_content "Log Out"
+		expect(page).to have_content "Sign Out"
 	end
 
 	it 'redirect student to the sign in page' do
 		student = create :student
 		visit '/students/dashboard'
-		click_link "Log Out"
+		click_link "Sign Out"
 
 		expect(current_url).to match '/'
 	end

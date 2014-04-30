@@ -13,7 +13,7 @@ describe 'requests page' do
 			before {
 				set_omniauth
 				visit '/'
-				click_link 'Login with Github'
+				click_link 'Sign in with Github'
 			}
 			it 'displays one request' do
 				visit '/requests/new'
