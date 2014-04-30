@@ -11,4 +11,16 @@ FactoryGirl.define do
     email "khushkaran@example.com"
     approved false
   end
+
+  factory :ross, class: Student do
+    name "Ross"
+    email "ross@example.com"
+    approved true
+  end
+
+  factory :sarah, class: Student do
+    name "Sarah"
+    email "ross@example.com"
+    approved true
+  end
 end
