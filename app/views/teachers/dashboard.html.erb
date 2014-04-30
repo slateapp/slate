@@ -12,4 +12,18 @@
   <% else %>
     <h2><%= @default.name %></h2>
   <% end %>
+
+  <% if @students.count > 0 %>
+    <table class="table table-hover">
+      <th>Student Name</th><th>Number of Requests</th>
+      <% @students.each do |student| %>
+        <tr>
+          <td><%= student.name %></td>
+          <td>0</td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <h3>No students registered in this cohort</h3>
+  <% end %>
 </div>
