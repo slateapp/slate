@@ -3,6 +3,7 @@ class Student < ActiveRecord::Base
   gravtastic :secure => true,
               :size => 50
 	has_many :authorizations
+  has_many :requests
 	belongs_to :cohort
 	validates :name, :email, :presence => true
 
