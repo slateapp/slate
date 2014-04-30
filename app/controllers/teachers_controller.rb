@@ -1,9 +1,11 @@
 class TeachersController < ApplicationController
-  before_action :authenticate_teacher!, only: [:dashboard, :update, :students, :approve_student]
+  before_action :authenticate_teacher!, only: [:dashboard, :update, :students,
+    :approve_student, :unapprove_student, :delete_student, :edit_student]
   def dashboard
     @teacher = current_teacher
-    @default = Cohort.find(@teacher.cohort) if @teacher.cohort
-    @students = Student.where(cohort: @teacher.cohort, approved: true)
+    cohort = params[:cohort] ? params[:cohort] : @teacher.cohort
+    @cohort = Cohort.find(cohort) if cohort
+    @students = Student.where(cohort: cohort, approved: true)    
   end
 
   def update

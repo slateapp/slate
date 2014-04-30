@@ -9,12 +9,18 @@ FactoryGirl.define do
   factory :sarah, class: Student do
   	name "Sarah C Young"
   	email "sarah@example.com"
+    approved true
   end
-
 
   factory :khush, class: Student do
     name "Khushkaran Singh Bajwa"
     email "khushkaran@example.com"
     approved false
+  end
+
+  factory :ross, class: Student do
+    name "Ross"
+    email "ross@example.com"
+    approved true
   end
 end

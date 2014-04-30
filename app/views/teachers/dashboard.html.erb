@@ -1,10 +1,18 @@
 <%= render 'partials/teacher_menu' %>
   <h4>Welcome <%= @teacher.name %></h4>
 
-  <% if !@default %>
+  <%= form_tag teacher_path(current_teacher), method: :patch do %>
+    <%= label :name, "Cohort" %>
+    <% @cohort_gen = Cohort.all.collect{|cohort| [ cohort.name, cohort.id ] } %>
+    <% @cohort_gen.insert(0, ["Please select a cohort", 0]) %>
+    <%= select("cohort", "id", @cohort_gen, {selected: params[:cohort] || (current_teacher.cohort || 0)},:onchange => 'changeCohort(this)') %>
+    <%= submit_tag 'Set as default' if Cohort.count > 0 %>
+  <% end %>
+
+  <% if !@cohort %>
     <h2>Please set a default cohort</h2>
   <% else %>
-    <h2><%= @default.name %></h2>
+    <h2><%= @cohort.name %></h2>
   <% end %>
 
   <% if @students.count > 0 %>
