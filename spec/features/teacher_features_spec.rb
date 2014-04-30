@@ -41,7 +41,7 @@ describe "Teacher Dashboard" do
     end
 
     it "should display the Dashboard after login" do
-      expect(page).to have_content 'Welcome evgeny@makersacademy.com'
+      expect(page).to have_content 'Welcome Evgeny'
     end
 
     context 'displays default cohort' do
