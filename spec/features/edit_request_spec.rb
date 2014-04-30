@@ -10,7 +10,7 @@ describe 'editing requests' do
 
 		fill_in 'Description', with: 'Migration issue'
 		fill_in 'Category', with: 'Postgresql'
-		click_button 'Edit'
+		click_button 'Update'
 
 		expect(current_path).to eq '/requests'
 		expect(page).to have_content 'Migration issue'
