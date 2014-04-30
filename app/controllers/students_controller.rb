@@ -9,15 +9,15 @@ class StudentsController < ApplicationController
 		@authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
 		
 	  if @authorization
-	    # render :text => "Welcome back #{@authorization.student.name}! You have already signed up."
 	    student = @authorization.student
+			flash[:notice] = "Hi #{student.name}! Awesome, you came back to us."
 	    redirect_to students_dashboard_path
 
 	  else
 	    student = Student.new :name => auth_hash["info"]["name"], :email => auth_hash["info"]["email"]
 	    student.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
 	    student.save
-		# render :text => "Hi #{student.name}! Awesome, you've signed up."
+			flash[:notice] = "Hi #{student.name}! Awesome, you've signed up!"
 			redirect_to get_cohort_path
   	end
   	
