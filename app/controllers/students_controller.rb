@@ -10,7 +10,7 @@ class StudentsController < ApplicationController
 		
 	  if @authorization
 	    student = @authorization.student
-			flash[:notice] = "Hi #{student.name}! Awesome, you came back to us."
+			flash[:notice] = "Hi #{student.name}! Awesome, welcome back."
 	    redirect_to students_dashboard_path
 
 	  else
@@ -34,7 +34,7 @@ class StudentsController < ApplicationController
 
   def destroy
 	  session[:student_id] = nil
-	  flash[:notice] = "You have now logged out!"
+	  flash[:notice] = "You have now signed out!"
 	  redirect_to root_path
 	end
 
