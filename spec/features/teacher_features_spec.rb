@@ -71,6 +71,17 @@ describe "Teacher Dashboard" do
         click_link "Delete"
         expect(page).to have_content "Khushkaran Singh Bajwa has been deleted!"
       end
+
+      it "can edit a student" do
+        create :february
+        click_link "Approve"
+        click_link "Approved"
+        click_link "Edit"
+        select('February 2014', :from => 'cohort_id')
+        click_button "Update Student"
+        expect(page).to have_content "February 2014"
+        expect(page).not_to have_content "No cohort assigned"
+      end
     end
   end
 end

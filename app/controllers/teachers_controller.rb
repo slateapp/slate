@@ -47,4 +47,8 @@ class TeachersController < ApplicationController
     flash[:notice] = "#{@student.name} has been deleted!"
     redirect_to :back
   end
+
+  def edit_student
+    @student = Student.find params[:id]
+  end
 end

@@ -29,7 +29,7 @@
         <td><%= student.name %></td>
         <td><%= student.cohort ? student.cohort.name : "No cohort assigned"%></td>
         <td><%= link_to("Unapprove", unapprove_student_teachers_path(id: student), class: "btn btn-default") %>
-        <%= link_to("Edit", "#", class: "btn btn-default") %>
+        <%= link_to("Edit", edit_student_teachers_path(id: student), class: "btn btn-default") %>
         <%= link_to("Delete", delete_student_teachers_path(id: student), class: "btn btn-default") %></td>
       </tr>
     <% end %>
