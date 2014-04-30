@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-	before_action :authenticate_student!, only: [:new, :create, :destroy]
+	before_action :authenticate_student!, only: [:new, :create, :destroy, :edit]
 	
 	def index
 		@requests = Request.all
@@ -27,7 +27,10 @@ class RequestsController < ApplicationController
 	end 
 
 	def edit
-		@request = Request.find(params[:id])
+		@request = current_student.requests.find params[:id]
+
+		flash[:notice] = 'Request was successfully updated.'
+
 	end
 
 	def update
