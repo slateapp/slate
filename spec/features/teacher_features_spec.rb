@@ -44,14 +44,26 @@ describe "Teacher Dashboard" do
       expect(page).to have_content 'Welcome Evgeny'
     end
 
+    specify "able to see all cohorts", js: true do
+      create(:ross, cohort: (create :march))
+      create(:sarah, cohort: (create :april))
+      visit dashboard_teachers_path
+      select('March 2014', :from => 'cohort_id')
+      expect(page).to have_content "Ross"
+      select('April 2014', :from => 'cohort_id')
+      expect(page).to have_content "Sarah"
+    end
+
     context 'displays default cohort' do
       specify "no default specified prompts to create default" do
         expect(page).to have_content 'Please set a default cohort'
       end
 
       specify "default specified displays the cohort title" do
-           visit '/cohorts'
+        visit dashboard_teachers_path
+        select('February 2014', :from => 'cohort_id')
         click_button 'Set as default'
+        visit dashboard_teachers_path
         expect(page).to have_content 'February 2014'
       end
     end
