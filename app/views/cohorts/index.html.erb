@@ -1,4 +1,11 @@
 <%= render 'partials/teacher_menu' %>
+
+<%= form_tag teacher_path(current_teacher), method: :patch do %>
+    <%= label :name, "Cohort" %>
+    <%= select("cohort", "id", Cohort.all.collect {|cohort| [ cohort.name, cohort.id ] }, selected: current_teacher.cohort || nil) %>
+    <%= submit_tag'Set as default' if Cohort.count > 0 %>
+  <% end %>
+  <br>
 <%= link_to("Add Cohort", new_cohort_path , class: "btn btn-default") %>
 <table class="table table-hover">
   <th>Name</th><th>Actions</th>

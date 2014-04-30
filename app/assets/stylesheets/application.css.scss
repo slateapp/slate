@@ -320,10 +320,33 @@ margin-top: -7px;
 margin-right: -10px;
 }
 
+
 .btn-group-vertical > .btn:first-child:not(:last-child)
 {
 border-top-right-radius: 4px;
 border-bottom-right-radius: 0;
 border-bottom-left-radius: 0;
 margin-left: 0px;
+}
+
+.waiting {
+    border: 1px solid maroon;
+    text-align: center;
+    margin: 15px;
+    height: 260px;
+    width: 180px;
+	position:relative;
+}
+.li:hover {
+width: 215px;
+height: 350px;
+margin: 0px;
+   border: 1px dotted black;
+}
+.li:hover .codeSnippet {
+    display: block;
+}
+.li:hover .waiting {
+	position:relative;
+>>>>>>> slateBranch
 }
