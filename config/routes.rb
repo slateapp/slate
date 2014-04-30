@@ -13,6 +13,7 @@ Rails.application.routes.draw do\
       get 'students'
       get 'approve_student'
       get 'unapprove_student'
+      get 'delete_student'
     end
   end
   resources :students

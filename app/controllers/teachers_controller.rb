@@ -40,4 +40,11 @@ class TeachersController < ApplicationController
     flash[:notice] = "#{@student.name} has been unapproved!"
     redirect_to students_teachers_path(approved: true)
   end
+
+  def delete_student
+    @student = Student.find params[:id]
+    @student.destroy
+    flash[:notice] = "#{@student.name} has been deleted!"
+    redirect_to :back
+  end
 end

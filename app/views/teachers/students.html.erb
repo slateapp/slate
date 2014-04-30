@@ -13,7 +13,8 @@
     <% @students.each do |student| %>
       <tr>
         <td><%= student.name %></td>
-        <td><%= link_to("Approve", approve_student_teachers_path(id: student)) %></td>
+        <td><%= link_to("Approve", approve_student_teachers_path(id: student)) %>
+        <%= link_to("Delete", delete_student_teachers_path(id: student)) %></td>
       </tr>
     <% end %>
   <% else %>
@@ -25,7 +26,7 @@
         <td><%= student.cohort ? student.cohort.name : "No cohort assigned"%></td>
         <td><%= link_to("Unapprove", unapprove_student_teachers_path(id: student)) %>
         <%= link_to("Edit", "#") %>
-        <%= link_to("Delete", "#") %></td>
+        <%= link_to("Delete", delete_student_teachers_path(id: student)) %></td>
       </tr>
     <% end %>
   <% end %>

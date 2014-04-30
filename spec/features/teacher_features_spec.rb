@@ -55,13 +55,21 @@ describe "Teacher Dashboard" do
       end
     end
 
-    context "approving a student" do
-      specify "is possible via the approval page" do
+    context "whilst editing a student" do
+      before(:each) do
         create :khush
         click_link "Students"
         click_link "Awaiting approval"
+      end
+
+      it "can approve a student" do
         click_link "Approve"
         expect(page).to have_content "Khushkaran Singh Bajwa has been approved!"
+      end
+
+      it "can delete a student" do
+        click_link "Delete"
+        expect(page).to have_content "Khushkaran Singh Bajwa has been deleted!"
       end
     end
   end
