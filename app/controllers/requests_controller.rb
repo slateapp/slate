@@ -19,6 +19,7 @@ class RequestsController < ApplicationController
 
 		if @request.save
 			redirect_to '/requests', :notice => "Your request has been created."
+			WebsocketRails[:requests].trigger 'new', { description: @request.description }
 		else
 			render "new"
 		end

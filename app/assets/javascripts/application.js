@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require websocket_rails/main
 //= require_tree .
 //= require bootstrap
 
@@ -30,3 +31,4 @@ $(document.body).on('click', '#delButton' ,function(){
 $(document.body).on('click', '#giveupButton' ,function(){
     $('#sterge').popup("close");
 });
+
