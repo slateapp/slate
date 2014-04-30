@@ -8,6 +8,7 @@ describe 'deleting requests' do
 		before do
 			sign_in_as_student_alex
 		end
+		
 		let(:alex) { Student.find_by(email: 'alex@example.com') }
 
 		describe "attempting to delete Sarah's request" do

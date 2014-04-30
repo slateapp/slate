@@ -8,6 +8,7 @@ describe 'editing requests' do
 		before do
 			sign_in_as_student_alex
 		end
+
 		let(:alex) { Student.find_by(email: 'alex@example.com') }
 
 		describe "attempting to edit Sarah's request" do
@@ -29,11 +30,8 @@ describe 'editing requests' do
 				visit '/requests'
 				click_link 'Edit'
 
-				expect(page).to have_content 'Request edited'
+				expect(page).to have_content 'Request was successfully updated.'
 			end
 		end
 	end
 end
-
-
-
