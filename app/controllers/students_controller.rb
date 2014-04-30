@@ -25,10 +25,6 @@ class StudentsController < ApplicationController
 
   end
 
-  # def student_signed_in?
-  # 	@authorization.student
-  # end
-
   def index
   end
 

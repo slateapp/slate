@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
-
+	before_action :authenticate_student!, only: [:new, :create, :destroy]
+	
 	def index
 		@requests = Request.all
 	end
@@ -23,7 +24,7 @@ class RequestsController < ApplicationController
 		else
 			render "new"
 		end
-	end
+	end 
 
 	def edit
 		@request = Request.find(params[:id])
@@ -40,15 +41,16 @@ class RequestsController < ApplicationController
 		end
 	end
 
+
 	def destroy
-		@request = Request.find params[:id]
+		@request = current_student.requests.find params[:id]
 		@request.destroy
 
 		flash[:notice] = 'Request deleted'
+		redirect_to '/'
 
-		redirect_to '/requests'
-	end
-
-
-
+	rescue ActiveRecord::RecordNotFound
+		flash[:notice] = 'Error: This is not your post'
+		redirect_to '/'
+	end 
 end

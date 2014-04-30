@@ -17,4 +17,11 @@ class ApplicationController < ActionController::Base
   rescue ActiveRecord::RecordNotFound
     session[:student_id] = nil
   end
+
+  def authenticate_student!
+    unless current_student
+      flash[:notice] = 'You need to sign in'
+      redirect_to students_dashboard_path
+    end
+  end
 end
