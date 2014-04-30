@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :request do
-  	
+  	description 'hello'
   end
 end
