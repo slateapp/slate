@@ -44,10 +44,16 @@ class StudentsController < ApplicationController
 	end
 
 	def update
-		@student = current_student
+    @student = from_teacher? ? (Student.find params[:id]) : current_student
 		@cohort = Cohort.find params[:cohort][:id]
 	  @student.cohort = @cohort
+    @student.name = params[:student][:name] if from_teacher?
 	  @student.save
-	  redirect_to students_dashboard_path
+    flash[:notice] = "Student successfully updated" if from_teacher?
+	  from_teacher? ? (redirect_to students_teachers_path(approved: true)) : (redirect_to students_dashboard_path)
  	end
+end
+
+def from_teacher?
+  params[:teacher]
 end

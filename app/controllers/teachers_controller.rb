@@ -3,6 +3,7 @@ class TeachersController < ApplicationController
   def dashboard
     @teacher = current_teacher
     @default = Cohort.find(@teacher.cohort) if @teacher.cohort
+    @students = Student.where(cohort: @teacher.cohort, approved: true)
   end
 
   def update
@@ -39,5 +40,16 @@ class TeachersController < ApplicationController
     @student.unapprove
     flash[:notice] = "#{@student.name} has been unapproved!"
     redirect_to students_teachers_path(approved: true)
+  end
+
+  def delete_student
+    @student = Student.find params[:id]
+    @student.destroy
+    flash[:notice] = "#{@student.name} has been deleted!"
+    redirect_to :back
+  end
+
+  def edit_student
+    @student = Student.find params[:id]
   end
 end
