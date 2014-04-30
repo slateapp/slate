@@ -9,7 +9,9 @@
   <table class="table table-hover">
   <% if @switch == "unapproved" %>
     <th>Name</th><th>Actions</th>
-    <tr><td><%= "No Students requiring approval" if @students.count == 0 %></td><tr>
+    <% if @students.count == 0 %>
+      <tr><td><%= "No Students requiring approval" %></td><tr>
+    <% end %>
     <% @students.each do |student| %>
       <tr>
         <td><%= student.name %></td>
@@ -19,7 +21,9 @@
     <% end %>
   <% else %>
     <th>Name</th><th>Cohort</th><th>Actions</th>
-    <tr><td><%= "No Students" if @students.count == 0 %></td><tr>
+    <% if @students.count == 0 %>
+      <tr><td><%= "No Students requiring approval" %></td><tr>
+    <% end %>
     <% @students.each do |student| %>
       <tr>
         <td><%= student.name %></td>
