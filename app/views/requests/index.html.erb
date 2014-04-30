@@ -20,8 +20,9 @@
           <%= image_tag request.student.gravatar_url %>
           </div>
           <div class="codeSnippet"><%= request.description %></div>
-          <p><%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
+          <p>
             <% if request.student == current_student %>
+              <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
               <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %></p>
             <% end %>
             <div class="solveTab">

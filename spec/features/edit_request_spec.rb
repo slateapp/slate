@@ -31,9 +31,8 @@ describe 'editing requests' do
 				sarah = create(:sarah)
 				create(:request, student: sarah)
 				visit '/requests'
-				click_link 'Edit'
 
-				expect(page).to have_content 'Error'
+				expect(page).not_to have_link 'Edit'
 			end
 		end
 
