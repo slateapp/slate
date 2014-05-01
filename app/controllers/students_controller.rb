@@ -26,6 +26,7 @@ class StudentsController < ApplicationController
   end
 
   def index
+  	redirect_to dashboard_teachers_path if current_teacher
   end
 
   def failure
