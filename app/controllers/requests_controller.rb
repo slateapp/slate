@@ -13,7 +13,7 @@ class RequestsController < ApplicationController
 		if current_student
 			@request = Request.new
 		else
-			flash[:notice] = 'No'
+			flash[:notice] = 'Sorry, you must be a student to make a request'
 			redirect_to requests_path
 		end
 	end
