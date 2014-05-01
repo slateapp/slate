@@ -18,8 +18,8 @@ class ApplicationController < ActionController::Base
     session[:student_id] = nil
   end
 
-  def authenticate_student!
-    unless current_student
+  def authenticate!
+    unless current_student || current_teacher
       flash[:notice] = 'You need to sign in'
       redirect_to students_dashboard_path
     end

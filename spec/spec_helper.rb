@@ -89,6 +89,12 @@ def sign_in_as_student_alex
   click_link 'Sign in with GitHub'
 end
 
+def sign_out_as_student_alex
+  set_omniauth
+  visit '/'
+  click_link 'Sign Out'
+end
+
 def create_request
   create :postgresql
   visit '/requests/new'
