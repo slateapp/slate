@@ -7,32 +7,32 @@
   <div class="scroll">
     <ul>
       <% if @requests.any? %>
-      <% @requests.each_with_index do |request, i| %>
-      <li>
-        <div class="waiting">
-          <h3><%= request.student.name %></h3>
-          <div class="position">
-            <%= i + 1 %>
-          </div>
-          <p class="time"><%= request.created_at.strftime( '%l:%M%p' ) %></p>
-          <p class="category"><%= request.category_name %></p>
-          <div class="gravatar">
-            <%= image_tag request.student.gravatar_url %>
-          </div>
-          <div class="codeSnippet"><%= request.description %></div>
-          <div class="solveTab">
-            <% if request.student == current_student %>
-            <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
-            <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %>
-            <% end %>
-            <a class='close' href='#'>SOLVE</a>
-          </div>
-        </div>
+        <% @requests.each_with_index do |request, i| %>
+          <li>
+            <div class="waiting">
+              <h3><%= request.student.name %></h3>
+              <div class="position">
+                <%= i + 1 %>
+              </div>
+              <p class="time"><%= request.created_at.strftime( '%l:%M%p' ) %></p>
+              <p class="category"><%= request.category_name %></p>
+              <div class="gravatar">
+                <%= image_tag request.student.gravatar_url %>
+              </div>
+              <div class="codeSnippet"><%= request.description %></div>
+              <div class="solveTab">
+                <% if request.student == current_student %>
+                <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
+                <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %>
+                <% end %>
+                <a class='close' href='#'>SOLVE</a>
+              </div>
+            </div>
+          </li>
         <% end %>
-        <% else %>
+      <% else %>
         <h3>No requests</h3>
-        <% end %>
-      </li>
+      <% end %>
     </ul>
   </div>
 </div>
