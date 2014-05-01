@@ -5,7 +5,7 @@ describe "Whilst teacher is signed in" do
     login_as create :teacher
     visit dashboard_teachers_path
   end
-  xspecify 'they can create a category' do
+  specify 'they can create a category' do
     click_link "Categories"
     click_link "Add Category"
     fill_in "name", with: "Ruby"

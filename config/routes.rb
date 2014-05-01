@@ -18,6 +18,7 @@ Rails.application.routes.draw do\
       get 'categories'
     end
   end
+  resources :categories
   resources :students
   resources :cohorts
   resources :requests
