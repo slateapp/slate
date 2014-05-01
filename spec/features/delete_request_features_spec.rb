@@ -62,6 +62,3 @@ describe 'deleting requests' do
 		end
 	end
 end
-
-
-
