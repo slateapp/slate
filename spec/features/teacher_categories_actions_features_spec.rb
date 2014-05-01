@@ -1,5 +1,12 @@
 require "spec_helper"
 
+describe "Whilst teacher not signed in" do
+  specify "should return an error" do
+    visit dashboard_teachers_path
+    expect(page).to have_content "You need to sign in or sign up before continuing."
+  end
+end
+
 describe "Whilst teacher is signed in" do
 	before(:each) do
     login_as create :teacher
