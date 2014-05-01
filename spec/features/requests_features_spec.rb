@@ -38,21 +38,37 @@ describe 'requests page' do
 		end
 
 		context 'with requests' do
-		    before {
-		    	sign_in_as_student_alex
-		    	create_request
-		    }
+	    before {
+	    	sign_in_as_student_alex
+	    	create_request
+	    }
 
-		    it 'displays the request' do
-		      visit '/requests'
-		      expect(page).to have_content 'Migration issue'
-					expect(page).to have_content 'Postgresql'
-		    end
+	    it 'displays the request' do
+	      visit '/requests'
+	      expect(page).to have_content 'Migration issue'
+				expect(page).to have_content 'Postgresql'
+	    end
 
-		    xit 'displays the request time' do
-		    	visit '/requests'
-		    	expect(page).to have_content Time.strftime( '%l:%M%p %e/%m' )
-		    end
+	    xit 'displays the request time' do
+	    	visit '/requests'
+	    	expect(page).to have_content Time.strftime( '%l:%M%p %e/%m' )
+	    end
+		end
+
+		context 'teacher tries to create request' do
+			let(:teacher) { create :teacher }
+			
+			before {
+				login_as teacher
+				visit '/requests'
+			}
+
+			it 'should be unable to create request' do
+				click_link 'Create request'
+
+				expect(page).to have_content 'No'
+			end
+
 		end
 	end
 end

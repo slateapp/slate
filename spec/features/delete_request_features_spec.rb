@@ -37,25 +37,24 @@ describe 'deleting requests' do
 	end
 
 	context 'signed in as Teacher' do
+	  let(:alex) { Student.find_by(email: 'alex@example.com') }
 	  let(:teacher) { create :teacher }
 
-	  before(:each) do
-	    create :february
-	    visit '/teachers/sign_in'
-	    fill_in "Email", with: teacher.email
-	    fill_in "Password", with: teacher.password
-	    click_button "Sign in"
+
+	  before do
+			sign_in_as_student_alex
+			create :category
+			create(:request, student: alex, category: Category.last.id.to_s)
+			sign_out_as_student_alex				
 	  end
 
 		describe "deleting a student's request" do
 
-		let(:alex) { Student.find_by(email: 'alex@example.com') }
-
-			xit 'removes the post' do
-				create(:request, student: alex)
+			it 'removes the post' do
+				login_as teacher
 				visit '/requests'
 				click_link 'Delete'
-
+				
 				expect(page).to have_content 'Request deleted'
 				expect(page).not_to have_content 'hello'
 			end
