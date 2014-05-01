@@ -5,11 +5,13 @@ describe 'editing requests' do
 	  create :category
 	end
 
-	it 'edits the request' do
+	it 'edits the request', js: true do
 		sign_in_as_student_alex
 		create_request
 
 		visit '/requests'
+		sleep 1
+		
 		click_link 'Edit'
 
 		fill_in 'Description', with: 'Migration issue'
@@ -30,8 +32,7 @@ describe 'editing requests' do
 		let(:alex) { Student.find_by(email: 'alex@example.com') }
 
 		describe "attempting to edit Sarah's request" do
-
-			it 'displays error' do
+			it 'displays error', js: true do
 				sarah = create(:sarah)
 				create(:request, student: sarah, category: Category.last.id.to_s)
 				visit '/requests'
@@ -42,7 +43,7 @@ describe 'editing requests' do
 
 		describe "attempting to edit own request" do
 
-			it 'edits the post' do
+			it 'edits the post', js: true do
 				create(:request, student: alex, category: Category.last.id.to_s)
 				visit '/requests'
 				click_link 'Edit'

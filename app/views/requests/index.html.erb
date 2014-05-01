@@ -8,40 +8,31 @@
   </div>
   <div class="scroll">
     <ul>
-      <% if @requests.any? %>
-      <% @requests.each_with_index do |request, i| %>
-      <li>
-        <div class="waiting">
-          <h3><%= request.student.name %></h3>
-          <div class="position">
-            <%= i + 1 %>
-          </div>
-          <p class="time"><%= request.created_at.strftime( '%l:%M%p' ) %></p>
-          <p class="category"><%= request.category_name %></p>
-          <div class="gravatar">
-            <%= image_tag request.student.gravatar_url %>
-          </div>
-          <div class="codeSnippet"><%= request.description %></div>
-          <div class="solveTab">
-            <% if request.student == current_student %>
-              <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-edit' %>
-              <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %>
-            <% elsif current_teacher %>
-              <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-edit' %>
-              <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %>            
-            <% end %>
-            <a class='close' href='#'>SOLVED</a>
-          </div>
-        </div>
-      </li>
-      <% end %>
-      <% else %>
-      <h3>No requests</h3>
-      <% end %>
+      <% if @requests.any? %><% else %><h3>No requests</h3><% end %>
     </ul>
   </div>
 </div>
 <br />
+
+<template id="request">
+  <li id="{{ request_id }}">
+    <div class="waiting">
+      <h3>{{ student_name }}</h3>
+      <div class="position">{{ position }}</div>
+      <p class="time">{{ time }}</p>
+      <p class="category">{{ category }}</p>
+      <div class="gravatar"><img data-src='{{ gravatar_url }}' /></div>
+      <div class="codeSnippet">{{ description }}</div>
+      <div class="solveTab">
+        {{ #my_request }}
+          <a href='{{ edit_url }}' class='btn btn-danger'>Edit</a> 
+          <a href='{{ delete_url }}' class='btn btn-danger' data-method='delete'>Delete</a> 
+        {{ /my_request }}
+        <a class='close' href='#'>SOLVE</a>
+      </div>
+    </div>
+  </li>
+</template>
 
 
 <script>

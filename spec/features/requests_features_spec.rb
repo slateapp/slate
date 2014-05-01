@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'requests page' do
 	context 'no requests' do
-		it 'shows a message' do
+		it 'shows a message', js: true do
 			visit '/requests'
 			expect(page).to have_content 'No requests'
 		end
@@ -27,7 +27,7 @@ describe 'requests page' do
 		end
 
 		context '1 valid post' do
-			it 'displays one request' do
+			it 'displays one request', js: true do
 				sign_in_as_student_alex
 				create_request
 
@@ -38,21 +38,21 @@ describe 'requests page' do
 		end
 
 		context 'with requests' do
-	    before {
-	    	sign_in_as_student_alex
-	    	create_request
-	    }
+		    before {
+		    	sign_in_as_student_alex
+		    	create_request
+		    }
 
-	    it 'displays the request' do
-	      visit '/requests'
-	      expect(page).to have_content 'Migration issue'
-				expect(page).to have_content 'Postgresql'
-	    end
+		    it 'displays the request', js: true do
+		      visit '/requests'
+		      expect(page).to have_content 'Migration issue'
+					expect(page).to have_content 'Postgresql'
+		    end
 
-	    xit 'displays the request time' do
-	    	visit '/requests'
-	    	expect(page).to have_content Time.strftime( '%l:%M%p %e/%m' )
-	    end
+		    xit 'displays the request time' do
+		    	visit '/requests'
+		    	expect(page).to have_content Time.strftime( '%l:%M%p %e/%m' )
+		    end
 		end
 
 		context 'teacher tries to create request' do
@@ -68,7 +68,6 @@ describe 'requests page' do
 
 				expect(page).to have_content 'No'
 			end
-
 		end
 	end
 end
