@@ -23,8 +23,8 @@ class RequestsController < ApplicationController
 		@request.student = current_student
 
 		if @request.save
+			WebsocketRails[:request_created].trigger 'new', @request
 			redirect_to '/requests', :notice => "Your request has been created."
-			WebsocketRails[:requests].trigger 'new', { description: @request.description }
 		else
 			flash[:error] = "Error: Please fill out all fields"
 			render "new"
@@ -57,7 +57,7 @@ class RequestsController < ApplicationController
 	def destroy
 		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
 		@request.destroy
-
+		WebsocketRails[:request_deleted].trigger 'destroy', @request.id
 		flash[:notice] = 'Request deleted'
 		redirect_to requests_path
 
