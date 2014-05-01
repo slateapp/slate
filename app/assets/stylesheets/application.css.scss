@@ -343,4 +343,44 @@ border-bottom-left-radius: 0;
 margin-left: 0px;
 }
 
+.scroll ul li:first-child .waiting
+{
+width: 260px;
+height: 249px;
+position: fixed;
+color: #ffffff;
+background-color: #FFFFFF;
+padding: 20px;
+margin-top: -5px;
+margin-right: 200px;
+border: solid 5px #a91d2a;
+border-radius: 11px;
+float: left;
+z-index: 60;
+}
+
+.scroll ul li:nth-child(2) .waiting
+{
+width: 250px;
+height: 180px;
+color: #ffffff;
+background-color: #FFFFFF;
+padding: 20px;
+margin-right: 20px;
+margin-left: 280px;
+border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+float: left;
+z-index: 30;
+}
+
+.curtain
+{
+width: 20px;
+height: 250px;
+background-color: #e6dfd6;
+position: fixed;
+float: left;
+z-index: 100;
+}
 
