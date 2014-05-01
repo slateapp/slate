@@ -90,8 +90,9 @@ def sign_in_as_student_alex
 end
 
 def create_request
+  create :postgresql
   visit '/requests/new'
   fill_in 'Description', with: 'Migration issue'
-  fill_in 'Category', with: 'Postgresql'
+  select('Postgresql', from: 'Category')
   click_button 'Create Request'
 end

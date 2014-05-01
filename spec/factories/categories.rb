@@ -4,4 +4,8 @@ FactoryGirl.define do
   factory :category do
     name "Ruby"
   end
+
+  factory :postgresql, class: Category do
+    name "Postgresql"
+  end
 end
