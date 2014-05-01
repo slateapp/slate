@@ -26,12 +26,6 @@ ActiveRecord::Schema.define(version: 20140501054241) do
 
   add_index "authorizations", ["student_id"], name: "index_authorizations_on_student_id", using: :btree
 
-  create_table "categeories", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
