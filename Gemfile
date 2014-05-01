@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.1.0'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
@@ -33,6 +35,7 @@ gem 'omniauth-github'
 gem 'bootstrap-sass'
 gem 'gravtastic'
 gem 'thin'
+gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 group :development, :test do
 
@@ -43,6 +46,10 @@ group :development, :test do
 	gem 'spring'
 	gem 'database_cleaner'
 
+end
+
+group :production do 
+	gem 'rails_12factor'
 end
 
 # Use ActiveModel has_secure_password
