@@ -155,11 +155,13 @@ color: #7b7b7b;
 {
 float: left;
 margin-right: 20px;
+font-size: 0.85em;
 }
 
 .category
 {
-float: left
+float: left;
+font-size: 0.85em;
 }
 
 .codeSnippet
@@ -177,6 +179,7 @@ margin-top: 46px;
 margin-left: -20px;
 overflow-x: overflow;
 overflow-y: scroll;
+word-wrap: break-word;
 }
 
 .position
@@ -188,7 +191,7 @@ padding-left: 15px;
 margin-top: -53px;
 margin-right: -20px;
 border-top-right-radius: 5px;
-background-color: #2980b9;
+background-color: #a91d2a;
 color: #ffffff;
 font-size: 1.5em;
 float: right;
@@ -232,8 +235,8 @@ opacity: 1;
 .btn-primary
 {
 margin: 0px 20px 20px 20px;
-background-color: #2980b9;
-border-color: #2980b9;
+background-color: #a91d2a;
+border-color: #a91d2a;
 }
 
 .btn-danger
