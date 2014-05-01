@@ -1,7 +1,7 @@
 class Student < ActiveRecord::Base
   include Gravtastic
   gravtastic :secure => true,
-              :size => 50
+              :size => 40
 	has_many :authorizations
   has_many :requests
 	belongs_to :cohort

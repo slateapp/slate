@@ -362,15 +362,16 @@ overflow: hidden;
 margin-top: 30px;
 }
 
-.gravatar, .gravatar img
+.gravatar,
+.gravatar img
 {
 width: 40px;
 height: 40px;
 border-bottom-left-radius: 5px;
 border: none;
 float: right;
-margin-top: -7px;
-margin-right: -10px;
+margin-top: -13px;
+margin-right: -20px;
 }
 
 
@@ -414,11 +415,11 @@ z-index: 30;
 
 .curtain
 {
-width: 20px;
+width: 30px;
 height: 250px;
 background-color: #e6dfd6;
 position: fixed;
 float: left;
-z-index: 100;
+z-index: 50;
 }
 
