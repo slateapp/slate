@@ -8,8 +8,8 @@ describe "Whilst teacher is signed in" do
   specify 'they can create a category' do
     click_link "Categories"
     click_link "Add Category"
-    fill_in "name", with: "Ruby"
-    click_button "Add Category"
+    fill_in "Category", with: "Ruby"
+    click_button "Create Category"
     expect(page).to have_content "Ruby"
   end
 end
