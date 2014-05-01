@@ -6,45 +6,45 @@
 <div class="waitingList">
   <div class="scroll">
     <ul>
+      <% if @requests.any? %>
+      <% @requests.each_with_index do |request, i| %>
       <li>
-        <% if @requests.any? %>
-        <% @requests.each_with_index do |request, i| %>
         <div class="waiting">
           <h3><%= request.student.name %></h3>
           <div class="position">
-          <%= i + 1 %>
+            <%= i + 1 %>
           </div>
-          <p class="time"><%= request.created_at.strftime( '%l:%M%p %e/%m' ) %></p>
+          <p class="time"><%= request.created_at.strftime( '%l:%M%p' ) %></p>
           <p class="category"><%= request.category_name %></p>
           <div class="gravatar">
-          <%= image_tag request.student.gravatar_url %>
+            <%= image_tag request.student.gravatar_url %>
           </div>
           <div class="codeSnippet"><%= request.description %></div>
-            <div class="solveTab">
+          <div class="solveTab">
             <% if request.student == current_student %>
-              <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
-              <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %>
+            <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
+            <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %>
             <% end %>
-              <a class='close' href='#'>SOLVE</a>
-            </div>
+            <a class='close' href='#'>SOLVE</a>
           </div>
-          <% end %>
-          <% else %>
-          <h3>No requests</h3>
-          <% end %>
-        </li>
-      </ul>
-    </div>
+        </div>
+        <% end %>
+        <% else %>
+        <h3>No requests</h3>
+        <% end %>
+      </li>
+    </ul>
   </div>
-  <br />
+</div>
+<br />
 
 
-  <script>
-    $(document).ready(function(){
+<script>
+  $(document).ready(function(){
 
-      $('.waiting').on('click', '.close', function() {
-        $(this).parent().parent().remove();
-      })
-
+    $('.waiting').on('click', '.close', function() {
+      $(this).parent().parent().remove();
     })
-  </script>
+
+  })
+</script>
