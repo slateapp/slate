@@ -22,4 +22,12 @@ describe "Whilst teacher is signed in" do
     expect(page).to have_content "JavaScript"
     expect(page).to have_content "Category updated successfully"
   end
+
+  specify 'they can delete a category' do
+    create :category
+    click_link "Categories"
+    click_link "Delete"
+    expect(page).not_to have_content "Ruby"
+    expect(page).to have_content "Category deleted successfully"
+  end
 end

@@ -31,6 +31,13 @@ class CategoriesController < ApplicationController
     flash[:success] = "Category updated successfully"
     redirect_to categories_path
   end
+
+  def destroy
+    @category = Category.find params[:id]
+    @category.destroy
+    flash[:success] = "Category deleted successfully"
+    redirect_to categories_path
+  end
 end
 
 def category_params
