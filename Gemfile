@@ -48,7 +48,7 @@ group :development, :test do
 
 end
 
-group :productionn do 
+group :production do 
 	gem 'rails_12factor'
 end
 
