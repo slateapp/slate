@@ -11,7 +11,12 @@ $(document).ready ->
 		$.each(data.requests, (index, request) ->
 			request.position = index + 1
 			newRequest = Mustache.render($('#request').html(),request)
+
+
 			$(newRequest).appendTo('.scroll ul')
+			$('.waitingList img[data-src]').each ->
+				$(this).attr('src', $(this).attr('data-src'))
+				$(this).attr('data-src', '')
 		)
 	)
 
