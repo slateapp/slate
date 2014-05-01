@@ -12,4 +12,6 @@ $(document).ready ->
 	channel = dispatcher.subscribe 'requests'
 	channel.bind 'new', (request) ->
 		if($('#example').length)
-			$('#example').append("<li>#{request.description}</li>")
+			$('#example').append("<li>#{'request received'}</li>")
+
+#request.description
