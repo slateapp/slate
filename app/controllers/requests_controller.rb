@@ -22,6 +22,7 @@ class RequestsController < ApplicationController
 			redirect_to '/requests', :notice => "Your request has been created."
 			WebsocketRails[:requests].trigger 'new', { description: @request.description }
 		else
+			flash[:error] = "Error: Please fill out all fields"
 			render "new"
 		end
 	end 
