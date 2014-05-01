@@ -54,4 +54,8 @@ class TeachersController < ApplicationController
   def edit_student
     @student = Student.find params[:id]
   end
+
+  def categories
+    
+  end
 end
