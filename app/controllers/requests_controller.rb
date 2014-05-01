@@ -19,8 +19,8 @@ class RequestsController < ApplicationController
 		@request.student = current_student
 
 		if @request.save
+			WebsocketRails[:requests].trigger 'new', @request
 			redirect_to '/requests', :notice => "Your request has been created."
-			WebsocketRails[:requests].trigger 'new', { description: @request.description }
 		else
 			flash[:error] = "Error: Please fill out all fields"
 			render "new"
@@ -55,7 +55,7 @@ class RequestsController < ApplicationController
 		@request.destroy
 
 		flash[:notice] = 'Request deleted'
-		redirect_to '/'
+		redirect_to '/requests'
 
 	rescue ActiveRecord::RecordNotFound
 		flash[:notice] = 'Error: This is not your post'

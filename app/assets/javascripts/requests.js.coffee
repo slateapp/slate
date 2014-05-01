@@ -7,11 +7,24 @@ $(document).ready ->
 		event.preventDefault()
 		$.post url
 
+	$.get(window.location.origin + '/requests.json', (data) ->
+		$.each(data.requests, (index, request) ->
+			request.position = index + 1
+			newRequest = Mustache.render($('#request').html(),request)
+			$(newRequest).appendTo('.scroll ul')
+		)
+	)
+
 	dispatcher = new WebSocketRails(window.location.host + '/websocket');
 		
 	channel = dispatcher.subscribe 'requests'
 	channel.bind 'new', (request) ->
-		if($('#example').length)
-			$('#example').append("<li>#{'request received'}</li>")
+		if($('.scroll ul').length)
+			$.get(window.location.origin + '/requests.json', (data) ->
+				newData = data.requests[data.requests.length-1]
+				newData.position = data.requests.length
+				newRequest = Mustache.render($('#request').html(),newData)
+				$(newRequest).appendTo('.scroll ul')
+		)
 
 #request.description
