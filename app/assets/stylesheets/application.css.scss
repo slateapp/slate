@@ -314,8 +314,8 @@ overflow: hidden;
 .signInPage
 {
 width: 100%;
-height: 1250px;
-background-image: image-url("blurred.jpg");
+height: 700px;
+background-image: image-url("blurred2.jpg");
 padding-top: 50px;
 }
 
@@ -360,6 +360,8 @@ width: 300px;
 height: 300px;
 overflow: hidden;
 margin-top: 30px;
+border-radius: 15px;
+box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
 }
 
 .gravatar,
