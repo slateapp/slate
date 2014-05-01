@@ -1,4 +1,5 @@
 json.requests @requests do |request|
+	json.request_id request.id
 	json.student_name request.student.name
 	json.position 1
     json.time request.created_at.strftime( '%l:%M%p' )
