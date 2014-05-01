@@ -15,7 +15,6 @@ Rails.application.routes.draw do\
       get 'unapprove_student'
       get 'delete_student'
       get 'edit_student'
-      get 'categories'
     end
   end
   resources :categories
