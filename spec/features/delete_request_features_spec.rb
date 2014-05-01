@@ -7,6 +7,7 @@ describe 'deleting requests' do
 		
 		before do
 			sign_in_as_student_alex
+			create :category
 		end
 		
 		let(:alex) { Student.find_by(email: 'alex@example.com') }
@@ -15,7 +16,7 @@ describe 'deleting requests' do
 
 			it 'displays error' do
 				sarah = create(:sarah)
-				create(:request, student: sarah)
+				create(:request, student: sarah, category: Category.last.id.to_s)
 				visit '/requests'
 
 				expect(page).not_to have_link 'Delete'
@@ -25,7 +26,7 @@ describe 'deleting requests' do
 		describe "attempting to delete own request" do
 
 			it 'removes the post' do
-				create(:request, student: alex)
+				create(:request, student: alex, category: Category.last.id.to_s)
 				visit '/requests'
 				click_link 'Delete'
 
