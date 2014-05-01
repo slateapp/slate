@@ -146,6 +146,20 @@ float: left;
 z-index: 60;
 }
 
+.waitingOpen
+{
+width: 290px;
+height: 180px;
+color: #ffffff;
+background-color: #FFFFFF;
+padding: 20px;
+margin-right: 20px;
+border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+float: left;
+z-index: 60;
+}
+
 .waiting p
 {
 color: #7b7b7b;
@@ -221,8 +235,9 @@ z-index: 30;
 color: #000000;
 position: relative;
 text-decoration: none;
+font-size: 16px;
 font-family: arial, sans-serif;
-margin-top: 15px;
+margin-top: 18px;
 }
 
 .waiting .close:hover
@@ -239,12 +254,35 @@ background-color: #a91d2a;
 border-color: #a91d2a;
 }
 
+.btn-primary:hover,
+.btn-danger:hover
+{
+background-color: #7C151F;
+border-color: #7C151F;
+}
+
 .btn-danger
 {
 margin-top: 8px;
 margin-right: 5px;
 margin-bottom: 20px;
-background-color: #d64435;
+background-color: #a91d2a;
+border-color: #a91d2a;
+}
+
+.btn-edit
+{
+margin-top: 8px;
+margin-right: 5px;
+margin-bottom: 20px;
+color: #ffffff;
+background-color: #007cac;
+}
+
+.btn-edit:hover
+{
+color: #ffffff;
+background-color: #006288;
 }
 
 .container-fluid
@@ -357,6 +395,7 @@ border: solid 5px #a91d2a;
 border-radius: 11px;
 float: left;
 z-index: 60;
+box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
 }
 
 .scroll ul li:nth-child(2) .waiting

@@ -24,10 +24,10 @@
           <div class="codeSnippet"><%= request.description %></div>
           <div class="solveTab">
             <% if request.student == current_student %>
-            <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-danger' %>
+            <%= link_to 'Edit', edit_request_path(request), method: :get, class: 'btn btn-edit' %>
             <%= link_to 'Delete', request_path(request), method: :delete, class: 'btn btn-danger' %>
             <% end %>
-            <a class='close' href='#'>SOLVE</a>
+            <a class='close' href='#'>SOLVED</a>
           </div>
         </div>
       </li>
@@ -49,4 +49,11 @@
     })
 
   })
+
+  $(function() {
+    $('.waiting').click(function() {
+      $(this).find('waitingOpen').slideToggle();
+    });
+  });
+
 </script>
