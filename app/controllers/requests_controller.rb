@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-	before_action :authenticate_student!, only: [:new, :create, :destroy, :edit]
+	before_action :authenticate!, only: [:new, :create, :destroy, :edit]
 	
 	def index
 		@requests = Request.all
@@ -10,8 +10,12 @@ class RequestsController < ApplicationController
 	end
 
 	def new 
-		raise 'No' unless current_student
-		@request = Request.new
+		if current_student
+			@request = Request.new
+		else
+			flash[:notice] = 'No'
+			redirect_to requests_path
+		end
 	end
 
 	def create
@@ -28,7 +32,7 @@ class RequestsController < ApplicationController
 	end 
 
 	def edit
-		@request = current_student.requests.find params[:id]
+		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
 
 		flash[:notice] = 'Request was successfully updated.'
 
@@ -51,14 +55,14 @@ class RequestsController < ApplicationController
 
 
 	def destroy
-		@request = current_student.requests.find params[:id]
+		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
 		@request.destroy
 
 		flash[:notice] = 'Request deleted'
-		redirect_to '/'
+		redirect_to requests_path
 
 	rescue ActiveRecord::RecordNotFound
 		flash[:notice] = 'Error: This is not your post'
-		redirect_to '/'
+		redirect_to requests_path
 	end 
 end
