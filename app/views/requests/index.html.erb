@@ -15,7 +15,7 @@
           <%= i + 1 %>
           </div>
           <p class="time"><%= request.created_at.strftime( '%l:%M%p %e/%m' ) %></p>
-          <p class="category"><%= ">>>>>>>>>#{Category.find(request.category.to_i).name}<<<<<<<<<<" %></p>
+          <p class="category"><%= Category.find(request.category.to_i).name %></p>
           <div class="gravatar">
           <%= image_tag request.student.gravatar_url %>
           </div>
