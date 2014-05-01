@@ -60,15 +60,20 @@ describe 'requests page' do
 			
 			before {
 				login_as teacher
-				visit '/requests'
 			}
 
-			it 'should be unable to create request' do
+			xit 'should be unable to create request' do
+				visit '/requests'
 				click_link 'Create request'
 
-				expect(page).to have_content 'No'
+				expect(page).to have_content 'Sorry, you must be a student to make a request'
 			end
 
+			it 'should be unable to see the Create button' do
+				visit '/requests'
+
+				expect(page).not_to	have_content 'Create request'
+			end
 		end
 	end
 end
