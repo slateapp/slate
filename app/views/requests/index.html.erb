@@ -21,7 +21,7 @@
       <div class="position">{{ position }}</div>
       <p class="time">{{ time }}</p>
       <p class="category">{{ category }}</p>
-      <div class="gravatar"><img data-src='{{ gravatar_url }}' /></div>
+      <div class="gravatar" style="background-image: url('{{gravatar_url}}');"></div>
       <div class="codeSnippet">{{ description }}</div>
       <div class="solveTab">
         {{ #my_request }}
@@ -50,4 +50,9 @@
     });
   });
 
+</script>
+<script>
+$('gravatar > img').prop('src',function() {
+    return this.getAttribute('data-src');
+}).removeAttr('data-src');
 </script>
