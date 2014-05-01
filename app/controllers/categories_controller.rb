@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :authenticate_teacher!, only: [:index, :new, :create, :edit, :update]
   def index
     @categories = Category.all
   end
@@ -18,6 +19,17 @@ class CategoriesController < ApplicationController
       end
       render 'new'
     end
+  end
+
+  def edit
+    @category = Category.find params[:id]
+  end
+
+  def update
+    @category = Category.find params[:id]
+    @category.update category_params
+    flash[:success] = "Category updated successfully"
+    redirect_to categories_path
   end
 end
 

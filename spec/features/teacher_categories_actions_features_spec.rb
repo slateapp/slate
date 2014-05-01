@@ -12,4 +12,14 @@ describe "Whilst teacher is signed in" do
     click_button "Create Category"
     expect(page).to have_content "Ruby"
   end
+
+  specify 'they can edit a category' do
+    create :category
+    click_link "Categories"
+    click_link "Edit"
+    fill_in "Category", with: "JavaScript"
+    click_button "Update Category"
+    expect(page).to have_content "JavaScript"
+    expect(page).to have_content "Category updated successfully"
+  end
 end
