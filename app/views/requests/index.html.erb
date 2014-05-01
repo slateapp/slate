@@ -1,5 +1,6 @@
-<%= link_to 'Create request', '/requests/new', class: 'btn btn-primary' %>
-
+<% unless current_teacher %> 
+  <%= link_to 'Create request', '/requests/new', class: 'btn btn-primary' %>
+<% end %>
 <ul id='example'>
 </ul>
 
