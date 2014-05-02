@@ -3,6 +3,7 @@ class CohortsController < ApplicationController
   
   def index
     @cohorts = Cohort.all
+    @cohorts_list = Cohort.all.sort_by(&:name_to_date).reverse
   end
 
   def new

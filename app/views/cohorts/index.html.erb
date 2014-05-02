@@ -1,8 +1,8 @@
 <%= render 'partials/teacher_menu' %>
 
-<%= form_tag teacher_path(current_teacher), method: :patch do %>
+  <%= form_tag teacher_path(current_teacher), method: :patch do %>
     <%= label :name, "Cohort" %>
-    <%= select("cohort", "id", Cohort.all.collect {|cohort| [ cohort.name, cohort.id ] }, selected: current_teacher.cohort || nil) %>
+    <%= select "cohort", "id", @cohorts_list.map { |cohort| [cohort.name, cohort.id] }, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"} %>
     <%= submit_tag'Set as default' if Cohort.count > 0 %>
   <% end %>
   <br>

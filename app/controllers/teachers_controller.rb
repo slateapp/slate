@@ -3,6 +3,7 @@ class TeachersController < ApplicationController
     :approve_student, :unapprove_student, :delete_student, :edit_student]
   def dashboard
     @teacher = current_teacher
+    @cohorts_list = Cohort.all.sort_by(&:name_to_date).reverse
     cohort = params[:cohort] ? params[:cohort] : @teacher.cohort
     @cohort = Cohort.find(cohort) if cohort
     @students = Student.where(cohort: cohort, approved: true)    
