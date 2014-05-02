@@ -15,11 +15,11 @@ describe "An unapproved student" do
     click_button "Submit"
   end
   it "is redirected with an error if they access their dashboard" do
-    expect(page).to have_content 'Error: you are still awaiting approval'
+    expect(page).to have_content 'Approval Required'
   end
 
   it "is redirected with an error if they try to make a new request" do
-    visit 'requests/new'
+    visit '/requests/new'
     expect(page).to have_content 'Error: you are still awaiting approval'
   end
 end
