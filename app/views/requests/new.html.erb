@@ -4,7 +4,7 @@
 	<%= f.text_area :description %>
 
 	<%= f.label :category %>
-	<%= f.select :category, Category.all.map { |category| [category.name, category.id] }, :include_blank => "-- Select One --" %>
+	<%= f.select :category, Category.all.map { |category| [category.name, category.id] }, :include_blank => "Select a category" %>
 
 	<%= f.submit %>
 
