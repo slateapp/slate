@@ -29,9 +29,9 @@ teacher.save!
   "March 2014",
   "April 2014",
   "May 2014",
-  "June 2014",
-  "July 2014",
-  "August 2014",
-  "September 2014"].each{|cohort|
+  "June 2013",
+  "July 2013",
+  "August 2013",
+  "September 2013"].each{|cohort|
   Cohort.create(name: cohort)
 }
