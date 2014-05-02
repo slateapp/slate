@@ -82,6 +82,11 @@ input
 margin-bottom: 20px;
 }
 
+img
+{
+border-radius: 5px;
+}
+
 .right
 {
 float: right;
@@ -314,8 +319,8 @@ overflow: hidden;
 .signInPage
 {
 width: 100%;
-height: 1250px;
-background-image: image-url("blurred.jpg");
+height: 700px;
+background-image: image-url("blurred2.jpg");
 padding-top: 50px;
 }
 
@@ -360,16 +365,20 @@ width: 300px;
 height: 300px;
 overflow: hidden;
 margin-top: 30px;
+border-radius: 15px;
+box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
 }
 
-.gravatar, .gravatar img
+.gravatar,
+.gravatar img
 {
 width: 40px;
 height: 40px;
 border-bottom-left-radius: 5px;
+border: none;
 float: right;
-margin-top: -7px;
-margin-right: -10px;
+margin-top: -13px;
+margin-right: -20px;
 }
 
 
@@ -413,11 +422,11 @@ z-index: 30;
 
 .curtain
 {
-width: 20px;
+width: 30px;
 height: 250px;
 background-color: #e6dfd6;
 position: fixed;
 float: left;
-z-index: 100;
+z-index: 50;
 }
 

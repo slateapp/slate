@@ -11,8 +11,6 @@ $(document).ready ->
 		$.each(data.requests, (index, request) ->
 			request.position = index + 1
 			newRequest = Mustache.render($('#request').html(),request)
-
-
 			$(newRequest).appendTo('.scroll ul')
 			$('.waitingList img[data-src]').each ->
 				$(this).attr('src', $(this).attr('data-src'))
@@ -38,3 +36,16 @@ $(document).ready ->
 			$("##{request_id}").remove()
 			$('.scroll ul li').each (index, request) ->
 				$(request).find('.position').html(index+1)
+
+	channel_edited = dispatcher.subscribe 'request_edited'
+	channel_edited.bind 'edit', (request_id) ->
+		if($('.scroll ul').length)
+			$.get(window.location.origin + '/requests.json', (data) ->
+				$.each(data.requests, (index, request) ->
+					if(request.request_id == request_id)
+						editedRequest = Mustache.render($('#request').html(),request)
+						$("##{request_id}").replaceWith(editedRequest)
+						$('.scroll ul li').each (index, request) ->
+							$(request).find('.position').html(index+1)
+				)
+			)

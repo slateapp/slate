@@ -1,4 +1,4 @@
-Rails.application.routes.draw do\
+  Rails.application.routes.draw do\
 
   get '/students/login', :to => 'students#new', :as => :login
   get '/auth/:provider/callback' => 'students#create', :as => :omniauth_callback
@@ -7,6 +7,7 @@ Rails.application.routes.draw do\
   get '/requests' => 'requests#index'
   get '/students/cohort' => "students#cohort", :as => :get_cohort
   get '/students/dashboard' => "students#index"
+  
   resources :teachers, only:[:update] do
     collection do
       get 'dashboard'
@@ -17,6 +18,7 @@ Rails.application.routes.draw do\
       get 'edit_student'
     end
   end
+  
   resources :categories
   resources :students
   resources :cohorts
@@ -33,6 +35,7 @@ Rails.application.routes.draw do\
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  
   root 'pages#index'
 
   # Example of regular route:
