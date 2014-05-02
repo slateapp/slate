@@ -32,7 +32,7 @@
       <div class="solveTab">
         {{ #my_request }}
           <a href='{{ edit_url }}' class='btn btn-edit'>Edit</a> 
-          <a href='{{ delete_url }}' class='btn btn-danger' data-method='delete'>Delete</a> 
+          <a class="btn btn-danger" data-confirm="Are you sure?" data-method="delete" href="{{ delete_url }}" rel="nofollow">Delete</a>
         {{ /my_request }}
         {{ #current_teacher }}
           <a class='close' href='{{ solved_url }}' data-method='patch'>SOLVED</a>
