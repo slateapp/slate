@@ -42,5 +42,5 @@ class CohortsController < ApplicationController
 end
 
 def cohort_params
-  params[:cohort].permit(:name)
+  params[:cohort].permit(:month, :year)
 end
