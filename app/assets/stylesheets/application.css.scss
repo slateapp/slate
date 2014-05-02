@@ -202,7 +202,6 @@ word-wrap: break-word;
 width: 40px;
 height: 40px;
 padding-top: 5px;
-padding-left: 15px;
 margin-top: -53px;
 margin-right: -20px;
 border-top-right-radius: 5px;
@@ -210,6 +209,7 @@ background-color: #a91d2a;
 color: #ffffff;
 font-size: 1.5em;
 float: right;
+text-align: center;
 }
 
 button
@@ -438,5 +438,14 @@ word-wrap: break-word;
 color: #333333;
 background-color: whitesmoke;
 border: none;
+}
+
+.waiting h3
+{
+width: 165px;
+height: 23px;
+margin-right: 0px;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
