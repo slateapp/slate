@@ -2,8 +2,7 @@ class RequestsController < ApplicationController
 	before_action :authenticate!, only: [:new, :create, :destroy, :edit]
 	
 	def index
-		@requests = Request.where(solved: false)
-		@requests = Request.all.sort {|a,b| a.created_at <=> b.created_at}
+		@requests = Request.where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
 	end
 
 	def show

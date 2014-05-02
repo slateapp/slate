@@ -24,7 +24,7 @@ describe 'Solving a request' do
       visit '/requests'
       click_link 'SOLVED'
       expect(page).not_to have_content 'hello'
-      expect(page).to have_content 'Request was successfully updated.'
+      expect(page).to have_content 'Request was successfully updated'
     end
 	end
 
@@ -38,17 +38,10 @@ describe 'Solving a request' do
       create(:request, student: alex, category: Category.last.id.to_s)
     end
 
-    xit 'clicks the SOLVED link', js:true do
+    it 'cannot click the SOLVED link', js:true do
       visit '/requests'
-      click_link 'SOLVED'
 
-      expect(page).not_to have_content 'hello'
-      expect(page).not_to have_content 'Request was successfully updated.'
-    end
-
-    it 'cannot see the SOLVED button', js:true do
-      visit '/requests'      
-      expect(page).not_to have_content 'SOLVED'
+      expect(page).not_to have_link 'SOLVED'
     end
   end
 end

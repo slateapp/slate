@@ -12,7 +12,7 @@
 <body>
 <%= render 'partials/header' %>
 <% flash do |key, value| %>
-  <div class="alert <%= flash_class(key) %>"><button type="button" class="close" data-dismiss="alert">&times;</button><%= value %></div>
+  <div class="alert <%= flash_class(key) %>"><%= value %></div>
 <% end %>
 
 	<%= javascript_include_tag 'application' %>

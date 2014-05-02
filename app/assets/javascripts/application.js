@@ -32,3 +32,7 @@ $(document.body).on('click', '#giveupButton' ,function(){
     $('#sterge').popup("close");
 });
 
+$(document).ready(function(){
+	$('.alert').delay( 3000 ).fadeOut( 100 );
+});
+
