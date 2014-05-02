@@ -26,6 +26,7 @@ class StudentsController < ApplicationController
   end
 
   def index
+  	@requests = Request.all
   	redirect_to dashboard_teachers_path if current_teacher
   end
 
