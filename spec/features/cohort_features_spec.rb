@@ -16,7 +16,8 @@ describe "Cohorts" do
       visit '/teachers/dashboard'
       click_link "Cohorts"
       click_link "Add Cohort"
-      fill_in "Cohort", with: "January 2020"
+      select('January', :from => 'cohort_month')
+      select('2020', :from => 'cohort_year')
       click_button 'Create Cohort'
       expect(page).to have_content "January 2020"
     end
@@ -30,7 +31,8 @@ describe "Cohorts" do
       
       it "can be edited" do
         click_link "Edit"
-        fill_in "Cohort", with: "February 2014"
+        select('February', :from => 'cohort_month')
+        select('2014', :from => 'cohort_year')
         click_button "Update Cohort"
         expect(page).to have_content "February 2014"
       end

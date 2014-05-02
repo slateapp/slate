@@ -9,10 +9,11 @@
 <%= link_to("Add Cohort", new_cohort_path , class: "btn btn-default") %>
 <table class="table table-hover">
   <th>Name</th><th>Actions</th>
-  <% @cohorts.each do |cohort| %>
+  <% @cohorts_list.each do |cohort| %>
     <tr>
       <td><%= cohort.name %></td>
-      <td><%= link_to("Edit", edit_cohort_path(cohort), class: "btn btn-default") %><%= link_to("Delete", cohort_path(cohort), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-default") %></td>
+      <td><%= link_to("Edit", edit_cohort_path(cohort), class: "btn btn-default") %>
+      <%= link_to("Delete", cohort_path(cohort), {method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-default"}) %></td>
     </tr>
   <% end %>
 </table>
