@@ -33,26 +33,22 @@ class RequestsController < ApplicationController
 
 	def edit
 		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
-
 		flash[:notice] = 'Request was successfully updated.'
-
-	rescue ActiveRecord::RecordNotFound
-		flash[:notice] = 'Error: This is not your post'
-		redirect_to '/requests'
-
+		rescue ActiveRecord::RecordNotFound
+			flash[:notice] = 'Error: This is not your post'
+			redirect_to '/requests'
 	end
 
 	def update
 	  @request = Request.find(params[:id])
-
-	    if @request.update_attributes(params[:request].permit(:description, :category))
-	      flash[:notice] = 'Request was successfully updated.'
-	      redirect_to requests_path
-	    else
-	      render 'edit'
+    if @request.update_attributes(params[:request].permit(:description, :category))
+      flash[:notice] = 'Request was successfully updated.'
+			WebsocketRails[:request_edited].trigger 'edit', @request.id
+      redirect_to requests_path
+    else
+      render 'edit'
 		end
 	end
-
 
 	def destroy
 		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
@@ -60,9 +56,8 @@ class RequestsController < ApplicationController
 		WebsocketRails[:request_deleted].trigger 'destroy', @request.id
 		flash[:notice] = 'Request deleted'
 		redirect_to requests_path
-
-	rescue ActiveRecord::RecordNotFound
-		flash[:notice] = 'Error: This is not your post'
-		redirect_to requests_path
+		rescue ActiveRecord::RecordNotFound
+			flash[:notice] = 'Error: This is not your post'
+			redirect_to requests_path
 	end 
 end
