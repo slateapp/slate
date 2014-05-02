@@ -1,4 +1,5 @@
 class StudentsController < ApplicationController
+  before_filter :deny_to_unapproved, only: [:index]
 	def new
   end
 
@@ -51,7 +52,13 @@ class StudentsController < ApplicationController
     @student.name = params[:student][:name] if from_teacher?
 	  @student.save
     flash[:notice] = "Student successfully updated" if from_teacher?
-	  from_teacher? ? (redirect_to students_teachers_path(approved: true)) : (redirect_to students_dashboard_path)
+    if from_teacher?
+      redirect_to students_teachers_path(approved: true)
+    elsif current_student && !current_student.approved
+      redirect_to students_require_approval_path
+    else
+      redirect_to students_dashboard_path
+    end
  	end
 end
 

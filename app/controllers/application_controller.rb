@@ -18,6 +18,15 @@ class ApplicationController < ActionController::Base
     session[:student_id] = nil
   end
 
+  def deny_to_unapproved
+    unless current_teacher
+      unless current_student.approved == true
+        flash[:error] = "Error: you are still awaiting approval"
+        redirect_to root_path
+      end
+    end
+  end
+
   def authenticate!
     unless current_student || current_teacher
       flash[:notice] = 'You need to sign in'
