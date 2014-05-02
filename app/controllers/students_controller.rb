@@ -40,8 +40,7 @@ class StudentsController < ApplicationController
 	end
 
 	def cohort
-		@student = current_student
-		@cohorts = Cohort.all
+		@cohorts_list = Cohort.all.sort_by(&:name_to_date).reverse
 	end
 
 	def update
