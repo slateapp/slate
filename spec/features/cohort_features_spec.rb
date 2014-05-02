@@ -16,9 +16,9 @@ describe "Cohorts" do
       visit '/teachers/dashboard'
       click_link "Cohorts"
       click_link "Add Cohort"
-      fill_in "Cohort", with: "kdnsflnflksdfnf"
+      fill_in "Cohort", with: "January 2020"
       click_button 'Create Cohort'
-      expect(page).to have_content "kdnsflnflksdfnf"
+      expect(page).to have_content "January 2020"
     end
 
     context 'a cohort has been created' do

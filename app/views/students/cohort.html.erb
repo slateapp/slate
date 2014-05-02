@@ -1,7 +1,11 @@
 <div class="indent">
 <h3> Select cohort </h3>
-<%= form_tag student_path(current_student), method: :patch do %>
-	<%= select("cohort","id", Cohort.all.collect {|cohort| [ cohort.name, cohort.id ] }) %>
-	<%= submit_tag 'Submit' %>
+<% if @cohorts_list.count > 0 %>
+  <%= form_tag student_path(current_student), method: :patch do %>
+  	<%= select "cohort", "id", @cohorts_list.map { |cohort| [cohort.name, cohort.id] }, :include_blank => "Select a cohort" %>
+  	<%= submit_tag 'Submit' %>
+  <% end %>
+<% else %>
+  <div>Please see a teacher, a cohort needs to be created.</div>
 <% end %>
 </div>

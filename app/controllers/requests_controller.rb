@@ -2,6 +2,7 @@ class RequestsController < ApplicationController
 	before_action :authenticate!, only: [:new, :create, :destroy, :edit]
 	
 	def index
+		@requests = Request.where(solved: false)
 		@requests = Request.all.sort {|a,b| a.created_at <=> b.created_at}
 	end
 
@@ -41,13 +42,15 @@ class RequestsController < ApplicationController
 
 	def update
 	  @request = Request.find(params[:id])
-    if @request.update_attributes(params[:request].permit(:description, :category))
-      flash[:notice] = 'Request was successfully updated.'
-			WebsocketRails[:request_edited].trigger 'edit', @request.id
-      redirect_to requests_path
-    else
-      render 'edit'
-		end
+
+	  if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
+	      flash[:notice] = 'Request was successfully updated.'
+	      redirect_to requests_path
+	    else
+	      render 'edit'
+			end
+		rescue StudentCannotSolve
+			flash[:notice] = "Please sign in as a teacher"
 	end
 
 	def destroy
@@ -56,8 +59,13 @@ class RequestsController < ApplicationController
 		WebsocketRails[:request_deleted].trigger 'destroy', @request.id
 		flash[:notice] = 'Request deleted'
 		redirect_to requests_path
-		rescue ActiveRecord::RecordNotFound
-			flash[:notice] = 'Error: This is not your post'
-			redirect_to requests_path
-	end 
+
+	rescue ActiveRecord::RecordNotFound
+		flash[:notice] = 'Error: This is not your post'
+		redirect_to requests_path
+	end
+
+	def current_user
+		current_teacher || current_student
+	end
 end

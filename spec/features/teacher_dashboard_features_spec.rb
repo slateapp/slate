@@ -36,7 +36,7 @@ describe "Teacher Dashboard" do
       end
 
       specify "default specified displays the cohort title" do
-        visit dashboard_teachers_path
+        visit cohorts_path
         select('February 2014', :from => 'cohort_id')
         click_button 'Set as default'
         visit dashboard_teachers_path

@@ -11,4 +11,8 @@ json.requests @requests do |request|
     	json.edit_url edit_request_url(request)
     	json.delete_url request_url(request)
     end
+    if current_teacher 
+        json.current_teacher true
+        json.solved_url request_path(request, request:{solved: true})
+    end
 end
