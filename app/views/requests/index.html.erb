@@ -28,7 +28,7 @@
       <p class="time">{{ time }}</p>
       <p class="category">{{ category }}</p>
       <div class="gravatar" style="background-image: url('{{gravatar_url}}');"></div>
-      <div class="codeSnippet">{{ description }}</div>
+      <div class="codeSnippet prettyprint"><pre class="prettyprint">{{ description }}</pre></div>
       <div class="solveTab">
         {{ #my_request }}
           <a href='{{ edit_url }}' class='btn btn-edit'>Edit</a> 
