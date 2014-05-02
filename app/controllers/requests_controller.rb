@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
 	before_action :authenticate!, only: [:new, :create, :destroy, :edit]
+  before_filter :deny_to_unapproved, only: [:new, :create, :edit, :update, :destroy]
 	
 	def index
 		@requests = Request.where(solved: false)

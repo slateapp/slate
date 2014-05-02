@@ -87,6 +87,15 @@ def sign_in_as_student_alex
   set_omniauth
   visit '/'
   click_link 'Sign in with GitHub'
+  student = Student.last
+  student.approve
+  visit '/'
+end
+
+def sign_in_as_unapproved_student
+  unapproved_student
+  visit '/'
+  click_link 'Sign in with GitHub'
 end
 
 def sign_out_as_student_alex

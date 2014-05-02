@@ -1,4 +1,5 @@
 class StudentsController < ApplicationController
+  before_filter :deny_to_unapproved, only: [:index]
 	def new
   end
 
