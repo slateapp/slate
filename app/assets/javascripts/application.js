@@ -33,6 +33,6 @@ $(document.body).on('click', '#giveupButton' ,function(){
 });
 
 $(document).ready(function(){
-	$('.alert').delay( 3000 ).fadeOut( 100 );
+	$('.alert').delay( 3000 ).fadeOut( 1000 );
 });
 
