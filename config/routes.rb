@@ -7,6 +7,7 @@
   get '/requests' => 'requests#index'
   get '/students/cohort' => "students#cohort", :as => :get_cohort
   get '/students/dashboard' => "students#index"
+  get '/students/require_approval' => "pages#require_approval"
   
   resources :teachers, only:[:update] do
     collection do
