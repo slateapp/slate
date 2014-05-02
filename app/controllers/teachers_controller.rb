@@ -2,6 +2,7 @@ class TeachersController < ApplicationController
   before_action :authenticate_teacher!, only: [:dashboard, :update, :students,
     :approve_student, :unapprove_student, :delete_student, :edit_student]
   def dashboard
+    @requests = Request.all
     @teacher = current_teacher
     @cohorts_list = Cohort.all.sort_by(&:name_to_date).reverse
     cohort = params[:cohort] ? params[:cohort] : @teacher.cohort
