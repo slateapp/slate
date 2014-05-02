@@ -137,6 +137,11 @@ float: left;
 margin-left: 60px;
 }
 
+.alert 
+{
+	z-index: 150;
+}
+
 .waiting
 {
 width: 250px;
@@ -461,4 +466,3 @@ margin-top: 100px;
 margin-left: 20px;
 z-index: 0;
 }
-
