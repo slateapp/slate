@@ -20,7 +20,12 @@ Rails.application.routes.draw do\
   resources :categories
   resources :students
   resources :cohorts
-  resources :requests
+  resources :requests do
+    collection do 
+      get 'solved'
+    end
+  end
+
 
   devise_for :teachers
 

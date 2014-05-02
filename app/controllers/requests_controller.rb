@@ -2,7 +2,7 @@ class RequestsController < ApplicationController
 	before_action :authenticate!, only: [:new, :create, :destroy, :edit]
 	
 	def index
-		@requests = Request.all
+		@requests = Request.where(solved: false)
 	end
 
 	def show
@@ -44,15 +44,15 @@ class RequestsController < ApplicationController
 
 	def update
 	  @request = Request.find(params[:id])
-
-	    if @request.update_attributes(params[:request].permit(:description, :category))
+	  if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
 	      flash[:notice] = 'Request was successfully updated.'
 	      redirect_to requests_path
 	    else
 	      render 'edit'
-		end
+			end
+		rescue StudentCannotSolve
+			flash[:notice] = "Please sign in as a teacher"
 	end
-
 
 	def destroy
 		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
@@ -64,5 +64,27 @@ class RequestsController < ApplicationController
 	rescue ActiveRecord::RecordNotFound
 		flash[:notice] = 'Error: This is not your post'
 		redirect_to requests_path
-	end 
+	end
+
+	# def solve
+	# 	@request = Request.where(approved: true)
+	# end
+
+	# private
+
+	# def request_solved
+	# 	if authenticate_teacher!
+	# 		@request = Request.find(params[:id])
+	# 		@request.solve 
+	# 		flash[:notice] = "Request solved!"
+	# 		redirect_to requests_path(solved: true)
+	# 	else
+	# 		flash[:notice] = "Please sign in as a teacher"
+	# 	end
+	# end
+
+	def current_user
+		current_teacher || current_student
+	end
+
 end
