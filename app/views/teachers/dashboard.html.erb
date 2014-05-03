@@ -2,7 +2,7 @@
 <%= render 'partials/teacher_menu' %>
   <h4>Welcome <%= @teacher.name %></h4>
 
-  <%= select "cohort", "id", @cohorts_list.map { |cohort| [cohort.name, cohort.id] }, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
+  <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
 
   <% if !@cohort %>
     <h2>Please set a default cohort</h2>
