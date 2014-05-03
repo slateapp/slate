@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "Teacher signing up" do
-  context 'validates email' do
-    it "can sign up with @makersacademy.com domain" do
+describe "Teacher Features" do
+  context 'Sign up' do
+    it "returns an error if using a non-makersacademy email" do
       teacher = build :teacher
-      visit '/teachers/sign_up'
+      visit new_teacher_registration_path
       fill_in "Email", with: teacher.email
       fill_in "Password", with: teacher.password
       fill_in "Password confirmation", with: teacher.password_confirmation
@@ -12,14 +12,28 @@ describe "Teacher signing up" do
       expect(page).to have_content "Welcome! You have signed up successfully."
     end
 
-    it "cannot sign up with any other domain" do
+    it "is successful if using a makersacademy email" do
       teacher = build :not_teacher
-      visit '/teachers/sign_up'
+      visit new_teacher_registration_path
       fill_in "Email", with: teacher.email
       fill_in "Password", with: teacher.password
       fill_in "Password confirmation", with: teacher.password_confirmation
       click_button "Sign up"
       expect(page).to have_content "Sign up 1 error prohibited this teacher from being saved: Email is invalid"
+    end
+  end
+
+  context 'Accessing the dashboard' do
+    specify "returns an error if not signed in as a teacher" do
+      visit dashboard_teachers_path
+      expect(page).to have_content 'You need to sign in or sign up before continuing'
+    end
+
+    specify "is successful if signed in as a teacher" do
+      create :february
+      login_as create :teacher
+      visit dashboard_teachers_path
+      expect(page).to have_content 'Welcome Evgeny'
     end
   end
 end
