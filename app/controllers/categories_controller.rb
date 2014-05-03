@@ -14,9 +14,7 @@ class CategoriesController < ApplicationController
       flash[:success] = "Cohort created successfully"
       redirect_to categories_path
     else
-      @category.errors.full_messages.each do |msg|
-        flash[:error] = msg
-      end
+      @category.errors.full_messages.each{ |msg| flash[:error] = msg }
       render 'new'
     end
   end
@@ -27,9 +25,14 @@ class CategoriesController < ApplicationController
 
   def update
     @category = Category.find params[:id]
-    @category.update category_params
-    flash[:success] = "Category updated successfully"
-    redirect_to categories_path
+    @category.assign_attributes category_params
+    if @category.save
+      flash[:success] = "Category updated successfully"
+      redirect_to categories_path
+    else
+      @category.errors.full_messages.each{ |msg| flash[:error] = msg }
+      render 'edit'
+    end
   end
 
   def destroy
