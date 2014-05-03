@@ -15,7 +15,7 @@ describe "Teacher Cohort Features" do
 
     specify "if default set displays the cohort title" do
       visit cohorts_path
-      select('March 2014', :from => 'cohort_id')
+      select('March 2014', from: 'cohort_id')
       click_button 'Set as default'
       visit dashboard_teachers_path
       expect(page).to have_content 'March 2014'
@@ -23,9 +23,9 @@ describe "Teacher Cohort Features" do
     end
 
     specify "able to see all cohorts", js: true do
-      select('March 2014', :from => 'cohort_id')
+      select('March 2014', from: 'cohort_id')
       expect(page).to have_content "Ross"
-      select('April 2014', :from => 'cohort_id')
+      select('April 2014', from: 'cohort_id')
       expect(page).to have_content "Sarah"
     end
   end
