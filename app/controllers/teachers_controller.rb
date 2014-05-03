@@ -21,17 +21,9 @@ class TeachersController < ApplicationController
   end
 
   def students
-    if params[:approved]
-      @approved = Student.where(approved: true)
-      @unapproved = Student.where(approved: false)
-      @students = @approved
-      @switch = "approved"
-    else
-      @approved = Student.where(approved: true)
-      @unapproved = Student.where(approved: false)
-      @students = @unapproved
-      @switch = "unapproved"
-    end
+    @approved = Student.where(approved: true)
+    @unapproved = Student.where(approved: false)
+    params[:approved] ? (@students, @switch = @approved, "approved") : (@students, @switch = @unapproved, "unapproved")
   end
 
   def edit_student
