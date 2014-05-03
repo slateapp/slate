@@ -20,9 +20,9 @@
     end
   end
   
-  resources :categories
+  resources :categories, only:[:index, :new, :create, :edit, :update, :destroy]
+  resources :cohorts, only:[:index, :new, :create, :edit, :update, :destroy]
   resources :students
-  resources :cohorts
   resources :requests do
     collection do 
       get 'solved'
