@@ -2,7 +2,8 @@ class CohortsController < ApplicationController
   before_action :authenticate_teacher!, only: [:index, :new, :create, :edit, :update, :destroy]
   
   def index
-    @cohorts_list = Cohort.all.sort_by(&:name_to_date).reverse
+    @cohorts = Cohort.all.sort_by(&:name_to_date).reverse
+    @cohort_options = @cohorts.map { |cohort| [cohort.name, cohort.id] }
   end
 
   def new
@@ -15,9 +16,7 @@ class CohortsController < ApplicationController
       flash[:success] = "Cohort created successfully"
       redirect_to cohorts_path
     else
-      @cohort.errors.full_messages.each do |msg|
-        flash[:error] = msg
-      end
+      @cohort.errors.full_messages.each { |msg| flash[:error] = msg }
       render 'new'
     end
   end
@@ -27,11 +26,15 @@ class CohortsController < ApplicationController
   end
 
   def update
-    authenticate_teacher!
     @cohort = Cohort.find params[:id]
-    @cohort.update cohort_params
-    flash[:success] = "Cohort updated successfully"
-    redirect_to cohorts_path
+    @cohort.assign_attributes cohort_params
+    if @cohort.save
+      flash[:success] = "Cohort updated successfully"
+      redirect_to cohorts_path
+    else
+      @cohort.errors.full_messages.each{ |msg| flash[:error] = msg }
+      render 'edit'
+    end
   end
 
   def destroy
