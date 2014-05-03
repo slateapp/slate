@@ -33,6 +33,8 @@ $(document.body).on('click', '#giveupButton' ,function(){
 });
 
 $(document).ready(function(){
-	$('.alert').delay( 3000 ).fadeOut( 1000 );
+	// $('.alert').animate({ top: '-=100px' }, 600, 'easeInSine', function () {
+		$('.alert').delay( 3000 ).fadeOut( 1000 );
+	// })
 });
 
