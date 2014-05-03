@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Category Features" do
 
-  describe "Creating a category" do
+  context "Creating a category" do
     specify "returns an error if not a teacher is not signed in" do
       visit new_category_path
       expect(page).to have_content "You need to sign in or sign up before continuing."
@@ -16,7 +16,7 @@ describe "Category Features" do
     end
   end
 
-  describe "Editing a category" do
+  context "Editing a category" do
     before { create :category }
     specify "returns an error if not a teacher is not signed in" do
       visit edit_category_path(Category.last.id)
@@ -32,7 +32,7 @@ describe "Category Features" do
     end
   end
 
-  describe "Deleting a category" do
+  context "Deleting a category" do
     before { create :category }
     specify "returns an error if not a teacher is not signed in" do
       visit categories_path
