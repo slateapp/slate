@@ -36,9 +36,16 @@ class StudentsController < ApplicationController
 	end
 
   def destroy
-	  session[:student_id] = nil
-	  flash[:notice] = "You have now signed out!"
-	  redirect_to root_path
+    if from_teacher?
+      student = Student.find params[:id]
+      student.destroy
+      flash[:notice] = "#{student.name} has been deleted!"
+      redirect_to :back
+    else
+  	  session[:student_id] = nil
+  	  flash[:notice] = "You have now signed out!"
+  	  redirect_to root_path
+    end
 	end
 
 	def cohort
@@ -46,13 +53,18 @@ class StudentsController < ApplicationController
 	end
 
 	def update
-    @student = from_teacher? ? (Student.find params[:id]) : current_student
-		@cohort = Cohort.find params[:cohort][:id]
-	  @student.cohort = @cohort
-    @student.name = params[:student][:name] if from_teacher?
-	  @student.save
+    student = from_teacher? ? (Student.find params[:id]) : current_student
+		cohort = Cohort.find params[:cohort][:id] if params[:cohort]
+	  student.cohort = cohort
+    student.name = params[:student][:name] if from_teacher? && params[:student]
+    if approval?
+      student.approved ? student.unapprove : student.approve
+    end
+	  student.save
     flash[:notice] = "Student successfully updated" if from_teacher?
-    if from_teacher?
+    if from_teacher? && approval?
+      redirect_to :back
+    elsif from_teacher?
       redirect_to students_teachers_path(approved: true)
     elsif current_student && !current_student.approved
       redirect_to students_require_approval_path
@@ -64,4 +76,8 @@ end
 
 def from_teacher?
   params[:teacher]
+end
+
+def approval?
+  params[:approve]
 end

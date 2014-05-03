@@ -15,8 +15,8 @@
     <% @students.each do |student| %>
       <tr>
         <td><%= student.name %></td>
-        <td><%= link_to("Approve", approve_student_teachers_path(id: student), class: "btn btn-default") %>
-        <%= link_to("Delete", delete_student_teachers_path(id: student), {data: {confirm: "Are you sure?"}, class: "btn btn-default"}) %></td>
+        <td><%= link_to("Approve", student_path(id: student, teacher: true, approve: true), {class: "btn btn-default", method: :patch}) %>
+        <%= link_to("Delete", student_path(id: student, teacher: true), {data: {confirm: "Are you sure?"}, class: "btn btn-default", method: :delete}) %></td>
       </tr>
     <% end %>
   <% else %>
@@ -28,9 +28,9 @@
       <tr>
         <td><%= student.name %></td>
         <td><%= student.cohort ? student.cohort.name : "No cohort assigned"%></td>
-        <td><%= link_to("Unapprove", unapprove_student_teachers_path(id: student), class: "btn btn-default") %>
+        <td><%= link_to("Unapprove", student_path(id: student, teacher: true, approve: false), {class: "btn btn-default", method: :patch}) %>
         <%= link_to("Edit", edit_student_teachers_path(id: student), class: "btn btn-default") %>
-        <%= link_to("Delete", delete_student_teachers_path(id: student), {data: {confirm: "Are you sure?"}, class: "btn btn-default"}) %></td>
+        <%= link_to("Delete", student_path(id: student, teacher: true), {data: {confirm: "Are you sure?"}, class: "btn btn-default", method: :delete}) %></td>
       </tr>
     <% end %>
   <% end %>

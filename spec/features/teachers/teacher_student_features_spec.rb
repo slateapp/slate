@@ -11,7 +11,16 @@ describe "Teacher Student Features" do
 
     it "can approve a student" do
       click_link "Approve"
-      expect(page).to have_content "Khushkaran Singh Bajwa has been approved!"
+      expect(page).to have_content "Student successfully updated"
+      expect(page).not_to have_content "Khushkaran Singh Bajwa"
+    end
+
+    it "can unapprove a student" do
+      click_link "Approve"
+      click_link "Approved"
+      click_link "Unapprove"
+      expect(page).to have_content "Student successfully updated"
+      expect(page).not_to have_content "Khushkaran Singh Bajwa"
     end
 
     it "can delete a student" do

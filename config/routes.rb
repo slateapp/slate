@@ -16,9 +16,6 @@
     collection do
       get 'dashboard'
       get 'students'
-      get 'approve_student'
-      get 'unapprove_student'
-      get 'delete_student'
       get 'edit_student'
     end
   end
@@ -33,5 +30,5 @@
       get 'solved'
     end
   end
-  
+
 end
