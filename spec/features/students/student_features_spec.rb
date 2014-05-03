@@ -37,7 +37,7 @@ describe 'Students sign in and out' do
 		end
 	end
 
-	context 'An approved student signs in and then out' do
+	context 'An approved student signs in/out' do
 		let(:student){create :student}
 		before do
 			set_omniauth
@@ -68,3 +68,16 @@ describe 'Students sign in and out' do
 		end
 	end
 end
+
+# context 'setting cohort' do
+# 				xit 'should add cohort to student' do
+# 					# This needs to be a controller or a model test, to ensure to cohort is being set
+# 					cohort = create :february
+# 					visit '/'
+# 					click_link 'Sign in with GitHub'
+# 					select('February 2014', :from => 'cohort_id')
+# 					click_button "Submit"
+# 					expect(Student.last.cohort).to eq cohort
+# 				end
+# 			end
+# 		end
