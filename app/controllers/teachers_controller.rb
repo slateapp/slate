@@ -23,7 +23,7 @@ class TeachersController < ApplicationController
   def students
     @approved = Student.where(approved: true)
     @unapproved = Student.where(approved: false)
-    params[:approved] ? (@students, @switch = @approved, "approved") : (@students, @switch = @unapproved, "unapproved")
+    params[:approved] ? (@students, @switch = @approved, "Unapprove") : (@students, @switch = @unapproved, "Approve")
   end
 
   def edit_student
@@ -33,13 +33,5 @@ class TeachersController < ApplicationController
   private
   def selected_cohort
     params[:cohort] || @teacher.cohort
-  end
-
-  def cohorts_in_order
-    Cohort.all.sort_by(&:name_to_date).reverse
-  end
-
-  def cohort_options
-    cohorts_in_order.map { |cohort| [cohort.name, cohort.id] }  
   end
 end

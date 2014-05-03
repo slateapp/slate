@@ -33,4 +33,12 @@ class ApplicationController < ActionController::Base
       redirect_to students_dashboard_path
     end
   end
+
+  def cohorts_in_order
+    Cohort.all.sort_by(&:name_to_date).reverse
+  end
+
+  def cohort_options
+    cohorts_in_order.map { |cohort| [cohort.name, cohort.id] }  
+  end
 end

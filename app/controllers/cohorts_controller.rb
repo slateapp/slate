@@ -2,8 +2,8 @@ class CohortsController < ApplicationController
   before_action :authenticate_teacher!, only: [:index, :new, :create, :edit, :update, :destroy]
   
   def index
-    @cohorts = Cohort.all.sort_by(&:name_to_date).reverse
-    @cohort_options = @cohorts.map { |cohort| [cohort.name, cohort.id] }
+    @cohorts = cohorts_in_order
+    @cohort_options = cohort_options
   end
 
   def new
