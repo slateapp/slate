@@ -12,13 +12,7 @@ class CohortsController < ApplicationController
 
   def create
     @cohort = Cohort.new cohort_params
-    if @cohort.save
-      flash[:success] = "Cohort created successfully"
-      redirect_to cohorts_path
-    else
-      @cohort.errors.full_messages.each { |msg| flash[:error] = msg }
-      render 'new'
-    end
+    cohort_save("new")
   end
 
   def edit
@@ -28,13 +22,7 @@ class CohortsController < ApplicationController
   def update
     @cohort = Cohort.find params[:id]
     @cohort.assign_attributes cohort_params
-    if @cohort.save
-      flash[:success] = "Cohort updated successfully"
-      redirect_to cohorts_path
-    else
-      @cohort.errors.full_messages.each{ |msg| flash[:error] = msg }
-      render 'edit'
-    end
+    cohort_save("edit")
   end
 
   def destroy
@@ -42,6 +30,17 @@ class CohortsController < ApplicationController
     @cohort.destroy
     redirect_to cohorts_path
   end
+end
+
+def cohort_save(function)
+  verb = function == "edit" ? "updated" : "created"
+  if @cohort.save
+      flash[:success] = "Category #{verb} successfully"
+      redirect_to cohorts_path
+    else
+      @cohort.errors.full_messages.each{ |msg| flash[:error] = msg }
+      render function
+    end
 end
 
 def cohort_params
