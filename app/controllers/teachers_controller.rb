@@ -8,7 +8,9 @@ class TeachersController < ApplicationController
     @students = Student.where(cohort: selected_cohort, approved: true)    
     @stats = {
       todays_wait_time: Request.todays_average_wait_time.round,
-      todays_queue: Request.todays_average_queue.round
+      todays_queue: Request.todays_average_queue.round,
+      pie: Request.where(created_at: (Time.now-604800)..Time.now).group(:category).count,
+      weekly_requests: Request.group_by_day(:created_at, last: 7).count
     }
   end
 

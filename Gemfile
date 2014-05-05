@@ -36,6 +36,8 @@ gem 'bootstrap-sass'
 gem 'gravtastic'
 gem 'thin'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
+gem "chartkick"
+gem 'groupdate'
 
 group :development, :test do
 

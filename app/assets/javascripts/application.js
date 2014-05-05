@@ -16,6 +16,8 @@
 //= require websocket_rails/main
 //= require_tree .
 //= require bootstrap
+//= require jsapi
+//= require chartkick
 
 var li = '';
 $(document.body).on('click', '.del' ,function(){
