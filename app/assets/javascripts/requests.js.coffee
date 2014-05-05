@@ -37,6 +37,13 @@ $(document).ready ->
 			$('.scroll ul li').each (index, request) ->
 				$(request).find('.position').html(index+1)
 
+	channel_solved = dispatcher.subscribe 'request_solved'
+	channel_solved.bind 'solved', (request_id) ->
+		if($('.scroll ul').length)
+			$("##{request_id}").remove()
+			$('.scroll ul li').each (index, request) ->
+				$(request).find('.position').html(index+1)
+
 	channel_edited = dispatcher.subscribe 'request_edited'
 	channel_edited.bind 'edit', (request_id) ->
 		if($('.scroll ul').length)

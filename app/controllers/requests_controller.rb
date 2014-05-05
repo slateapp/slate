@@ -45,6 +45,7 @@ class RequestsController < ApplicationController
 
 	  if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
 	      flash[:notice] = 'Request was successfully updated.'
+	      WebsocketRails[:request_solved].trigger 'solved', @request.id if @request.solved
 	      redirect_to requests_path
 	    else
 	      render 'edit'
