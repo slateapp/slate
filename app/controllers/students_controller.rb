@@ -29,16 +29,24 @@ class StudentsController < ApplicationController
 
 	def update
     student = from_teacher? ? (Student.find params[:id]) : current_student
-		cohort = Cohort.find params[:cohort][:id] if params[:cohort]
-	  student.cohort = cohort
+    if params[:cohort]
+      if params[:cohort][:id].empty?
+        flash[:error] = "No cohort selected, please select a cohort"
+        redirect_to edit_student_teachers_path(id: params[:id])
+        return false
+      else
+        cohort = Cohort.find params[:cohort][:id]
+      end
+    end
+    student.cohort = cohort
     student.name = params[:student][:name] if from_teacher? && params[:student]
     if approval?
       student.approved ? student.unapprove : student.approve
     end
-	  student.save
+    student.save
     flash[:notice] = "Student successfully updated" if from_teacher?
     redirection
- 	end
+  end
 end
 
 private 

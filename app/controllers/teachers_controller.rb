@@ -28,6 +28,7 @@ class TeachersController < ApplicationController
 
   def edit_student
     @student = Student.find params[:id]
+    @cohort_options = cohort_options
   end
 
   private
