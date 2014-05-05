@@ -17,7 +17,8 @@ describe 'deleting requests' do
 			it 'displays error', js: true do
 				sarah = create(:sarah)
 				create(:request, student: sarah, category: Category.last.id.to_s)
-				visit '/requests'
+				visit students_dashboard_path
+
 
 				expect(page).not_to have_link 'Delete'
 			end
@@ -27,7 +28,7 @@ describe 'deleting requests' do
 
 			it 'removes the post', js: true do
 				create(:request, student: alex, category: Category.last.id.to_s)
-				visit '/requests'
+				visit students_dashboard_path
 				click_link 'Delete'
 
 				expect(page).to have_content 'Request deleted'
@@ -52,7 +53,7 @@ describe 'deleting requests' do
 
 			it 'removes the post',js: true do
 				login_as teacher
-				visit '/requests'
+				visit dashboard_teachers_path
 				click_link 'Delete'
 				
 				expect(page).to have_content 'Request deleted'
