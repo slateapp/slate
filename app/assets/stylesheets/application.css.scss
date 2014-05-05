@@ -139,10 +139,11 @@ margin-left: 60px;
 
 .alert
 {
-	z-index: 150;
-	margin-top: -84px;
-	margin-bottom: 32px;
-	display: block;
+width: 84%;
+margin-right: 2%;
+padding: 6px;
+display: inline;
+float: right;
 }
 
 .waiting
@@ -472,6 +473,5 @@ z-index: 0;
 
 .navbar
 {
-z-index: -1;
 display: relative;
 }
