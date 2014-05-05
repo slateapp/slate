@@ -61,16 +61,20 @@ class StudentsController < ApplicationController
     end
 	  student.save
     flash[:notice] = "Student successfully updated" if from_teacher?
-    if from_teacher? && approval?
-      redirect_to :back
-    elsif from_teacher?
-      redirect_to students_teachers_path(approved: true)
-    elsif current_student && !current_student.approved
-      redirect_to students_require_approval_path
-    else
-      redirect_to students_dashboard_path
-    end
+    redirection
  	end
+end
+
+def redirection
+  if from_teacher? && approval?
+    redirect_to :back
+  elsif from_teacher?
+    redirect_to students_teachers_path(approved: true)
+  elsif current_student && !current_student.approved
+    redirect_to students_require_approval_path
+  else
+    redirect_to students_dashboard_path
+  end  
 end
 
 def from_teacher?
