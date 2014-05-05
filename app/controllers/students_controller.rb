@@ -5,24 +5,9 @@ class StudentsController < ApplicationController
 
   def create
   	auth_hash = request.env['omniauth.auth']
-
-		@authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
-		
-	  if @authorization
-	    student = @authorization.student
-			flash[:notice] = "Hi #{student.name}! Awesome, welcome back."
-	    redirect_to students_dashboard_path
-
-	  else
-	    student = Student.new :name => auth_hash["info"]["name"], :email => auth_hash["info"]["email"]
-	    student.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
-	    student.save
-			flash[:notice] = "Hi #{student.name}! Awesome, you've signed up!"
-			redirect_to get_cohort_path
-  	end
-  	
+		authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
+		student = authorization ? create_new_session(authorization) : create_new_student(auth_hash)
 	  session[:student_id] = student.id
-
   end
 
   def index
@@ -35,16 +20,7 @@ class StudentsController < ApplicationController
 	end
 
   def destroy
-    if from_teacher?
-      student = Student.find params[:id]
-      student.destroy
-      flash[:notice] = "#{student.name} has been deleted!"
-      redirect_to :back
-    else
-  	  session[:student_id] = nil
-  	  flash[:notice] = "You have now signed out!"
-  	  redirect_to root_path
-    end
+    from_teacher? ? destroy_student : destroy_session
 	end
 
 	def cohort
@@ -65,6 +41,8 @@ class StudentsController < ApplicationController
  	end
 end
 
+private 
+
 def redirection
   if from_teacher? && approval?
     redirect_to :back
@@ -83,4 +61,33 @@ end
 
 def approval?
   params[:approve]
+end
+
+def create_new_session(authorization)
+  student = authorization.student
+  flash[:notice] = "Hi #{student.name}! Awesome, welcome back."
+  redirect_to students_dashboard_path
+  student
+end
+
+def create_new_student(auth_hash)
+  student = Student.new :name => auth_hash["info"]["name"], :email => auth_hash["info"]["email"]
+  student.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
+  student.save
+  flash[:notice] = "Hi #{student.name}! Awesome, you've signed up!"
+  redirect_to get_cohort_path
+  student
+end
+
+def destroy_session
+  session[:student_id] = nil
+  flash[:notice] = "You have now signed out!"
+  redirect_to root_path
+end
+
+def destroy_student
+  student = Student.find params[:id]
+  student.destroy
+  flash[:notice] = "#{student.name} has been deleted!"
+  redirect_to :back
 end
