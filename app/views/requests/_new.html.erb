@@ -1,7 +1,7 @@
 <%= form_for Request.new do |f| %>
 
 	<%= f.label :description %>
-	<%= f.text_area :description,  autofocus: true %>
+	<%= f.text_area :description, :value => "Description", onfocus: "this.value='';"%>
 
 	<%= f.label :category %>
 	<%= f.select :category, Category.all.map { |category| [category.name, category.id] }, :include_blank => "Select a category" %>
