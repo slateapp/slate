@@ -5,7 +5,6 @@ class StudentsController < ApplicationController
 
   def create
   	auth_hash = request.env['omniauth.auth']
-  	# raise auth_hash.to_hash.inspect
 
 		@authorization = Authorization.find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
 		
