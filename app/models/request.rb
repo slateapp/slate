@@ -7,10 +7,7 @@ class Request < ActiveRecord::Base
 	belongs_to :teacher
   validates :category, :description, :presence => true
   scope :todays_solved_requests, -> { where(solved: true, solved_at: Time.now.beginning_of_day..Time.now) }
-  
-  # def category_name
-  #   Category.find(self.category.to_i).name
-  # end
+  scope :todays_requests, ->(minute) { where(created_at: Time.now.beginning_of_day..minute) }
 
   def solve!(teacher)
   	self.solved = true
@@ -43,9 +40,7 @@ class Request < ActiveRecord::Base
     queue_lengths = []
     minute = Time.now.beginning_of_day
     while minute < Time.now
-      requests = self.where(created_at: Time.now.beginning_of_day..minute)
-      request_array = []
-      requests.each{ |request| request_array << request.category if request.category && (!request.solved || request.solved_at > minute) }
+      request_array = todays_requests(minute).map{ |request| request.category if !request.solved || request.solved_at > minute }.compact
       queue_lengths << request_array.count unless request_array.empty?
       minute += 60
     end
