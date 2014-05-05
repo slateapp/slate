@@ -9,8 +9,7 @@ describe 'Solving a request' do
 
     before do
       sign_in_as_student_alex
-      create :category
-      create(:request, student: alex, category: Category.last.id.to_s)
+      create(:request, student: alex, category: (create :category))
       sign_out_as_student_alex  
       login_as teacher
       visit dashboard_teachers_path
@@ -32,8 +31,7 @@ describe 'Solving a request' do
 
     before do
       sign_in_as_student_alex
-      create :category
-      create(:request, student: alex, category: Category.last.id.to_s)
+      create(:request, student: alex, category: (create :category))
     end
 
     it 'cannot click the SOLVED link', js:true do

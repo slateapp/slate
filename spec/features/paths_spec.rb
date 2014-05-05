@@ -6,8 +6,7 @@ describe 'redirects to dashboard' do
 		let(:alex) { Student.find_by(email: 'alex@example.com') }
 		before do
 			sign_in_as_student_alex
-			create :category
-      create(:request, student: alex, category: Category.last.id.to_s)
+      create(:request, student: alex, category: (create :category))
       visit '/students/dashboard'
 		end
 
@@ -36,8 +35,7 @@ describe 'redirects to dashboard' do
 		let(:alex) { Student.find_by(email: 'alex@example.com') }
 		before do 
 			sign_in_as_student_alex
-			create :category
-      create(:request, student: alex, category: Category.last.id.to_s)
+      create(:request, student: alex, category: (create :category))
       sign_out_as_student_alex
 			login_as create :teacher
       visit dashboard_teachers_path

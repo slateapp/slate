@@ -6,6 +6,10 @@ class TeachersController < ApplicationController
     @teacher, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
     @cohort = Cohort.find(selected_cohort) if selected_cohort
     @students = Student.where(cohort: selected_cohort, approved: true)    
+    @stats = {
+      todays_wait_time: Request.todays_average_wait_time.round,
+      todays_queue: Request.todays_average_queue.round
+    }
   end
 
   def update

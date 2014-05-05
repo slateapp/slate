@@ -16,7 +16,7 @@ describe 'deleting requests' do
 
 			it 'displays error', js: true do
 				sarah = create(:sarah)
-				create(:request, student: sarah, category: Category.last.id.to_s)
+				create(:request, student: sarah, category: Category.last)
 				visit students_dashboard_path
 
 
@@ -27,7 +27,7 @@ describe 'deleting requests' do
 		describe "attempting to delete own request" do
 
 			it 'removes the post', js: true do
-				create(:request, student: alex, category: Category.last.id.to_s)
+				create(:request, student: alex, category: Category.last)
 				visit students_dashboard_path
 				click_link 'Delete'
 
@@ -45,7 +45,7 @@ describe 'deleting requests' do
 	  before do
 			sign_in_as_student_alex
 			create :category
-			create(:request, student: alex, category: Category.last.id.to_s)
+			create(:request, student: alex, category: Category.last)
 			sign_out_as_student_alex				
 	  end
 
