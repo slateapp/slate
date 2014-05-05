@@ -11,7 +11,7 @@ describe 'requests page' do
 	describe 'adding requests' do
 		it "throws an error if the user doesn't pick a category" do
 			sign_in_as_student_alex
-			visit '/requests/new'
+			visit '/students/dashboard'
 		  fill_in 'Description', with: 'Migration issue'
 		  click_button 'Create Request'
 		  expect(page).to have_content 'Error: Please fill out all fields'
@@ -20,7 +20,7 @@ describe 'requests page' do
 		it "throws an error if the user doesn't enter a description" do
 			sign_in_as_student_alex
 			create :postgresql
-			visit '/requests/new'
+			visit '/students/dashboard'
 		  select('Postgresql', from: 'Category')
 		  click_button 'Create Request'
 		  expect(page).to have_content 'Error: Please fill out all fields'

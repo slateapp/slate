@@ -28,7 +28,7 @@ class RequestsController < ApplicationController
 			redirect_to students_dashboard_path, :notice => "Your request has been created."
 		else
 			flash[:error] = "Error: Please fill out all fields"
-			render "new"
+			redirect_to students_dashboard_path
 		end
 	end 
 
@@ -37,7 +37,7 @@ class RequestsController < ApplicationController
 		flash[:notice] = 'Request was successfully updated.'
 		rescue ActiveRecord::RecordNotFound
 			flash[:notice] = 'Error: This is not your post'
-			redirect_to edit_request_path
+			redirect_to students_dashboard_path
 	end
 
 	def update
