@@ -13,15 +13,14 @@ describe 'Solving a request' do
       create(:request, student: alex, category: Category.last.id.to_s)
       sign_out_as_student_alex  
       login_as teacher
+      visit dashboard_teachers_path
     end
 
-    it 'should be able to see the SOLVED button', js:true do
-    	visit '/requests'      
+    it 'should be able to see the SOLVED button', js:true do   
     	expect(page).to have_content 'SOLVED'
     end
 
     it 'should be able to click the SOLVED link', js:true do
-      visit '/requests'
       click_link 'SOLVED'
       expect(page).not_to have_content 'hello'
       expect(page).to have_content 'Request was successfully updated'
@@ -31,7 +30,6 @@ describe 'Solving a request' do
   context 'logged in as student' do
     let(:alex) { Student.find_by(email: 'alex@example.com') }
 
-
     before do
       sign_in_as_student_alex
       create :category
@@ -39,7 +37,7 @@ describe 'Solving a request' do
     end
 
     it 'cannot click the SOLVED link', js:true do
-      visit '/requests'
+      visit students_dashboard_path
 
       expect(page).not_to have_link 'SOLVED'
     end
