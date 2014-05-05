@@ -15,7 +15,7 @@ class RequestsController < ApplicationController
 			@request = Request.new
 		else
 			flash[:notice] = 'Sorry, you must be a student to make a request'
-			redirect_to requests_path
+			redirect_to '/'
 		end
 	end
 
@@ -25,7 +25,7 @@ class RequestsController < ApplicationController
 
 		if @request.save
 			WebsocketRails[:request_created].trigger 'new', @request
-			redirect_to '/', :notice => "Your request has been created."
+			redirect_to students_dashboard_path, :notice => "Your request has been created."
 		else
 			flash[:error] = "Error: Please fill out all fields"
 			render "new"
@@ -37,21 +37,19 @@ class RequestsController < ApplicationController
 		flash[:notice] = 'Request was successfully updated.'
 		rescue ActiveRecord::RecordNotFound
 			flash[:notice] = 'Error: This is not your post'
-			redirect_to '/requests'
+			redirect_to edit_request_path
 	end
 
 	def update
 	  @request = Request.find(params[:id])
-
 	  if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
-	      flash[:notice] = 'Request was successfully updated.'
-	      WebsocketRails[:request_solved].trigger 'solved', @request.id if @request.solved
-	      redirect_to requests_path
-	    else
-	      render 'edit'
-			end
+      flash[:notice] = 'Request was successfully updated.'
+      redirect_to students_dashboard_path
+	  else
+	    render 'edit'
+		end
 		rescue StudentCannotSolve
-			flash[:notice] = "Please sign in as a teacher"
+		flash[:notice] = "Please sign in as a teacher"
 	end
 
 	def destroy
@@ -59,11 +57,11 @@ class RequestsController < ApplicationController
 		@request.destroy
 		WebsocketRails[:request_deleted].trigger 'destroy', @request.id
 		flash[:notice] = 'Request deleted'
-		redirect_to requests_path
+		redirect_to students_dashboard_path
 
 	rescue ActiveRecord::RecordNotFound
 		flash[:notice] = 'Error: This is not your post'
-		redirect_to requests_path
+		redirect_to students_dashboard_path
 	end
 
 	def current_user
