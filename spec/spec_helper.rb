@@ -106,7 +106,7 @@ end
 
 def create_request
   create :postgresql
-  visit '/requests/new'
+  visit '/students/dashboard'
   fill_in 'Description', with: 'Migration issue'
   select('Postgresql', from: 'Category')
   click_button 'Create Request'

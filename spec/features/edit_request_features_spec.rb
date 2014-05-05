@@ -15,7 +15,7 @@ describe 'editing requests' do
 		click_link 'Edit'
 
 		fill_in 'Description', with: 'Migration issue'
-    select('Ruby', from: 'Category')
+    	select('Ruby', from: 'Category')
 		click_button 'Update'
 
 		expect(current_path).to eq students_dashboard_path
