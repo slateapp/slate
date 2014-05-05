@@ -9,7 +9,7 @@ describe 'editing requests' do
 		sign_in_as_student_alex
 		create_request
 
-		visit '/requests'
+		visit students_dashboard_path
 		sleep 1
 		
 		click_link 'Edit'
@@ -18,7 +18,7 @@ describe 'editing requests' do
     select('Ruby', from: 'Category')
 		click_button 'Update'
 
-		expect(current_path).to eq '/requests'
+		expect(current_path).to eq students_dashboard_path
 		expect(page).to have_content 'Request was successfully updated.'
 	end
 
@@ -34,7 +34,7 @@ describe 'editing requests' do
 			it 'displays error', js: true do
 				sarah = create(:sarah)
 				create(:request, student: sarah, category: Category.last.id.to_s)
-				visit '/requests'
+				visit students_dashboard_path
 
 				expect(page).not_to have_link 'Edit'
 			end
@@ -44,7 +44,7 @@ describe 'editing requests' do
 
 			it 'edits the post', js: true do
 				create(:request, student: alex, category: Category.last.id.to_s)
-				visit '/requests'
+				visit students_dashboard_path
 				click_link 'Edit'
 
 				expect(page).to have_content 'Request was successfully updated.'

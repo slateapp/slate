@@ -137,9 +137,13 @@ float: left;
 margin-left: 60px;
 }
 
-.alert 
+.alert
 {
-	z-index: 150;
+width: 84%;
+margin-right: 2%;
+padding: 6px;
+display: inline;
+float: right;
 }
 
 .waiting
@@ -435,7 +439,7 @@ pre.prettyprint
 {
 display: block;
 padding: 20px;
-margin: 0 0 10px;
+margin: -6px 0 10px;
 font-size: 13px;
 line-height: 1.428571429;
 word-break: break-all;
@@ -465,4 +469,9 @@ font-size: 2em;
 margin-top: 100px;
 margin-left: 20px;
 z-index: 0;
+}
+
+.navbar
+{
+display: relative;
 }
