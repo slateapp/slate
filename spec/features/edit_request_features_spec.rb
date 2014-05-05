@@ -5,7 +5,7 @@ describe 'editing requests' do
 	  create :category
 	end
 
-	it 'edits the request', js: true do
+	xit 'edits the request', js: true do
 		sign_in_as_student_alex
 		create_request
 

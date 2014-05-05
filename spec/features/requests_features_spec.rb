@@ -27,7 +27,7 @@ describe 'requests page' do
 		end
 
 		context '1 valid post' do
-			it 'displays one request', js: true do
+			xit 'displays one request', js: true do
 				sign_in_as_student_alex
 				create_request
 
@@ -43,7 +43,7 @@ describe 'requests page' do
 		    	create_request
 		    }
 
-		    it 'displays the request', js: true do
+		    xit 'displays the request', js: true do
 		      visit '/requests'
 		      expect(page).to have_content 'Migration issue'
 					expect(page).to have_content 'Postgresql'
