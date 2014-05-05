@@ -3,26 +3,36 @@ require "spec_helper"
 describe "Category Features" do
 
   context "Creating a category" do
-    specify "returns an error if not a teacher is not signed in" do
+    it "returns an error if not a teacher is not signed in" do
       visit new_category_path
       expect(page).to have_content "You need to sign in or sign up before continuing."
     end
-    specify "is successful if a teacher is signed in" do
+
+    it "is successful if a teacher is signed in" do
       login_as create :teacher
       visit new_category_path
       fill_in "Category", with: "Ruby"
       click_button "Create Category"
       expect(page).to have_content "Ruby"
     end
+
+    it "returns an error if category already exists" do
+      create :category
+      login_as create :teacher
+      visit new_category_path
+      fill_in "Category", with: "Ruby"
+      click_button "Create Category"
+      expect(page).to have_content "Name has already been taken"
+    end
   end
 
   context "Editing a category" do
     before { create :category }
-    specify "returns an error if not a teacher is not signed in" do
+    it "returns an error if not a teacher is not signed in" do
       visit edit_category_path(Category.last.id)
       expect(page).to have_content "You need to sign in or sign up before continuing."
     end
-    specify "is successful if a teacher is signed in" do
+    it "is successful if a teacher is signed in" do
       login_as create :teacher
       visit edit_category_path(Category.last.id)
       fill_in "Category", with: "JavaScript"
@@ -34,11 +44,11 @@ describe "Category Features" do
 
   context "Deleting a category" do
     before { create :category }
-    specify "returns an error if not a teacher is not signed in" do
+    it "returns an error if not a teacher is not signed in" do
       visit categories_path
       expect(page).to have_content "You need to sign in or sign up before continuing."
     end
-    specify "is successful if a teacher is signed in" do
+    it "is successful if a teacher is signed in" do
       login_as create :teacher
       visit categories_path
       click_link "Delete"
