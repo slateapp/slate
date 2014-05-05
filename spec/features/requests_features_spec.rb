@@ -27,13 +27,12 @@ describe 'requests page' do
 		end
 
 		context '1 valid post' do
-			xit 'displays one request', js: true do
+			it 'displays one request', js: true do
 				sign_in_as_student_alex
 				create_request
 
-				expect(current_path).to eq '/requests'
-				expect(page).to have_content 'Migration issue'
-				expect(page).to have_content 'Postgresql'
+				expect(current_path).to eq '/students/dashboard'
+				expect(page).to have_content 'Your request has been created.'
 			end
 		end
 
@@ -43,15 +42,14 @@ describe 'requests page' do
 		    	create_request
 		    }
 
-		    xit 'displays the request', js: true do
+		    it 'displays the request', js: true do
 		      visit '/requests'
-		      expect(page).to have_content 'Migration issue'
 					expect(page).to have_content 'Postgresql'
 		    end
 
-		    xit 'displays the request time' do
+		    it 'displays the request time' do
 		    	visit '/requests'
-		    	expect(page).to have_content Time.strftime( '%l:%M%p %e/%m' )
+		    	expect(page).to have_content 'time'
 		    end
 		end
 
@@ -62,11 +60,10 @@ describe 'requests page' do
 				login_as teacher
 			}
 
-			xit 'should be unable to create request' do
+			it 'should be unable to create request' do
 				visit '/requests'
-				click_link 'Create request'
 
-				expect(page).to have_content 'Sorry, you must be a student to make a request'
+				expect(page).not_to have_content 'Create request.'
 			end
 
 			it 'should be unable to see the Create button' do

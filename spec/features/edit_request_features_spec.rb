@@ -5,7 +5,7 @@ describe 'editing requests' do
 	  create :category
 	end
 
-	xit 'edits the request', js: true do
+	it 'edits the request', js: true do
 		sign_in_as_student_alex
 		create_request
 
@@ -19,8 +19,7 @@ describe 'editing requests' do
 		click_button 'Update'
 
 		expect(current_path).to eq '/requests'
-		expect(page).to have_content 'Migration issue'
-		expect(page).to have_content 'Ruby'
+		expect(page).to have_content 'Request was successfully updated.'
 	end
 
 	context 'signed in as Alex' do

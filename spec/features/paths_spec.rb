@@ -47,7 +47,7 @@ describe 'redirects to dashboard' do
 		end
 
 		it 'after deleting a students request' do
-			click_link 'Delete'
+			click_button '{{ delete_url }}'
 
 			expect(current_url).to match /dashboard/
 			expect(current_url).to match /teachers/
