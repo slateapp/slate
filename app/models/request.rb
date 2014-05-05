@@ -12,17 +12,17 @@ class Request < ActiveRecord::Base
   #   Category.find(self.category.to_i).name
   # end
 
-  def solve!
+  def solve!(teacher)
   	self.solved = true
     self.solved_at = Time.now
-    self.teacher = current_teacher
+    self.teacher = teacher
   	save
   end
 
   def update_or_solve(attributes, user)
     if attributes[:solved]
       raise StudentCannotSolve if user.is_a? Student
-      solve!
+      solve!(attributes[:teacher])
     else
       update_attributes(attributes)
       save
