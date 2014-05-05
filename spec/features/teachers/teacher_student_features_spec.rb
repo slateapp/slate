@@ -3,8 +3,7 @@ require "spec_helper"
 describe "Teacher Student Features" do
   context 'Whilst teacher signed in they' do
     before{
-      create :february
-      create :khush
+      create :khush, cohort: (create :february)
       login_as create :teacher
       visit students_teachers_path
     }
@@ -37,6 +36,7 @@ describe "Teacher Student Features" do
 
       specify "name" do
         fill_in "student_name", with: "Jack Whitehall"
+        select('February 2014', from: 'cohort_id')
         click_button "Update Student"
         expect(page).to have_content "Jack Whitehall"
         expect(page).not_to have_content "Khushkaran Singh Bajwa"
