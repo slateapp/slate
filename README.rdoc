@@ -1,4 +1,5 @@
 == README
+[![Code Climate](https://codeclimate.com/github/slateapp/slate.png)](https://codeclimate.com/github/slateapp/slate)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
