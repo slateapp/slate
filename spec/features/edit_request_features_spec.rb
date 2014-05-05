@@ -15,7 +15,7 @@ describe 'editing requests' do
 		click_link 'Edit'
 
 		fill_in 'Description', with: 'Migration issue'
-    select('Ruby', from: 'Category')
+    	select('Ruby', from: 'Category')
 		click_button 'Update'
 
 		expect(current_path).to eq students_dashboard_path
@@ -33,7 +33,7 @@ describe 'editing requests' do
 		describe "attempting to edit Sarah's request" do
 			it 'displays error', js: true do
 				sarah = create(:sarah)
-				create(:request, student: sarah, category: Category.last.id.to_s)
+				create(:request, student: sarah, category: Category.last)
 				visit students_dashboard_path
 
 				expect(page).not_to have_link 'Edit'
@@ -43,7 +43,7 @@ describe 'editing requests' do
 		describe "attempting to edit own request" do
 
 			it 'edits the post', js: true do
-				create(:request, student: alex, category: Category.last.id.to_s)
+				create(:request, student: alex, category: Category.last)
 				visit students_dashboard_path
 				click_link 'Edit'
 
