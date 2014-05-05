@@ -20,8 +20,9 @@ class RequestsController < ApplicationController
 	end
 
 	def create
-		@request = Request.new params[:request].permit(:description, :category)
+		@request = Request.new params[:request].permit(:description)
 		@request.student = current_student
+		@request.category = Category.find params[:request][:category] if !params[:request][:category].empty?
 
 		if @request.save
 			WebsocketRails[:request_created].trigger 'new', @request
@@ -42,6 +43,7 @@ class RequestsController < ApplicationController
 
 	def update
 	  @request = Request.find(params[:id])
+	  params[:request][:category] = Category.find params[:request][:category].to_i if params[:request][:category]
 	  if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
       flash[:notice] = 'Request was successfully updated.'
       redirect_to students_dashboard_path

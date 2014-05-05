@@ -9,7 +9,7 @@
   </p>
   <p>
     <%= f.label :category %>
-    <%= f.select :category, Category.all.map { |category| [category.name, category.id] }, :include_blank => "-- Select One --" %>
+    <%= f.select :category, Category.all.map { |category| [category.name, category.id] }, {selected: @request.category.id || 0, :include_blank => "Select a category"} %>
   </p>
   <p>
     <%= f.submit "Update" %>

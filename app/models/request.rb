@@ -2,26 +2,30 @@ class StudentCannotSolve < Exception
 end
 
 class Request < ActiveRecord::Base
-	belongs_to :student
+  belongs_to :student
+  belongs_to :category
+	belongs_to :teacher
   validates :category, :description, :presence => true
   scope :todays_solved_requests, -> { where(solved: true, solved_at: Time.now.beginning_of_day..Time.now) }
   
-  def category_name
-    Category.find(self.category.to_i).name
-  end
+  # def category_name
+  #   Category.find(self.category.to_i).name
+  # end
 
   def solve!
   	self.solved = true
     self.solved_at = Time.now
+    self.teacher = current_teacher
   	save
   end
 
   def update_or_solve(attributes, user)
-  	if attributes[:solve]
-  		raise StudentCannotSolve if user.is_a? Student
-  		solve!
-  	else
-  		update_attributes(attributes)
+    if attributes[:solved]
+      raise StudentCannotSolve if user.is_a? Student
+      solve!
+    else
+      update_attributes(attributes)
+      save
   	end
   end
 
