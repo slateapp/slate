@@ -139,11 +139,12 @@ margin-left: 60px;
 
 .alert
 {
-width: 84%;
+width: 50%;
 margin-right: 2%;
+margin-top: 8px;
 padding: 6px;
 display: inline;
-float: right;
+float: left;
 }
 
 .waiting
@@ -329,6 +330,11 @@ background-image: image-url("slate_photo.jpg");
 padding-top: 50px;
 }
 
+.btn-group-vertical
+{
+margin-top: 20px;
+}
+
 .col-md-6
 {
 width: 50%;
@@ -353,7 +359,7 @@ display: inline;
 .col-md-9 a,
 {
 	margin-top: 20px;
-	margin-left: 20px;
+	margin-left: 0px;
 }
 
 .mainLogo
@@ -399,7 +405,7 @@ margin-left: 0px;
 {
 width: 250px;
 height: 238px;
-position: fixed;
+position: absolute;
 color: #ffffff;
 background-color: #FFFFFF;
 padding: 20px;
@@ -430,7 +436,7 @@ z-index: 30;
 width: 30px;
 height: 250px;
 background-color: #e6dfd6;
-position: fixed;
+position: absolute;
 float: left;
 z-index: 50;
 }
@@ -475,3 +481,62 @@ z-index: 0;
 {
 display: relative;
 }
+
+label
+{
+display: none;
+}
+
+textarea
+{
+width: 250px;
+height: 40px;
+float: left;
+color: #aeaeae;
+padding: 10px;
+border-radius: 5px;
+margin-top: 20px;
+}
+
+.styled-select
+{
+float: left;
+margin-top: 20px;
+margin-left: 20px;
+}
+
+.styled-select select
+{
+width: 250px;
+padding: 8px;
+color: #aeaeae;
+font-size: 1em;
+border-radius: 5px;
+height: 40px;
+-webkit-appearance: none;
+background: url(arrow_FINAL.png) no-repeat #ffffff;
+background-size: 15px 20px;
+background-position: 97% 51%;
+}
+
+.styled-submit input
+{
+width: 250px;
+padding: 8px;
+color: #ffffff;
+font-size: 1em;
+border-radius: 5px;
+border: none;
+height: 40px;
+-webkit-appearance: none;
+background-color: #a91d2a;
+float: left;
+margin-top: 20px;
+margin-left: 20px;
+}
+
+.styled-submit input:hover
+{
+background-color: #7C151F;
+}
+

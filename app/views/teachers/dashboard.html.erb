@@ -4,6 +4,7 @@
   <div class="Stats">
     <div><%= "Today's average wait time: #{@stats[:todays_wait_time]} Minutes" %></div>
     <div><%= "Today's average queue length: #{@stats[:todays_queue]} Students" %></div>
+    <br />
   </div>
 
   <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
