@@ -54,7 +54,14 @@ class Request < ActiveRecord::Base
   end
 
   def self.blank_board?
-    true
+    if self.any?
+      false
+    # elsif self.solved.any?
+    #   true      
+    else 
+      true
+    end
+    # false ? self.create : true 
   end
 
   # - No requests = true (ultimately sends an sms but don't test yet)
