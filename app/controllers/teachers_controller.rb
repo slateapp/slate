@@ -25,6 +25,7 @@ class TeachersController < ApplicationController
   end
 
   def students
+    @requests = Request.all
     @approved = Student.where(approved: true)
     @unapproved = Student.where(approved: false)
     params[:approved] ? (@students, @switch = @approved, "Unapprove") : (@students, @switch = @unapproved, "Approve")
