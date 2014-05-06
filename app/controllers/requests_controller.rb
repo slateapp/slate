@@ -3,6 +3,7 @@ class RequestsController < ApplicationController
   before_filter :deny_to_unapproved, only: [:new, :create, :edit, :update, :destroy]
 	
 	def index
+		# cohort = current_student.cohort
 		@requests = Request.where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
 	end
 
@@ -20,16 +21,21 @@ class RequestsController < ApplicationController
 	end
 
 	def create
-		@request = Request.new params[:request].permit(:description)
-		@request.student = current_student
-		@request.category = Category.find params[:request][:category] if !params[:request][:category].empty?
-
-		if @request.save
-			WebsocketRails[:request_created].trigger 'new', @request
-			redirect_to students_dashboard_path, :notice => "Your request has been created."
-		else
-			flash[:error] = "Error: Please fill out all fields"
+		if current_student.requests.where(solved: false).any?
+			flash[:notice] = 'You already have an active request.'
 			redirect_to students_dashboard_path
+		else
+			@request = Request.new params[:request].permit(:description)
+			@request.student = current_student
+			@request.category = Category.find params[:request][:category] if !params[:request][:category].empty?
+
+			if @request.save
+				WebsocketRails[:request_created].trigger 'new', @request
+				redirect_to students_dashboard_path, :notice => "Your request has been created."
+			else
+				flash[:error] = "Error: Please fill out all fields"
+				redirect_to students_dashboard_path
+			end
 		end
 	end 
 

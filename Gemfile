@@ -38,6 +38,7 @@ gem 'thin'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 gem "chartkick"
 gem 'groupdate'
+gem 'twilio-ruby', '~> 3.11'
 
 group :development, :test do
 
@@ -47,7 +48,7 @@ group :development, :test do
 	gem 'poltergeist'
 	gem 'spring'
 	gem 'database_cleaner'
-
+	gem 'sms-spec'
 end
 
 group :production do 

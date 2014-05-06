@@ -12,13 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require websocket_rails/main
+//= require prettify
 //= require_tree .
 //= require bootstrap
 //= require jsapi
 //= require chartkick
-//= require run_prettify
 
 var li = '';
 $(document.body).on('click', '.del' ,function(){
