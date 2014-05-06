@@ -2,6 +2,7 @@ class CategoriesController < ApplicationController
   before_action :authenticate_teacher!, only: [:index, :new, :create, :edit, :update, :destroy]
   
   def index
+    @requests = Request.all
     @categories = Category.all
   end
 
