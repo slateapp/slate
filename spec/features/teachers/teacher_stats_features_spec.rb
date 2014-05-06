@@ -7,12 +7,12 @@ describe "Teacher Stat Features" do
       @now = Time.now.beginning_of_minute
       ruby = create :category
       postgresql = create :postgresql
-      create :request, {category: ruby, solved: true, created_at: @now - (60*5), solved_at: @now - (60*3)}
-      create :request, {category: ruby, solved: true, created_at: @now - (60*4), solved_at: @now - (60*2)}
-      create :request, {category: postgresql, solved: true, created_at: @now - (60*3), solved_at: @now - (60*1)}
-      create :request, {category: postgresql, solved: true, created_at: @now - (60*3), solved_at: @now - (60*1)}
-      create :request, {category: postgresql, solved: false, created_at: @now - (60*2)}
-      create :request, {category: postgresql, solved: false, created_at: @now - (60*1)}
+      create :request, {category: ruby, solved: true, created_at: @now - (60*5), solved_at: @now - (60*3), teacher: Teacher.last}
+      create :request, {category: ruby, solved: true, created_at: @now - (60*4), solved_at: @now - (60*2), teacher: Teacher.last}
+      create :request, {category: postgresql, solved: true, created_at: @now - (60*3), solved_at: @now - (60*1), teacher: Teacher.last}
+      create :request, {category: postgresql, solved: true, created_at: @now - (60*3), solved_at: @now - (60*1), teacher: Teacher.last}
+      create :request, {category: postgresql, solved: false, created_at: @now - (60*2), teacher: Teacher.last}
+      create :request, {category: postgresql, solved: false, created_at: @now - (60*1), teacher: Teacher.last}
     }
     specify "today's average wait time" do
       visit dashboard_teachers_path

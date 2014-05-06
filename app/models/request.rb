@@ -12,6 +12,8 @@ class Request < ActiveRecord::Base
   scope :solved_by, ->(teacher) {where(teacher: teacher)}
   scope :categorised_by, ->(category) {where(category: category)}
   scope :for_cohort, ->(cohort) {where(student:Student.where(cohort: cohort))}
+  scope :solved_requests, -> { where(solved: true) }
+  scope :unsolved_requests, -> { where(solved: false) }
 
   def solve!(teacher)
   	self.solved = true
@@ -42,15 +44,9 @@ class Request < ActiveRecord::Base
   end
 
   def self.todays_average_queue_for(cohort)
-    cohort = cohort ? Cohort.find(cohort) : Cohort.all
     queue_lengths = []
-    minute = Time.now.beginning_of_day
-    while minute < Time.now
-      request_array = todays_requests(minute).for_cohort(cohort).map{ |request| request.category if !request.solved || request.solved_at > minute }.compact
-      queue_lengths << request_array.count unless request_array.empty?
-      minute += 60
-    end
-    return 0 if queue_lengths.count == 0
+    todays_requests(Time.now).group_by_minute(:created_at).count.each{|key,value| queue_lengths << value }
+    queue_lengths.reject!{|queue_length| queue_length == 0}
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
   end
 
@@ -64,5 +60,20 @@ class Request < ActiveRecord::Base
     this_weeks_requests.map{|request|
       [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count] if request.solved
     }.uniq
+  end
+
+  def self.weekly_issues_average_over_day_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
+
+    # queue_lengths = []
+    # hour = Time.now.beginning_of_day
+    # while hour < Time.now
+    #   request
+    #   request_array = todays_requests(hour).for_cohort(cohort).map{ |request| request.category if !request.solved || request.solved_at > hour }.compact
+    #   queue_lengths << request_array.count unless request_array.empty?
+    #   hour += 3600
+    # end
+    [{name: "Average Time to Solve", data: this_weeks_requests.solved_requests.group_by_hour(:solved_at).count},
+    {name: "Average Queue", data: this_weeks_requests.group_by_hour(:created_at).count}]
   end
 end

@@ -11,7 +11,8 @@ class TeachersController < ApplicationController
       todays_queue: Request.todays_average_queue_for(selected_cohort).round,
       weekly_requests: Request.group_by_day(:created_at, last: 7).count,
       pie: Request.weekly_request_categories,
-      leaderboard: Request.leaderboard
+      leaderboard: Request.leaderboard,
+      weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort)
     }
   end
 
