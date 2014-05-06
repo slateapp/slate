@@ -1,12 +1,6 @@
-
 require 'spec_helper'
 
 describe 'Request board' do 
-
-	before do 
-		sign_in_as_student_alex
-		visit students_dashboard_path
-	end
 
 	context 'No requests' do 
 		it 'returns a blank board' do 
@@ -15,17 +9,32 @@ describe 'Request board' do
 	end
 
 	context 'An unsolved request is created' do
+		before do
+			create(:request)
+		end
+		
 		it 'returns a board with an unsolved request' do
-			create_request
-
 			expect(Request.board_empty?).to be_false
 		end
 	end
 
-	context 'An solved request is created' do
+	context 'An unsolved request is created' do
+		before do
+			create(:request, solved: true)
+		end
+		
 		it 'returns a board with an unsolved request' do
-			create_request
+			expect(Request.board_empty?).to be_true
+		end
+	end
 
+	context 'A mixture of solved and unsolved requests' do
+		before do
+			create(:request, category: create(:postgresql))
+			create(:request, solved: true)
+		end
+		
+		it 'returns a board with an unsolved request' do
 			expect(Request.board_empty?).to be_false
 		end
 	end

@@ -53,19 +53,13 @@ class Request < ActiveRecord::Base
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
   end
 
-  def self.blank_board?
-    if self.any?
-      false
-    # elsif self.solved.any?
-    #   true      
-    else 
-      true
-    end
-    # false ? self.create : true 
+  def self.board_empty?
+    where(solved: false).none?
   end
 
-  # - No requests = true (ultimately sends an sms but don't test yet)
-  # - Request (unsolved) = false
+
+  # - No requests = true (ultimately sends an sms but don't test yet) (complete)
+  # - Request (unsolved) = false (complete)
   # - Request (solved) = true
   # - Mix of solved and unsolved = false
 

@@ -113,7 +113,3 @@ def create_request
   select('Postgresql', from: 'Category')
   click_button 'Create Request'
 end
-
-# def sms_time_interval 
-#   request = Request.where(time interval between request.last and request.new >= 5 minutes)
-# end
