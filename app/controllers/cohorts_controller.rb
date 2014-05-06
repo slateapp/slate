@@ -2,6 +2,7 @@ class CohortsController < ApplicationController
   before_action :authenticate_teacher!, only: [:index, :new, :create, :edit, :update, :destroy]
   
   def index
+    @requests = Request.all
     @cohorts = cohorts_in_order
     @cohort_options = cohort_options
   end
