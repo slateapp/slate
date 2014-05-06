@@ -52,4 +52,22 @@ class Request < ActiveRecord::Base
     return 0 if queue_lengths.count == 0
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
   end
+
+  def self.blank_board?
+    true
+  end
+
+  # - No requests = true (ultimately sends an sms but don't test yet)
+  # - Request (unsolved) = false
+  # - Request (solved) = true
+  # - Mix of solved and unsolved = false
+
+  # create callback to send sms when some of these conditions are true
+
+  def self.board_empty_for?(length_of_time)
+    true
+  end
+
+  # - No requests = true
+  # - 
 end

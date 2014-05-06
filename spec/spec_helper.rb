@@ -81,6 +81,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  SmsSpec.driver = :"twilio-ruby"
 end
 
 def sign_in_as_student_alex
@@ -112,4 +114,6 @@ def create_request
   click_button 'Create Request'
 end
 
-SmsSpec.driver = :"twilio-ruby"
+# def sms_time_interval 
+#   request = Request.where(time interval between request.last and request.new >= 5 minutes)
+# end
