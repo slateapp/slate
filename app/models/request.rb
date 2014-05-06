@@ -66,15 +66,6 @@ class Request < ActiveRecord::Base
 
   def self.weekly_issues_average_over_day_for(cohort)
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
-
-    # queue_lengths = []
-    # hour = Time.now.beginning_of_day
-    # while hour < Time.now
-    #   request
-    #   request_array = todays_requests(hour).for_cohort(cohort).map{ |request| request.category if !request.solved || request.solved_at > hour }.compact
-    #   queue_lengths << request_array.count unless request_array.empty?
-    #   hour += 3600
-    # end
     [{name: "Average Time to Solve", data: this_weeks_requests.solved_requests.group_by_hour(:solved_at).count},
     {name: "Average Queue", data: this_weeks_requests.group_by_hour(:created_at).count}]
   end
