@@ -29,6 +29,7 @@ $(document).ready ->
 				newData.position = data.requests.length
 				newRequest = Mustache.render($('#request').html(),newData)
 				$(newRequest).appendTo('.scroll ul')
+				prettyPrint();
 			)
 
 	channel_deleted = dispatcher.subscribe 'request_deleted'
@@ -56,4 +57,5 @@ $(document).ready ->
 						$('.scroll ul li').each (index, request) ->
 							$(request).find('.position').html(index+1)
 				)
+				prettyPrint();
 			)
