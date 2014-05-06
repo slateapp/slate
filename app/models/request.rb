@@ -57,18 +57,16 @@ class Request < ActiveRecord::Base
     where(solved: false).none?
   end
 
-
   # - No requests = true (ultimately sends an sms but don't test yet) (complete)
   # - Request (unsolved) = false (complete)
-  # - Request (solved) = true
-  # - Mix of solved and unsolved = false
+  # - Request (solved) = true (complete)
+  # - Mix of solved and unsolved = false (complete)
 
   # create callback to send sms when some of these conditions are true
 
   def self.board_empty_for?(length_of_time)
-    true
-  end
+    # length_of_time = Request.last(:solved_at) - Request.new(:created_at)
 
-  # - No requests = true
-  # - 
+    length_of_time >= 5
+  end
 end
