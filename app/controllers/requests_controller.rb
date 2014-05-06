@@ -50,7 +50,6 @@ class RequestsController < ApplicationController
 	def update
 	  @request = Request.find(params[:id])
 	  params[:request][:category] = Category.find params[:request][:category].to_i if params[:request][:category]
-	  params[:request][:teacher] = current_teacher
 	  if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
       flash[:notice] = 'Request was successfully updated.'
       redirect_to students_dashboard_path

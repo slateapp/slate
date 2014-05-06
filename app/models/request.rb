@@ -26,7 +26,7 @@ class Request < ActiveRecord::Base
   def update_or_solve(attributes, user)
     if attributes[:solved]
       raise StudentCannotSolve if user.is_a? Student
-      solve!(attributes[:teacher])
+      solve!(user)
     else
       update_attributes(attributes)
       save
