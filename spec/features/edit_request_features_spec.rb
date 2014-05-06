@@ -25,6 +25,8 @@ describe 'editing requests' do
 	context 'signed in as Alex' do
 		
 		before do
+			sarah = create(:sarah)
+			create(:request, student: sarah, category: Category.last)
 			sign_in_as_student_alex
 		end
 
@@ -32,9 +34,12 @@ describe 'editing requests' do
 
 		describe "attempting to edit Sarah's request" do
 			it 'displays error', js: true do
-				sarah = create(:sarah)
-				create(:request, student: sarah, category: Category.last)
-				visit students_dashboard_path
+			 #  puts page.html
+				# visit '/'
+			 #  puts page.html
+
+
+				# visit students_dashboard_path
 
 				expect(page).not_to have_link 'Edit'
 			end

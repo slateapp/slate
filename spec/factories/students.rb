@@ -10,6 +10,7 @@ FactoryGirl.define do
   	name "Sarah C Young"
   	email "sarah@example.com"
     approved true
+    cohort { Cohort.find_by(month: 'February') }
   end
 
   factory :khush, class: Student do

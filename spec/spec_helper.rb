@@ -49,6 +49,7 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+    Capybara.reset_sessions!
   end
 
   # ## Mock Framework
@@ -88,6 +89,7 @@ def sign_in_as_student_alex
   visit '/'
   click_link 'Sign in with GitHub'
   student = Student.last
+  student.cohort = create(:february)
   student.approve
   visit '/'
 end
