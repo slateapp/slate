@@ -10,7 +10,7 @@ class TeachersController < ApplicationController
     @stats = {
       todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
       todays_queue: Request.todays_average_queue_for(selected_cohort).round,
-      weekly_requests: Request.for_cohort(selected_cohort).group_by_day(:created_at, last: 7).count,
+      weekly_requests: Request.for_cohort(selected_cohort || Cohort.all).group_by_day(:created_at, last: 7).count,
       pie: Request.weekly_request_categories_for(selected_cohort),
       leaderboard: Request.leaderboard_for(selected_cohort),
       weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort)
