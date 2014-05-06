@@ -38,7 +38,7 @@ $(document).ready ->
 	channel_created = dispatcher.subscribe 'request_created'
 	channel_created.bind 'new', (request) ->
 		if($('.scroll ul').length)
-			$.get(window.location.origin + '/requests.json', (data) ->
+			$.get(getRequest, (data) ->
 				newData = data.requests[data.requests.length-1]
 				newData.position = data.requests.length
 				newRequest = Mustache.render($('#request').html(),newData)
@@ -63,7 +63,7 @@ $(document).ready ->
 	channel_edited = dispatcher.subscribe 'request_edited'
 	channel_edited.bind 'edit', (request_id) ->
 		if($('.scroll ul').length)
-			$.get(window.location.origin + '/requests.json', (data) ->
+			$.get(getRequest, (data) ->
 				$.each(data.requests, (index, request) ->
 					if(request.request_id == request_id)
 						editedRequest = Mustache.render($('#request').html(),request)
