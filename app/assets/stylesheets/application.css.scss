@@ -109,7 +109,7 @@ margin-left: 20px;
 width: 100%;
 height: 280px;
 padding-top: 20px;
-background-color: #e6dfd6;
+background-color: #355c7a;
 float: left;
 overflow: auto;
 }
@@ -289,13 +289,13 @@ margin-top: 8px;
 margin-right: 5px;
 margin-bottom: 20px;
 color: #ffffff;
-background-color: #007cac;
+background-color: #355c7a;
 }
 
 .btn-edit:hover
 {
 color: #ffffff;
-background-color: #006288;
+background-color: #1A3447;
 }
 
 .container-fluid
@@ -329,6 +329,7 @@ overflow: hidden;
 width: 100%;
 height: 500px;
 background-image: image-url("slate_photo2.jpg");
+background-size: cover;
 padding-top: 40px;
 margin-top: -20px;
 }
@@ -473,7 +474,7 @@ z-index: 30;
 {
 width: 30px;
 height: 250px;
-background-color: #e6dfd6;
+background-color: #355c7a;
 position: absolute;
 float: left;
 z-index: 50;
@@ -577,4 +578,38 @@ margin-left: 20px;
 {
 background-color: #7C151F;
 }
+
+pre .typ
+{
+color: #a6e22d;
+}
+
+pre .pln
+{
+color: #fff;
+}
+
+pre .kwd
+{
+color: #66d9ef;
+font-weight: bold;
+}
+
+pre .str
+{
+color: #e6db74;
+}
+
+pre .tag
+{
+color: #f92772;
+font-weight: bold;
+}
+
+pre .lit
+{
+color: #ae81ff;
+}
+
+
 
