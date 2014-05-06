@@ -17,6 +17,7 @@ class Request < ActiveRecord::Base
     self.solved_at = Time.now
     self.teacher = teacher
   	save
+    WebsocketRails[:request_solved].trigger 'solved', self.id
   end
 
   def update_or_solve(attributes, user)
