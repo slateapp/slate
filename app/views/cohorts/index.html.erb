@@ -6,13 +6,14 @@
     <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"} %>
     <%= submit_tag'Set as default' if Cohort.count > 0 %>
   <% end %>
-
-  <%= select "cohort1", "id", @cohort_options, {selected: (Cohort.where(selected: true).first || 0), :include_blank => "Select a cohort"} %>
-  <%= select "cohort2", "id", @cohort_options, {selected: (Cohort.where(selected: true).second || 0), :include_blank => "Select a cohort"} %>
-  <%= link_to("Update Current Cohorts", "#" , class: 'btn btn-default') %>
+  <%= form_tag selected_cohorts_cohorts_path, method: :patch do %>
+    <%= select "cohort1", "id", @cohort_options, {selected: (@cohort1.try(:id) || 0), :include_blank => "Select a cohort"} %>
+    <%= select "cohort2", "id", @cohort_options, {selected: (@cohort2.try(:id) || 0), :include_blank => "Select a cohort"} %>
+    <%= submit_tag'Update Current Cohorts' if Cohort.count > 0 %>
+  <% end %>
   <div>
-    <div id="cohort1_option"><%= "Cohort 1: #{Cohort.where(selected: true).first || "Not set"}" %></div>
-    <div id="cohort2_option"><%= "Cohort 2: #{Cohort.where(selected: true).first || "Not set"}" %></div>
+    <div id="cohort1_option"><%= "Cohort 1: #{@cohort1.try(:name) || "Not set"}" %></div>
+    <div id="cohort2_option"><%= "Cohort 2: #{@cohort2.try(:name) || "Not set"}" %></div>
   </div>
   <br>
 <%= link_to("Add Cohort", new_cohort_path , class: "btn btn-default") %>

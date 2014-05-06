@@ -23,7 +23,11 @@
 
   resources :categories,  only:[:index, :new, :create, :edit, :update, :destroy]
 
-  resources :cohorts,     only:[:index, :new, :create, :edit, :update, :destroy]
+  resources :cohorts,     only:[:index, :new, :create, :edit, :update, :destroy] do
+    collection do
+      patch 'selected_cohorts'
+    end
+  end
 
   resources :students
   resources :requests do

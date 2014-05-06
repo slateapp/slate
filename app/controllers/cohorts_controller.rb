@@ -6,6 +6,10 @@ class CohortsController < ApplicationController
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @cohorts = cohorts_in_order
     @cohort_options = cohort_options
+    if Cohort.where(selected: true).count == 2
+      @cohort1 = Cohort.where(selected: true).first
+      @cohort2 = Cohort.where(selected: true).second
+    end
   end
 
   def new
@@ -19,6 +23,20 @@ class CohortsController < ApplicationController
 
   def edit
     @cohort = Cohort.find params[:id]
+  end
+
+  def selected_cohorts
+    cohort1 = params[:cohort1][:id]
+    cohort2 = params[:cohort2][:id]
+    if !cohort1.empty? && !cohort2.empty? && cohort1 != cohort2
+      Cohort.where(selected: true).update_all(selected: false)
+      Cohort.where(id: [cohort1, cohort2]).update_all(selected: true)
+      flash[:success] = "You successfully selected the current cohorts"
+      redirect_to cohorts_path
+    else
+      flash[:error] = "You need to select cohorts that are not the same before continuing"
+      redirect_to cohorts_path
+    end
   end
 
   def update
