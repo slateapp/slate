@@ -25,6 +25,7 @@ class StudentsController < ApplicationController
 
 	def cohort
 		@cohorts_list = Cohort.all.sort_by(&:name_to_date).reverse
+    @cohort_options = cohort_options
 	end
 
 	def update
@@ -38,7 +39,7 @@ class StudentsController < ApplicationController
         cohort = Cohort.find params[:cohort][:id]
       end
     end
-    student.cohort = cohort
+    student.cohort = cohort if cohort
     student.name = params[:student][:name] if from_teacher? && params[:student]
     if approval?
       student.approved ? student.unapprove : student.approve
