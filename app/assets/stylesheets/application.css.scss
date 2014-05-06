@@ -123,6 +123,10 @@ height: 280px;
 padding-top: 20px;
 margin-top: -20px;
 background-color: #355c7a;
+background-image: image-url("no_requests.png");
+background-position: 27px;
+background-repeat: no-repeat;
+background-size: 244px;
 float: left;
 overflow: auto;
 }
@@ -526,6 +530,7 @@ margin-top: 6px;
 font-size: 2em;
 margin-top: 100px;
 margin-left: 20px;
+text-align: left;
 z-index: 0;
 }
 

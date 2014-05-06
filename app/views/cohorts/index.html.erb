@@ -13,8 +13,8 @@
   <% @cohorts.each do |cohort| %>
     <tr>
       <td><%= cohort.name %></td>
-      <td><%= link_to("Edit", edit_cohort_path(cohort), class: "btn btn-default") %>
-      <%= link_to("Delete", cohort_path(cohort), {method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-default"}) %></td>
+      <td><%= link_to("Edit", edit_cohort_path(cohort), class: "btn btn-edit") %>
+      <%= link_to("Delete", cohort_path(cohort), {method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger"}) %></td>
     </tr>
   <% end %>
 </table>
