@@ -35,14 +35,14 @@ class Request < ActiveRecord::Base
   end
 
   def self.todays_average_wait_time_for(cohort)
-    cohort = Cohort.find(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
     return 0 if todays_solved_requests.for_cohort(cohort).count == 0
     total_wait_time = self.todays_solved_requests.for_cohort(cohort).inject(0){|sum, request| sum + request.time_to_solve}
     (total_wait_time/self.todays_solved_requests.for_cohort(cohort).count)/60
   end
 
   def self.todays_average_queue_for(cohort)
-    cohort = Cohort.find(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
     queue_lengths = []
     minute = Time.now.beginning_of_day
     while minute < Time.now
