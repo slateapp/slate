@@ -20,17 +20,17 @@ teacher.save!
   "CSS",
   "HTML",
   "Rails",
-  "Postgresql"].each{|category|
+  "Postgresql",
+  "Rspec"].each{|category|
   Category.create(name: category)
 }
 
-[["January", "2014"],
+[ 
+  ["January", "2014"],
   ["February", "2014"],
   ["March", "2014"],
-  ["April", "2014"],
-  ["May", "2014"],
-  ["September", "2013"],
-  ["October", "2013"],
-  ["November", "2013"]].each{|cohort|
+  ["May", "2014"]
+
+   ].each{|cohort|
   Cohort.create(month: cohort[0], year: cohort[1])
 }
