@@ -17,7 +17,7 @@ describe 'requests page' do
 		  expect(page).to have_content 'Error: Please fill out all fields'
 		end
 
-		xit "throws an error if the user doesn't enter a description" do
+		it "throws an error if the user doesn't enter a description" do
 			sign_in_as_student_alex
 			create :postgresql
 			visit '/students/dashboard'

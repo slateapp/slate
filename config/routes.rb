@@ -17,6 +17,7 @@
       get 'dashboard'
       get 'students'
       get 'edit_student'
+      get 'statistics'
     end
   end
 

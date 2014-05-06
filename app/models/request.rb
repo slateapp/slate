@@ -7,10 +7,13 @@ class Request < ActiveRecord::Base
 	belongs_to :teacher
   validates :category, :description, :presence => true
   scope :todays_solved_requests, -> { where(solved: true, solved_at: Time.now.beginning_of_day..Time.now) }
-  
-  # def category_name
-  #   Category.find(self.category.to_i).name
-  # end
+  scope :todays_requests, ->(minute) { where(created_at: Time.now.beginning_of_day..minute) }
+  scope :this_weeks_requests, -> {where(created_at: (Date.today.beginning_of_week)..Time.now)}
+  scope :solved_by, ->(teacher) {where(teacher: teacher)}
+  scope :categorised_by, ->(category) {where(category: category)}
+  scope :for_cohort, ->(cohort) {where(student:Student.where(cohort: cohort))}
+  scope :solved_requests, -> { where(solved: true) }
+  scope :unsolved_requests, -> { where(solved: false) }
 
   def solve!(teacher)
   	self.solved = true
@@ -33,23 +36,39 @@ class Request < ActiveRecord::Base
     solved_at - created_at
   end
 
-  def self.todays_average_wait_time
-    return 0 if todays_solved_requests.count == 0
-    total_wait_time = self.todays_solved_requests.inject(0){|sum, request| sum + request.time_to_solve}
-    (total_wait_time/self.todays_solved_requests.count)/60
+  def self.todays_average_wait_time_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
+    return 0 if todays_solved_requests.for_cohort(cohort).count == 0
+    total_wait_time = self.todays_solved_requests.for_cohort(cohort).inject(0){|sum, request| sum + request.time_to_solve}
+    (total_wait_time/self.todays_solved_requests.for_cohort(cohort).count)/60
   end
 
-  def self.todays_average_queue
+  def self.todays_average_queue_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
     queue_lengths = []
-    minute = Time.now.beginning_of_day
-    while minute < Time.now
-      requests = self.where(created_at: Time.now.beginning_of_day..minute)
-      request_array = []
-      requests.each{ |request| request_array << request.category if request.category && (!request.solved || request.solved_at > minute) }
-      queue_lengths << request_array.count unless request_array.empty?
-      minute += 60
-    end
-    return 0 if queue_lengths.count == 0
+    return 0 if todays_solved_requests.for_cohort(cohort).count == 0
+    todays_requests(Time.now).for_cohort(cohort).group_by_minute(:created_at).count.each{|key,value| queue_lengths << value }
+    queue_lengths.reject!{|queue_length| queue_length == 0}
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
+  end
+
+  def self.weekly_request_categories_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
+    this_weeks_requests.for_cohort(cohort).map{|request|
+      [request.category.name, Request.this_weeks_requests.categorised_by(request.category).count]
+    }.uniq
+  end
+
+  def self.leaderboard_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
+    this_weeks_requests.for_cohort(cohort).map{|request|
+      [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count] if request.solved
+    }.uniq
+  end
+
+  def self.weekly_issues_average_over_day_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
+    [{name: "Average Time to Solve", data: this_weeks_requests.for_cohort(cohort).solved_requests.group_by_hour(:solved_at).count},
+    {name: "Average Queue", data: this_weeks_requests.for_cohort(cohort).group_by_hour(:created_at).count}]
   end
 end
