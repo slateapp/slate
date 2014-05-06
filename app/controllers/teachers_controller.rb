@@ -2,7 +2,7 @@ class TeachersController < ApplicationController
   before_action :authenticate_teacher!, only: [:dashboard, :update, :students, :edit_student]
 
   def dashboard
-    @teacher, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
+    @user, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @cohort = Cohort.find(selected_cohort) if selected_cohort
     @students = Student.where(cohort: selected_cohort, approved: true)
@@ -41,7 +41,7 @@ class TeachersController < ApplicationController
   end
 
   def students
-    @teacher = current_teacher
+    @user = current_teacher
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @approved = Student.where(approved: true)
     @unapproved = Student.where(approved: false)

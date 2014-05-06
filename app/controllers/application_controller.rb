@@ -43,6 +43,6 @@ class ApplicationController < ActionController::Base
   end
 
   def selected_cohort
-    params[:cohort] || @teacher.cohort
+    params[:cohort] || @user.cohort
   end
 end

@@ -1,6 +1,6 @@
 <%= render 'requests/list' %>
 <%= render 'partials/teacher_menu' %>
-  <h4>Welcome <%= @teacher.name %></h4>
+  <h4>Welcome <%= @user.name %></h4>
   <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
   <div class="Stats">
     <div class="text-center">
