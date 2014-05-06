@@ -3,8 +3,9 @@ class RequestsController < ApplicationController
   before_filter :deny_to_unapproved, only: [:new, :create, :edit, :update, :destroy]
 	
 	def index
-		# cohort = request.student.cohort
 		@requests = Request.for_cohort((params[:cohort] || current_user.try(:cohort)) || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
+		@requests_cohort_one = Request.for_cohort((params[:cohort] || current_user.try(:cohort)) || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
+		@requests_cohort_two = Request.for_cohort((params[:cohort] || current_user.try(:cohort)) || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
 	end
 
 	def show
