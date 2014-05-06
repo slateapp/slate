@@ -98,7 +98,8 @@ float: right;
 float: left;
 }
 
-.indent
+.indent,
+.indent_request
 {
 margin-left: 20px;
 }
@@ -519,7 +520,7 @@ z-index: 0;
 display: relative;
 }
 
-label
+.indent_request label
 {
 display: none;
 }
