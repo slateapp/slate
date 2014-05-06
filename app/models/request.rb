@@ -68,7 +68,7 @@ class Request < ActiveRecord::Base
 
   def self.weekly_issues_average_over_day_for(cohort)
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
-    [{name: "Average Time to Solve", data: this_weeks_requests.solved_requests.group_by_hour(:solved_at).count},
-    {name: "Average Queue", data: this_weeks_requests.group_by_hour(:created_at).count}]
+    [{name: "Average Time to Solve", data: this_weeks_requests.for_cohort(cohort).solved_requests.group_by_hour(:solved_at).count},
+    {name: "Average Queue", data: this_weeks_requests.for_cohort(cohort).group_by_hour(:created_at).count}]
   end
 end
