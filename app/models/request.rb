@@ -44,8 +44,10 @@ class Request < ActiveRecord::Base
   end
 
   def self.todays_average_queue_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
     queue_lengths = []
-    todays_requests(Time.now).group_by_minute(:created_at).count.each{|key,value| queue_lengths << value }
+    return 0 if todays_solved_requests.for_cohort(cohort).count == 0
+    todays_requests(Time.now).for_cohort(cohort).group_by_minute(:created_at).count.each{|key,value| queue_lengths << value }
     queue_lengths.reject!{|queue_length| queue_length == 0}
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
   end
