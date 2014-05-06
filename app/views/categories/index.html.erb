@@ -3,12 +3,12 @@
 
 <%= link_to("Add Category", new_category_path , class: "btn btn-default") %>
 <table class="table table-hover">
-  <th>Name</th><th>Actions</th>
+  <th class="table_title">Name</th><th class="table_title">Actions</th>
   <% @categories.each do |category| %>
     <tr>
-      <td><%= category.name %></td>
-      <td><%= link_to("Edit", edit_category_path(category), class: "btn btn-default") %>
-      <%= link_to("Delete", category_path(category), {data: {confirm: "Are you sure?"}, method: :delete, class: "btn btn-default"}) %></td>
+      <td class="vert_fix"><%= category.name %></td>
+      <td><%= link_to("Edit", edit_category_path(category), class: "btn btn-edit") %>
+      <%= link_to("Delete", category_path(category), {data: {confirm: "Are you sure?"}, method: :delete, class: "btn btn-danger"}) %></td>
     </tr>
   <% end %>
 </table>
