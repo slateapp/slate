@@ -7,7 +7,21 @@ $(document).ready ->
 		event.preventDefault()
 		$.post url
 
-	$.get(window.location.origin + '/requests.json', (data) ->
+	getParams = ->
+		query = window.location.search.substring(1)
+		raw_vars = query.split("&")
+		params = {}
+		for v in raw_vars
+			[key, val] = v.split("=")
+			params[key] = decodeURIComponent(val)
+		params
+
+	if getParams().cohort
+		getRequest = window.location.origin + '/requests.json?' + 'cohort=' + getParams().cohort
+	else
+		getRequest = window.location.origin + '/requests.json'
+
+	$.get(getRequest, (data) ->
 		$.each(data.requests, (index, request) ->
 			request.position = index + 1
 			newRequest = Mustache.render($('#request').html(),request)

@@ -6,8 +6,9 @@
   </div>
   <div class="scroll">
     <ul>
-      <% if @requests.any? %><% else %>
-      <h1 class="NoRequests">No requests</h1><% end %>
+      <% if @requests.empty? %>
+        <h1 class="NoRequests">No requests</h1>
+      <% end %>
     </ul>
   </div>
 </div>

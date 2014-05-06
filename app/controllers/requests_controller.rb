@@ -4,7 +4,7 @@ class RequestsController < ApplicationController
 	
 	def index
 		# cohort = request.student.cohort
-		@requests = Request.where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
+		@requests = Request.for_cohort((params[:cohort] || current_user.cohort) || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
 	end
 
 	def show
