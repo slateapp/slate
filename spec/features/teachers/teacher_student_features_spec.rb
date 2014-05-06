@@ -23,7 +23,7 @@ describe "Teacher Student Features" do
     end
 
     it "can delete a student" do
-      click_link "Delete"
+      page.find(".table").click_link "Delete"
       expect(page).to have_content "Khushkaran Singh Bajwa has been deleted!"
     end
 
@@ -31,7 +31,8 @@ describe "Teacher Student Features" do
       before do
         click_link "Approve"
         click_link "Approved"
-        click_link "Edit"
+        page.find(".table").click_link "Edit"
+        # click_link "Edit"
       end
 
       specify "name" do

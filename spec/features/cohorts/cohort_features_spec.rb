@@ -55,7 +55,7 @@ describe "Cohort Features" do
     specify "is successful if signed in as a teacher" do
       login_as create :teacher
       visit cohorts_path
-      click_link "Delete"
+      page.find(".table").click_link "Delete"
       expect(page).not_to have_content "January 2014"
     end
 

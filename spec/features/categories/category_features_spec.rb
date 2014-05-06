@@ -51,7 +51,7 @@ describe "Category Features" do
     it "is successful if a teacher is signed in" do
       login_as create :teacher
       visit categories_path
-      click_link "Delete"
+      page.find(".table").click_link "Delete"
       expect(page).not_to have_content "Ruby"
       expect(page).to have_content "Category deleted successfully"
     end
