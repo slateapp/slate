@@ -3,6 +3,7 @@ class RequestsController < ApplicationController
   before_filter :deny_to_unapproved, only: [:new, :create, :edit, :update, :destroy]
 	
 	def index
+		sleep 2
 		# cohort = current_student.cohort
 		@requests = Request.where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
 	end

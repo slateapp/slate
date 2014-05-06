@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require websocket_rails/main
+//= require prettify
 //= require_tree .
 //= require bootstrap
 

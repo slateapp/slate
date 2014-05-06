@@ -16,6 +16,7 @@ $(document).ready ->
 				$(this).attr('src', $(this).attr('data-src'))
 				$(this).attr('data-src', '')
 		)
+		prettyPrint();
 	)
 
 	dispatcher = new WebSocketRails(window.location.host + '/websocket');
