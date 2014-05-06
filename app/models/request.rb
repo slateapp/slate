@@ -8,6 +8,9 @@ class Request < ActiveRecord::Base
   validates :category, :description, :presence => true
   scope :todays_solved_requests, -> { where(solved: true, solved_at: Time.now.beginning_of_day..Time.now) }
   scope :todays_requests, ->(minute) { where(created_at: Time.now.beginning_of_day..minute) }
+  scope :this_weeks_requests, -> {where(created_at: (Date.today.beginning_of_week)..Time.now)}
+  scope :solved_by, ->(teacher) {where(teacher: teacher)}
+  scope :categorised_by, ->(category) {where(category: category)}
 
   def solve!(teacher)
   	self.solved = true

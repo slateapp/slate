@@ -9,14 +9,13 @@ class TeachersController < ApplicationController
     @stats = {
       todays_wait_time: Request.todays_average_wait_time.round,
       todays_queue: Request.todays_average_queue.round,
-      # pie: Request.where(created_at: (Time.now-604800)..Time.now).group(:category).count,
       weekly_requests: Request.group_by_day(:created_at, last: 7).count,
-      pie: Request.where(created_at: (Date.today.beginning_of_week)..Time.now).map{|request|
-        [request.category.name, Request.where(created_at: (Date.today.beginning_of_week)..Time.now, category: request.category).count]
+      pie: Request.this_weeks_requests.map{|request|
+        [request.category.name, Request.this_weeks_requests.categorised_by(request.category).count]
       }.uniq,
-      leaderboard: Request.where(created_at: (Date.today.beginning_of_week)..Time.now).map{|request|
+      leaderboard: Request.this_weeks_requests.map{|request|
         if request.solved
-          [request.teacher.name, Request.where(created_at: (Date.today.beginning_of_week)..Time.now, teacher: request.teacher).count]
+          [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count]
         end
       }.uniq
     }
