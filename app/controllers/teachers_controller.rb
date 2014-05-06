@@ -41,7 +41,8 @@ class TeachersController < ApplicationController
   end
 
   def students
-    @requests = Request.all
+    @teacher = current_teacher
+    @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @approved = Student.where(approved: true)
     @unapproved = Student.where(approved: false)
     params[:approved] ? (@students, @switch = @approved, "Unapprove") : (@students, @switch = @unapproved, "Approve")
@@ -50,10 +51,5 @@ class TeachersController < ApplicationController
   def edit_student
     @student = Student.find params[:id]
     @cohort_options = cohort_options
-  end
-
-  private
-  def selected_cohort
-    params[:cohort] || @teacher.cohort
   end
 end

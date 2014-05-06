@@ -41,4 +41,8 @@ class ApplicationController < ActionController::Base
   def cohort_options
     cohorts_in_order.map { |cohort| [cohort.name, cohort.id] }  
   end
+
+  def selected_cohort
+    params[:cohort] || @teacher.cohort
+  end
 end

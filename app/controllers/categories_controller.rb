@@ -2,7 +2,8 @@ class CategoriesController < ApplicationController
   before_action :authenticate_teacher!, only: [:index, :new, :create, :edit, :update, :destroy]
   
   def index
-    @requests = Request.all
+    @teacher = current_teacher
+    @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @categories = Category.all
   end
 
