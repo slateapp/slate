@@ -52,14 +52,16 @@ class Request < ActiveRecord::Base
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
   end
 
-  def self.weekly_request_categories
-    this_weeks_requests.map{|request|
+  def self.weekly_request_categories_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
+    this_weeks_requests.for_cohort(cohort).map{|request|
       [request.category.name, Request.this_weeks_requests.categorised_by(request.category).count]
     }.uniq
   end
 
-  def self.leaderboard
-    this_weeks_requests.map{|request|
+  def self.leaderboard_for(cohort)
+    cohort = cohort ? Cohort.find(cohort) : Cohort.all
+    this_weeks_requests.for_cohort(cohort).map{|request|
       [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count] if request.solved
     }.uniq
   end
