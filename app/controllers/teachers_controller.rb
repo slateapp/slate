@@ -11,11 +11,7 @@ class TeachersController < ApplicationController
       todays_queue: Request.todays_average_queue.round,
       weekly_requests: Request.group_by_day(:created_at, last: 7).count,
       pie: Request.weekly_request_categories,
-      leaderboard: Request.this_weeks_requests.map{|request|
-        if request.solved
-          [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count]
-        end
-      }.uniq
+      leaderboard: Request.leaderboard
     }
   end
 

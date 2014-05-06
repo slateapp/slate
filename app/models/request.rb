@@ -56,4 +56,10 @@ class Request < ActiveRecord::Base
       [request.category.name, Request.this_weeks_requests.categorised_by(request.category).count]
     }.uniq
   end
+
+  def self.leaderboard
+    this_weeks_requests.map{|request|
+      [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count] if request.solved
+    }.uniq
+  end
 end
