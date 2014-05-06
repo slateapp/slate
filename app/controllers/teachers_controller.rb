@@ -13,6 +13,11 @@ class TeachersController < ApplicationController
       weekly_requests: Request.group_by_day(:created_at, last: 7).count,
       pie: Request.where(created_at: (Date.today.beginning_of_week)..Time.now).map{|request|
         [request.category.name, Request.where(created_at: (Date.today.beginning_of_week)..Time.now, category: request.category).count]
+      }.uniq,
+      leaderboard: Request.where(created_at: (Date.today.beginning_of_week)..Time.now).map{|request|
+        if request.solved
+          [request.teacher.name, Request.where(created_at: (Date.today.beginning_of_week)..Time.now, teacher: request.teacher).count]
+        end
       }.uniq
     }
   end
