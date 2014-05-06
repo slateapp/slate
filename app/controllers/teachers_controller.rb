@@ -10,9 +10,7 @@ class TeachersController < ApplicationController
       todays_wait_time: Request.todays_average_wait_time.round,
       todays_queue: Request.todays_average_queue.round,
       weekly_requests: Request.group_by_day(:created_at, last: 7).count,
-      pie: Request.this_weeks_requests.map{|request|
-        [request.category.name, Request.this_weeks_requests.categorised_by(request.category).count]
-      }.uniq,
+      pie: Request.weekly_request_categories,
       leaderboard: Request.this_weeks_requests.map{|request|
         if request.solved
           [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count]

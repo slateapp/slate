@@ -50,4 +50,10 @@ class Request < ActiveRecord::Base
     return 0 if queue_lengths.count == 0
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
   end
+
+  def self.weekly_request_categories
+    this_weeks_requests.map{|request|
+      [request.category.name, Request.this_weeks_requests.categorised_by(request.category).count]
+    }.uniq
+  end
 end
