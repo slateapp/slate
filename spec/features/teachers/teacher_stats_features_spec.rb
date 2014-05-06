@@ -16,12 +16,12 @@ describe "Teacher Stat Features" do
     }
     specify "today's average wait time" do
       visit dashboard_teachers_path
-      expect(page).to have_content "Today's average wait time: 2 Minutes"
+      expect(page).to have_content "Today's average wait time 2 Minutes"
     end
 
     specify "today's average queue length" do
       visit dashboard_teachers_path
-      expect(page).to have_content "Today's average queue length: 2 Students"
+      expect(page).to have_content "Today's average queue length 2 Students"
     end
   end
 end
