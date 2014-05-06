@@ -20,12 +20,13 @@ class Request < ActiveRecord::Base
     self.solved_at = Time.now
     self.teacher = teacher
   	save
+    WebsocketRails[:request_solved].trigger 'solved', self.id
   end
 
   def update_or_solve(attributes, user)
     if attributes[:solved]
       raise StudentCannotSolve if user.is_a? Student
-      solve!(attributes[:teacher])
+      solve!(user)
     else
       update_attributes(attributes)
       save
