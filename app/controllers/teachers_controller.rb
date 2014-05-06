@@ -5,10 +5,26 @@ class TeachersController < ApplicationController
     @requests = Request.all
     @teacher, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
     @cohort = Cohort.find(selected_cohort) if selected_cohort
-    @students = Student.where(cohort: selected_cohort, approved: true)    
+    @students = Student.where(cohort: selected_cohort, approved: true)
+    # raise "#{Request.todays_average_wait_time_for(selected_cohort)}"
     @stats = {
-      todays_wait_time: Request.todays_average_wait_time.round,
-      todays_queue: Request.todays_average_queue.round
+      todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
+      todays_queue: Request.todays_average_queue_for(selected_cohort).round,
+      weekly_requests: Request.for_cohort(selected_cohort || Cohort.all).group_by_day(:created_at, last: 7).count,
+      pie: Request.weekly_request_categories_for(selected_cohort),
+      leaderboard: Request.leaderboard_for(selected_cohort),
+      weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort)
+    }
+  end
+
+  def statistics
+    @stats = {
+      todays_wait_time: Request.todays_average_wait_time_for(nil).round,
+      todays_queue: Request.todays_average_queue_for(nil).round,
+      weekly_requests: Request.for_cohort(Cohort.all).group_by_day(:created_at, last: 7).count,
+      pie: Request.weekly_request_categories_for(nil),
+      leaderboard: Request.leaderboard_for(nil),
+      weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(nil)
     }
   end
 

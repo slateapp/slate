@@ -1,13 +1,43 @@
 <%= render 'requests/list' %>
 <%= render 'partials/teacher_menu' %>
   <h4>Welcome <%= @teacher.name %></h4>
+  <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
   <div class="Stats">
-    <div><%= "Today's average wait time: #{@stats[:todays_wait_time]} Minutes" %></div>
-    <div><%= "Today's average queue length: #{@stats[:todays_queue]} Students" %></div>
-    <br />
+    <div class="text-center">
+      <div class="col-md-5">
+        <h3>Today's average wait time</h3>
+        <h2><%= pluralize(@stats[:todays_wait_time], 'Minute') %></h2>
+      </div>
+      <div class="col-md-5">
+        <h3>Today's average queue length</h3>
+        <h2><%= pluralize(@stats[:todays_queue], 'Student') %></h2>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="col-md-5">
+        <h3>Issues over last 7 days</h3>
+        <%= pie_chart @stats[:pie], library: {backgroundColor: "#EDF0F1"} %>
+      </div>
+      <div class="col-md-5">
+        <h3>Number of Issues over last 7 days</h3>
+        <%= line_chart @stats[:weekly_requests], library: {backgroundColor: "#EDF0F1"} %>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="col-md-5">
+        <h3>Number of requests solved</h3>
+        <%= bar_chart @stats[:leaderboard], library: {backgroundColor: "#EDF0F1"} %>
+      </div>
+      <div class="col-md-5">
+        <h3>Weekly Average</h3>
+        <%= line_chart @stats[:weekly_issues_average_over_day], library: {backgroundColor: "#EDF0F1"} %>
+      </div>
+    </div>
+
   </div>
 
-  <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
 
   <% if !@cohort %>
     <h2>Please set a default cohort</h2>
@@ -21,7 +51,7 @@
       <% @students.each do |student| %>
         <tr>
           <td><%= student.name %></td>
-          <td>0</td>
+          <td><%= student.requests.count %></td>
         </tr>
       <% end %>
     </table>
