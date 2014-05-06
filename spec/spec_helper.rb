@@ -111,3 +111,5 @@ def create_request
   select('Postgresql', from: 'Category')
   click_button 'Create Request'
 end
+
+SmsSpec.driver = :"twilio-ruby"
