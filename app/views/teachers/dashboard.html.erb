@@ -3,7 +3,6 @@
   <h4>Welcome <%= @teacher.name %></h4>
   <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
   <div class="Stats">
-
     <div class="text-center">
       <div class="col-md-5">
         <h3>Today's average wait time</h3>
@@ -25,7 +24,6 @@
         <%= line_chart @stats[:weekly_requests], library: {backgroundColor: "#EDF0F1"} %>
       </div>
     </div>
-
   </div>
 
 

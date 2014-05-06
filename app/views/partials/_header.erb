@@ -5,22 +5,20 @@
       <a class="navbar-brand" href="/">
         <%= image_tag "sl83.png" %>
       </a>
-      <a class="navbar-brand" href="/requests">Waiting List</a>
     </div>
-      <ul class="nav navbar-nav navbar-right">
-        <% if teacher_signed_in? %>
-          <li><%= link_to("Signed in as #{current_teacher.email}", dashboard_teachers_path) %></li>
-          <li><%= link_to("Sign Out", destroy_teacher_session_path, method: :delete) %></li>
-        <% end %>
-        <% if current_student %>
-          <li><%= image_tag current_student.gravatar_url %></li>
-          <li><%= link_to("Signed in as #{current_student.name}", students_dashboard_path) %></li>
-          <li><%= link_to("Sign Out", students_logout_path, method: :delete) %></li>
-        <% end %>
-      </ul>
+    <% flash.each do |key, value| %>
+    <div class="alert <%= flash_class(key) %>"><%= value %></div>
+    <% end %>
+    <ul class="nav navbar-nav navbar-right">
+      <% if teacher_signed_in? %>
+      <li><%= link_to("Signed in as #{current_teacher.email}", dashboard_teachers_path) %></li>
+      <li><%= link_to("Sign Out", destroy_teacher_session_path, method: :delete) %></li>
+      <% end %>
+      <% if current_student %>
+      <li><%= image_tag current_student.gravatar_url %></li>
+      <li><%= link_to("Signed in as #{current_student.name}", students_dashboard_path) %></li>
+      <li><%= link_to("Sign Out", students_logout_path, method: :delete) %></li>
+      <% end %>
+    </ul>
   </div><!-- /.container-fluid -->
 </nav>
-
-<% flash.each do |key, value| %>
-  <div class="alert <%= flash_class(key) %>"><%= value %></div>
-<% end %>
