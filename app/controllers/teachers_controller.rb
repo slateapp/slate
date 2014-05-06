@@ -7,8 +7,8 @@ class TeachersController < ApplicationController
     @cohort = Cohort.find(selected_cohort) if selected_cohort
     @students = Student.where(cohort: selected_cohort, approved: true)    
     @stats = {
-      todays_wait_time: Request.todays_average_wait_time.round,
-      todays_queue: Request.todays_average_queue.round,
+      todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
+      todays_queue: Request.todays_average_queue_for(selected_cohort).round,
       weekly_requests: Request.group_by_day(:created_at, last: 7).count,
       pie: Request.weekly_request_categories,
       leaderboard: Request.leaderboard

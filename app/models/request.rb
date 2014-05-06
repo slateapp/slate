@@ -11,6 +11,7 @@ class Request < ActiveRecord::Base
   scope :this_weeks_requests, -> {where(created_at: (Date.today.beginning_of_week)..Time.now)}
   scope :solved_by, ->(teacher) {where(teacher: teacher)}
   scope :categorised_by, ->(category) {where(category: category)}
+  scope :for_cohort, ->(cohort) {where(student:Student.where(cohort: cohort))}
 
   def solve!(teacher)
   	self.solved = true
@@ -33,17 +34,19 @@ class Request < ActiveRecord::Base
     solved_at - created_at
   end
 
-  def self.todays_average_wait_time
-    return 0 if todays_solved_requests.count == 0
-    total_wait_time = self.todays_solved_requests.inject(0){|sum, request| sum + request.time_to_solve}
-    (total_wait_time/self.todays_solved_requests.count)/60
+  def self.todays_average_wait_time_for(cohort)
+    cohort = Cohort.find(cohort)
+    return 0 if todays_solved_requests.for_cohort(cohort).count == 0
+    total_wait_time = self.todays_solved_requests.for_cohort(cohort).inject(0){|sum, request| sum + request.time_to_solve}
+    (total_wait_time/self.todays_solved_requests.for_cohort(cohort).count)/60
   end
 
-  def self.todays_average_queue
+  def self.todays_average_queue_for(cohort)
+    cohort = Cohort.find(cohort)
     queue_lengths = []
     minute = Time.now.beginning_of_day
     while minute < Time.now
-      request_array = todays_requests(minute).map{ |request| request.category if !request.solved || request.solved_at > minute }.compact
+      request_array = todays_requests(minute).for_cohort(cohort).map{ |request| request.category if !request.solved || request.solved_at > minute }.compact
       queue_lengths << request_array.count unless request_array.empty?
       minute += 60
     end
