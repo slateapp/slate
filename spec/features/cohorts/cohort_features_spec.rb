@@ -58,6 +58,16 @@ describe "Cohort Features" do
       page.find(".table").click_link "Delete"
       expect(page).not_to have_content "January 2014"
     end
+  end
 
+  specify "can set current cohorts" do
+    create :march
+    create :april
+    login_as create :teacher
+    visit cohorts_path
+    select("March 2014", from: 'cohort1_id')
+    select("April 2014", from: 'cohort2_id')
+    expect(page).to have_css '#cohort1_option', text: "March 2014"
+    expect(page).to have_css '#cohort2_option', text: "April 2014"
   end
 end
