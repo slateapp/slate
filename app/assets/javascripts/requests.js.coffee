@@ -6,35 +6,26 @@ $(document).ready ->
 	$('.create_request').on 'click', (event) ->
 		event.preventDefault()
 		$.post url
+	getStudentsRequests = (url,list_target) ->
+		$.get(url, (data) ->
+			$.each(data.requests, (index, request) ->
+				request.position = index + 1
+				newRequest = Mustache.render($('#request').html(),request)
+				$(newRequest).appendTo(list_target)
+				$('.waitingList img[data-src]').each ->
+					$(this).attr('src', $(this).attr('data-src'))
+					$(this).attr('data-src', '')
+			)
+			prettyPrint();
+		)
+
+	subscribeToWebSockets = ->
+
 
 	if window.location.pathname == "/requests/display"
 		$.get(window.location.origin + '/cohorts/current_cohorts.json', (data) ->
-
-			$.get(window.location.origin + '/requests.json?cohort=' + data.cohorts[0].cohort_id, (cohort1_data) ->
-				$.each(cohort1_data.requests, (index, request) ->
-					request.position = index + 1
-					newRequest = Mustache.render($('#request').html(),request)
-					console.log(".#{data.cohorts[0].cohort_name} .scroll ul")
-					$(newRequest).appendTo(".scroll.#{data.cohorts[0].cohort_name} ul")
-					$('.waitingList img[data-src]').each ->
-						$(this).attr('src', $(this).attr('data-src'))
-						$(this).attr('data-src', '')
-				)
-				prettyPrint();
-			)
-
-			$.get(window.location.origin + '/requests.json?cohort=' + data.cohorts[1].cohort_id, (cohort2_data) ->
-				$.each(cohort2_data.requests, (index, request) ->
-					request.position = index + 1
-					newRequest = Mustache.render($('#request').html(),request)
-					console.log(".#{data.cohorts[1].cohort_name} .scroll ul")
-					$(newRequest).appendTo(".scroll.#{data.cohorts[1].cohort_name} ul")
-					$('.waitingList img[data-src]').each ->
-						$(this).attr('src', $(this).attr('data-src'))
-						$(this).attr('data-src', '')
-				)
-				prettyPrint();
-			)
+			getStudentsRequests(window.location.origin + '/requests.json?cohort=' + data.cohorts[0].cohort_id, ".scroll.#{data.cohorts[0].cohort_name} ul")
+			getStudentsRequests(window.location.origin + '/requests.json?cohort=' + data.cohorts[1].cohort_id, ".scroll.#{data.cohorts[1].cohort_name} ul")
 		)
 	else
 
@@ -52,17 +43,7 @@ $(document).ready ->
 		else
 			getRequest = window.location.origin + '/requests.json'
 
-		$.get(getRequest, (data) ->
-			$.each(data.requests, (index, request) ->
-				request.position = index + 1
-				newRequest = Mustache.render($('#request').html(),request)
-				$(newRequest).appendTo('.scroll ul')
-				$('.waitingList img[data-src]').each ->
-					$(this).attr('src', $(this).attr('data-src'))
-					$(this).attr('data-src', '')
-			)
-			prettyPrint();
-		)
+		getStudentsRequests(getRequest, ".scroll ul")
 
 		dispatcher = new WebSocketRails(window.location.host + '/websocket');
 			
