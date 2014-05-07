@@ -2,15 +2,24 @@
 <%= render 'partials/teacher_menu' %>
 <h4>Welcome <%= @user.name %></h4>
 <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
+<% if !@cohort %>
+<h2>Please set a default cohort</h2>
+<% else %>
+<h2><%= @cohort.name %></h2>
+<% end %>
 <div class="Stats">
   <div class="text-center">
     <div class="col-md-5">
       <h3>Today's average wait time</h3>
-      <h2><%= pluralize(@stats[:todays_wait_time], 'Minute') %></h2>
+      <div class="grey_box">
+        <h2 class="vert_align"><%= pluralize(@stats[:todays_wait_time], 'Minute') %></h2>
+      </div>
     </div>
     <div class="col-md-5">
       <h3>Today's average queue length</h3>
-      <h2><%= pluralize(@stats[:todays_queue], 'Student') %></h2>
+      <div class="grey_box">
+        <h2 class="vert_align"><%= pluralize(@stats[:todays_queue], 'Student') %></h2>
+      </div>
     </div>
   </div>
 
@@ -36,17 +45,11 @@
     </div>
   </div>
 </div>
-
-<hr />
+</div>
 
 <div class="cohortDashboard">
-  <% if !@cohort %>
-  <h2>Please set a default cohort</h2>
-  <% else %>
-  <h2><%= @cohort.name %></h2>
-  <% end %>
-
   <% if @students.count > 0 %>
+  <br />
   <table class="table table-hover">
     <th>Student Name</th><th>Number of Requests</th>
     <% @students.each do |student| %>
