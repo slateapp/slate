@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'requests page' do
-
 	describe 'adding requests' do
 		it "throws an error if the user doesn't pick a category" do
 			sign_in_as_student_alex
