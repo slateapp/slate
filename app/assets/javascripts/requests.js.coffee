@@ -1,6 +1,11 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+resetTitle = ->
+	
+
+$(window).focus ->
+	document.title = "Slate"
 
 $(document).ready ->
 	$('.create_request').on 'click', (event) ->
@@ -19,6 +24,9 @@ $(document).ready ->
 			prettyPrint();
 		)
 
+	flashBrowser = (students) ->
+		document.title = "(#{students}) Slate"
+
 	subscribeToWebSockets = (url,list_target) ->
 		dispatcher = new WebSocketRails(window.location.host + '/websocket');
 		channel_created = dispatcher.subscribe 'request_created'
@@ -31,6 +39,8 @@ $(document).ready ->
 						newRequest = Mustache.render($('#request').html(),newData)
 						$(newRequest).appendTo(list_target)
 						prettyPrint();
+						if window.location.pathname == "/teachers/dashboard"
+							flashBrowser(data.requests.length)
 				)
 		channel_deleted = dispatcher.subscribe 'request_deleted'
 		channel_deleted.bind 'destroy', (request_id) ->
