@@ -81,8 +81,9 @@ describe 'Request board' do
 		let(:request) {build :request, {
 			category: ruby, solved: false}}
 
-		xit "connects a student's cohort to the corresponding teacher" do
-			expect(match_cohort).to be_true
+		it "connects request to a cohort" do
+			expect(request.match_cohort).to be_true
 		end
+
 	end
 end

@@ -118,7 +118,11 @@ class Request < ActiveRecord::Base
     send_message if Request.board_empty_for?(5.minutes)
   end
 
-  def match_cohort
+  def student_request_cohort
+  end
+  
+  def match_cohort(cohort)
+    trigger_teacher_message if student_request_cohort == teacher_cohort_id
   end
 end
 
