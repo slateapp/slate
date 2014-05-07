@@ -67,6 +67,7 @@ describe "Cohort Features" do
     visit cohorts_path
     select("March 2014", from: 'cohort1_id')
     select("April 2014", from: 'cohort2_id')
+    click_button 'Update Current Cohorts'
     expect(page).to have_css '#cohort1_option', text: "March 2014"
     expect(page).to have_css '#cohort2_option', text: "April 2014"
   end
