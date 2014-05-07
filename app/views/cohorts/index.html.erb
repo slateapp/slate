@@ -12,6 +12,7 @@
     <%= submit_tag'Update Current Cohorts' if Cohort.count > 0 %>
   <% end %>
   <div>
+    <h4>Current cohorts</h4>
     <div id="cohort1_option"><%= "Cohort 1: #{@cohort1.try(:name) || "Not set"}" %></div>
     <div id="cohort2_option"><%= "Cohort 2: #{@cohort2.try(:name) || "Not set"}" %></div>
   </div>
