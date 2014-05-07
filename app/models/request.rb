@@ -79,19 +79,21 @@ class Request < ActiveRecord::Base
     false
   end
 
-  def client
-    Twilio::REST::Client.new Rails.application.secrets.TWILIO_TEST_SID, Rails.application.secrets.TWILIO_TEST_TOKEN
-  end
-
   def message
     "Teacher you have a new request"
   end
 
   def send_message
-    client.account.sms.messages.create(
-      :from => Rails.application.secrets.TWILIO_PHONE_NUMBER,
+
+    account_sid = Rails.application.secrets.TWILIO_TEST_SID
+    auth_token = Rails.application.secrets.TWILIO_TEST_TOKEN
+    
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    sms = @client.account.messages.create(
       :to => Rails.application.secrets.TWILIO_TEST_NUMBER,
-      :body => message
+      :from => Rails.application.secrets.TWILIO_PHONE_NUMBER,
+      :body => "Teacher you have a new request"
     )
   end
 
