@@ -36,13 +36,10 @@ gem 'bootstrap-sass'
 gem 'gravtastic'
 gem 'thin'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
-<<<<<<< HEAD
 gem "chartkick"
 gem 'groupdate'
-gem 'twilio-ruby', '~> 3.11'
-=======
 gem 'twilio-ruby'
->>>>>>> sarah-twilio-tests
+
 
 group :development, :test do
 
