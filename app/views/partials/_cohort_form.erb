@@ -1,9 +1,9 @@
 <%= render 'partials/teacher_menu' %>
 <%= form_for @cohort do |f| %>
   <%= f.label :month, "Month" %>
-  <%= f.select :month, ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], selected: Time.now.month %>
+  <%= f.select :month, Date::MONTHNAMES, selected: (@cohort.try(:month) || Date::MONTHNAMES[Time.now.month]) %>
   <%= f.label :year, "Year" %>
-  <%= f.select :year, ((Time.now.year - 20)..(Time.now.year + 20)).to_a, selected: Time.now.year %>
+  <%= f.select :year, ((Time.now.year - 20)..(Time.now.year + 20)).to_a, selected: (@cohort.try(:year) || Time.now.year) %>
   <%= f.submit %>
 <% end %>
 </div>
