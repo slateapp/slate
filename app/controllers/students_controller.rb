@@ -18,7 +18,7 @@ class StudentsController < ApplicationController
   end
 
   def failure
-	  render :text => "Sorry, but you didn't allow access to our app!"
+	  render :text => "Sorry, but you haven't allowed SL8 to access your GitHub so we cannot sign you up!"
 	end
 
   def destroy
@@ -76,7 +76,7 @@ end
 
 def create_new_session(authorization)
   student = authorization.student
-  flash[:notice] = "Hi #{student.name}! Awesome, welcome back."
+  flash[:notice] = "Welcome back #{student.name}."
   redirect_to students_dashboard_path
   student
 end
@@ -85,14 +85,14 @@ def create_new_student(auth_hash)
   student = Student.new :name => auth_hash["info"]["name"], :email => auth_hash["info"]["email"]
   student.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
   student.save
-  flash[:notice] = "Hi #{student.name}! Awesome, you've signed up!"
+  flash[:notice] = "Hi #{student.name}, welcome to SL8."
   redirect_to get_cohort_path
   student
 end
 
 def destroy_session
   session[:student_id] = nil
-  flash[:notice] = "You have now signed out!"
+  flash[:notice] = "You have successfully signed out!"
   redirect_to root_path
 end
 
