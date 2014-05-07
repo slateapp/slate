@@ -1,4 +1,4 @@
-# require 'twilio-ruby'
+require 'twilio-ruby'
 # require 'yml'
 
 class StudentCannotSolve < Exception
@@ -61,13 +61,6 @@ class Request < ActiveRecord::Base
     where(solved: false).none?
   end
 
-  # - No requests = true (ultimately sends an sms but don't test yet) (complete)
-  # - Request (unsolved) = false (complete)
-  # - Request (solved) = true (complete)
-  # - Mix of solved and unsolved = false (complete)
-
-  # create callback to send sms when some of these conditions are true
-
   def self.board_empty_for?(length_of_time)
     last_solved_request = where(solved: true).last
     return true if count.zero?
@@ -79,21 +72,20 @@ class Request < ActiveRecord::Base
     false
   end
 
-  def message
+  def sms_text_body
     "Teacher you have a new request"
   end
 
   def send_message
-
     account_sid = Rails.application.secrets.TWILIO_TEST_SID
     auth_token = Rails.application.secrets.TWILIO_TEST_TOKEN
     
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    sms = @client.account.messages.create(
+    sms = @client.account.sms.messages.create(
       :to => Rails.application.secrets.TWILIO_TEST_NUMBER,
       :from => Rails.application.secrets.TWILIO_PHONE_NUMBER,
-      :body => "Teacher you have a new request"
+      :body => sms_text_body
     )
   end
 

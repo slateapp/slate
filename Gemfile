@@ -36,7 +36,7 @@ gem 'bootstrap-sass'
 gem 'gravtastic'
 gem 'thin'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
-gem 'twilio-ruby', '~> 3.11'
+gem 'twilio-ruby'
 
 group :development, :test do
 

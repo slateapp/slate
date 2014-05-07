@@ -67,7 +67,7 @@ describe 'Request board' do
 			category: ruby, solved: false}}
 		
 		it 'creates a message' do
-			expect(request.message).to eq 'This is a test message'
+			expect(request.sms_text_body).to eq 'Teacher you have a new request'
 		end
 
 		it 'sends an SMS message' do
