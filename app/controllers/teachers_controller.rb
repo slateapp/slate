@@ -18,6 +18,8 @@ class TeachersController < ApplicationController
   end
 
   def statistics
+    @user, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
+    @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @stats = {
       todays_wait_time: Request.todays_average_wait_time_for(nil).round,
       todays_queue: Request.todays_average_queue_for(nil).round,
