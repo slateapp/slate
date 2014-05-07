@@ -1,3 +1,6 @@
+# require 'twilio-ruby'
+# require 'yml'
+
 class StudentCannotSolve < Exception
 end
 
@@ -7,6 +10,7 @@ class Request < ActiveRecord::Base
 	belongs_to :teacher
   validates :category, :description, :presence => true
   scope :todays_solved_requests, -> { where(solved: true, solved_at: Time.now.beginning_of_day..Time.now) }
+  before_create :trigger_teacher_message
   
   # def category_name
   #   Category.find(self.category.to_i).name
@@ -65,17 +69,33 @@ class Request < ActiveRecord::Base
   # create callback to send sms when some of these conditions are true
 
   def self.board_empty_for?(length_of_time)
+    last_solved_request = where(solved: true).last
     return true if count.zero?
-    self.last.solved_at.to_i - self.create.created_at.to_i >= length_of_time
+
+    if last_solved_request && board_empty? && last_solved_request.solved_at && last_solved_request.solved_at < length_of_time.ago
+      return true
+    end
+
+    false
   end
 
-  def sms_message
-    "This is a test message"
+  def client
+    Twilio::REST::Client.new Rails.application.secrets.TWILIO_TEST_SID, Rails.application.secrets.TWILIO_TEST_TOKEN
   end
 
-  # def save_or_send_message
-  #   send_message if Request.board_empty_for?(5)
-  #   save
-  # end
+  def message
+    "Teacher you have a new request"
+  end
 
+  def send_message
+    client.account.sms.messages.create(
+      :from => Rails.application.secrets.TWILIO_PHONE_NUMBER,
+      :to => Rails.application.secrets.TWILIO_TEST_NUMBER,
+      :body => message
+    )
+  end
+
+  def trigger_teacher_message
+    send_message if Request.board_empty_for?(5.minutes)
+  end
 end

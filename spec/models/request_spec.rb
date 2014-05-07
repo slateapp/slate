@@ -21,7 +21,7 @@ describe 'Request board' do
 
 	context 'A solved request is created' do
 		before do
-			create(:request, solved: true)
+			create(:request, solved: true, solved_at: 10.minutes.ago)
 		end
 		
 		it 'returns a board with an unsolved request' do
@@ -50,22 +50,29 @@ describe 'Request board' do
 		end
 
 		it 'knows the time between a solved and new request is greater than 5 minutes' do
-			expect(Request.board_empty_for?(5)).to be_true
+			expect(Request.board_empty_for?(5.minutes)).to be_true
 		end
 
 		it 'subtracts the time between a solved and new request' do
 			Request.last.solved_at.to_i - Request.create.created_at.to_i
 
-			expect(Request.board_empty_for?(5)).to be_true
+			expect(Request.board_empty_for?(5.minutes)).to be_true
 		end
 
 	end
 
-	context 'Sends teachers an SMS' do
-		let(:request) {request = Request.create}
+	context 'Board sends teachers a text reminder' do
+		let(:ruby) {create :category}
+		let(:request) {build :request, {
+			category: ruby, solved: false}}
+		
 		it 'creates a message' do
-			expect(request.sms_message).to eq 'This is a test message'
+			expect(request.message).to eq 'This is a test message'
+		end
+
+		it 'sends an SMS message' do
+			expect(request).to receive(:send_message)
+			request.save
 		end
 	end
-
 end
