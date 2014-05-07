@@ -31,6 +31,33 @@ $(document).ready ->
 					$(newRequest).appendTo(list_target)
 					prettyPrint();
 				)
+		channel_deleted = dispatcher.subscribe 'request_deleted'
+		channel_deleted.bind 'destroy', (request_id) ->
+			if($(list_target).length)
+				$("##{request_id}").remove()
+				$(list_target + 'li').each (index, request) ->
+					$(request).find('.position').html(index+1)
+
+		channel_solved = dispatcher.subscribe 'request_solved'
+		channel_solved.bind 'solved', (request_id) ->
+			if($(list_target).length)
+				$("##{request_id}").remove()
+				$(list_target + 'li').each (index, request) ->
+					$(request).find('.position').html(index+1)
+
+		channel_edited = dispatcher.subscribe 'request_edited'
+		channel_edited.bind 'edit', (request_id) ->
+			if($(list_target).length)
+				$.get(url, (data) ->
+					$.each(data.requests, (index, request) ->
+						if(request.request_id == request_id)
+							editedRequest = Mustache.render($('#request').html(),request)
+							$("##{request_id}").replaceWith(editedRequest)
+							$(list_target + 'li').each (index, request) ->
+								$(request).find('.position').html(index+1)
+					)
+					prettyPrint();
+				)
 
 
 	if window.location.pathname == "/requests/display"
@@ -72,30 +99,30 @@ $(document).ready ->
 		# 			prettyPrint();
 		# 		)
 
-		channel_deleted = dispatcher.subscribe 'request_deleted'
-		channel_deleted.bind 'destroy', (request_id) ->
-			if($('.scroll ul').length)
-				$("##{request_id}").remove()
-				$('.scroll ul li').each (index, request) ->
-					$(request).find('.position').html(index+1)
+		# channel_deleted = dispatcher.subscribe 'request_deleted'
+		# channel_deleted.bind 'destroy', (request_id) ->
+		# 	if($('.scroll ul').length)
+		# 		$("##{request_id}").remove()
+		# 		$('.scroll ul li').each (index, request) ->
+		# 			$(request).find('.position').html(index+1)
 
-		channel_solved = dispatcher.subscribe 'request_solved'
-		channel_solved.bind 'solved', (request_id) ->
-			if($('.scroll ul').length)
-				$("##{request_id}").remove()
-				$('.scroll ul li').each (index, request) ->
-					$(request).find('.position').html(index+1)
+		# channel_solved = dispatcher.subscribe 'request_solved'
+		# channel_solved.bind 'solved', (request_id) ->
+		# 	if($('.scroll ul').length)
+		# 		$("##{request_id}").remove()
+		# 		$('.scroll ul li').each (index, request) ->
+		# 			$(request).find('.position').html(index+1)
 
-		channel_edited = dispatcher.subscribe 'request_edited'
-		channel_edited.bind 'edit', (request_id) ->
-			if($('.scroll ul').length)
-				$.get(getRequest, (data) ->
-					$.each(data.requests, (index, request) ->
-						if(request.request_id == request_id)
-							editedRequest = Mustache.render($('#request').html(),request)
-							$("##{request_id}").replaceWith(editedRequest)
-							$('.scroll ul li').each (index, request) ->
-								$(request).find('.position').html(index+1)
-					)
-					prettyPrint();
-				)
+		# channel_edited = dispatcher.subscribe 'request_edited'
+		# channel_edited.bind 'edit', (request_id) ->
+		# 	if($('.scroll ul').length)
+		# 		$.get(getRequest, (data) ->
+		# 			$.each(data.requests, (index, request) ->
+		# 				if(request.request_id == request_id)
+		# 					editedRequest = Mustache.render($('#request').html(),request)
+		# 					$("##{request_id}").replaceWith(editedRequest)
+		# 					$('.scroll ul li').each (index, request) ->
+		# 						$(request).find('.position').html(index+1)
+		# 			)
+		# 			prettyPrint();
+		# 		)
