@@ -13,6 +13,7 @@ class StudentsController < ApplicationController
   def index
   	@user = current_student
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
+    @request = Request.new
   	redirect_to dashboard_teachers_path if current_teacher
   end
 
