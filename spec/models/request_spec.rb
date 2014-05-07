@@ -61,7 +61,7 @@ describe 'Request board' do
 
 	end
 
-	context 'Board sends teachers a text reminder' do
+	context 'Board sends a teacher a text reminder' do
 		let(:ruby) {create :category}
 		let(:request) {build :request, {
 			category: ruby, solved: false}}
@@ -73,6 +73,16 @@ describe 'Request board' do
 		it 'sends an SMS message' do
 			expect(request).to receive(:send_message)
 			request.save
+		end
+	end
+
+	context 'Board sends texts to designated teachers' do
+		let(:ruby) {create :category}
+		let(:request) {build :request, {
+			category: ruby, solved: false}}
+
+		xit "connects a student's cohort to the corresponding teacher" do
+			expect(match_cohort).to be_true
 		end
 	end
 end
