@@ -4,22 +4,21 @@
 		<%= image_tag "sl84.png" %>
 	</div>
 </div>
-<div class="access_panel">
-	<div class="col-md-6 text-center">
-		<h1>Are you a teacher?</h1>
-		<h3><%= link_to("Sign In", new_teacher_session_path) %></h3>
-		<h3>&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-		<h3><%= link_to("Sign Up", new_teacher_registration_path) %></h3>
-	</div>
 
-	<div class="col-md-6 text-center">
-		<h1>Are you a student?</h1>
-		<h3><%= link_to("Sign in with GitHub", '/auth/github') %></h3>
-	</div>
+<div class="teacherSign text-center">
+	<h1>Are you a teacher?</h1>
+	<h3><%= link_to("Sign In", new_teacher_session_path, class: "buzz-out")  %></h3>
+	<h3><%= link_to("Sign Up", new_teacher_registration_path, class: "buzz-out")  %></h3>
 </div>
+
+<div class="studentSign text-center">
+	<h1>Are you a student?</h1>
+	<h3><%= link_to("Sign in with GitHub", '/auth/github', class: "buzz-out")  %></h3>
+</div>
+
 <div class="reading_panel">
 	<%= image_tag "mock-up-screenshot3.jpg" %>
 </div>
 <div class="tagline_panel">
-   <h3>Improve productivity in your work environment</h3>
+	<h3>Improve productivity in your work environment</h3>
 </div>
