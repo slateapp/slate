@@ -19,13 +19,26 @@ $(document).ready ->
 			prettyPrint();
 		)
 
-	subscribeToWebSockets = ->
+	subscribeToWebSockets = (url,list_target) ->
+		dispatcher = new WebSocketRails(window.location.host + '/websocket');
+		channel_created = dispatcher.subscribe 'request_created'
+		channel_created.bind 'new', (request) ->
+			if($(list_target).length)
+				$.get(url, (data) ->
+					newData = data.requests[data.requests.length-1]
+					newData.position = data.requests.length
+					newRequest = Mustache.render($('#request').html(),newData)
+					$(newRequest).appendTo(list_target)
+					prettyPrint();
+				)
 
 
 	if window.location.pathname == "/requests/display"
 		$.get(window.location.origin + '/cohorts/current_cohorts.json', (data) ->
+			# list_target =
 			getStudentsRequests(window.location.origin + '/requests.json?cohort=' + data.cohorts[0].cohort_id, ".scroll.#{data.cohorts[0].cohort_name} ul")
 			getStudentsRequests(window.location.origin + '/requests.json?cohort=' + data.cohorts[1].cohort_id, ".scroll.#{data.cohorts[1].cohort_name} ul")
+			# subscribeToWebSockets(list_target)
 		)
 	else
 
@@ -44,19 +57,20 @@ $(document).ready ->
 			getRequest = window.location.origin + '/requests.json'
 
 		getStudentsRequests(getRequest, ".scroll ul")
+		subscribeToWebSockets(getRequest, '.scroll ul')
 
-		dispatcher = new WebSocketRails(window.location.host + '/websocket');
+		# dispatcher = new WebSocketRails(window.location.host + '/websocket');
 			
-		channel_created = dispatcher.subscribe 'request_created'
-		channel_created.bind 'new', (request) ->
-			if($('.scroll ul').length)
-				$.get(getRequest, (data) ->
-					newData = data.requests[data.requests.length-1]
-					newData.position = data.requests.length
-					newRequest = Mustache.render($('#request').html(),newData)
-					$(newRequest).appendTo('.scroll ul')
-					prettyPrint();
-				)
+		# channel_created = dispatcher.subscribe 'request_created'
+		# channel_created.bind 'new', (request) ->
+		# 	if($('.scroll ul').length)
+		# 		$.get(getRequest, (data) ->
+		# 			newData = data.requests[data.requests.length-1]
+		# 			newData.position = data.requests.length
+		# 			newRequest = Mustache.render($('#request').html(),newData)
+		# 			$(newRequest).appendTo('.scroll ul')
+		# 			prettyPrint();
+		# 		)
 
 		channel_deleted = dispatcher.subscribe 'request_deleted'
 		channel_deleted.bind 'destroy', (request_id) ->
