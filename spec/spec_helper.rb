@@ -82,6 +82,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  SmsSpec.driver = :"twilio-ruby"
 end
 
 def sign_in_as_student_alex
@@ -113,5 +115,3 @@ def create_request
   select('Postgresql', from: 'Category')
   click_button 'Create Request'
 end
-
-SmsSpec.driver = :"twilio-ruby"

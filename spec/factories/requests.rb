@@ -3,5 +3,7 @@
 FactoryGirl.define do
   factory :request do
   	description 'hello'
+  	solved false
+  	category
   end
 end

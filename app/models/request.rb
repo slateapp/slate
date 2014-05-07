@@ -1,3 +1,6 @@
+require 'twilio-ruby'
+# require 'yml'
+
 class StudentCannotSolve < Exception
 end
 
@@ -14,6 +17,11 @@ class Request < ActiveRecord::Base
   scope :for_cohort, ->(cohort) {where(student:Student.where(cohort: cohort))}
   scope :solved_requests, -> { where(solved: true) }
   scope :unsolved_requests, -> { where(solved: false) }
+  before_create :trigger_teacher_message
+  
+  # def category_name
+  #   Category.find(self.category.to_i).name
+  # end
 
   def solve!(teacher)
   	self.solved = true
@@ -72,5 +80,40 @@ class Request < ActiveRecord::Base
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
     [{name: "Average Time to Solve", data: this_weeks_requests.for_cohort(cohort).solved_requests.group_by_hour(:solved_at).count},
     {name: "Average Queue", data: this_weeks_requests.for_cohort(cohort).group_by_hour(:created_at).count}]
+
+  def self.board_empty?
+    where(solved: false).none?
+  end
+
+  def self.board_empty_for?(length_of_time)
+    last_solved_request = where(solved: true).last
+    return true if count.zero?
+
+    if last_solved_request && board_empty? && last_solved_request.solved_at && last_solved_request.solved_at < length_of_time.ago
+      return true
+    end
+
+    false
+  end
+
+  def sms_text_body
+    "Teacher you have a new request"
+  end
+
+  def send_message
+    account_sid = Rails.application.secrets.TWILIO_TEST_SID
+    auth_token = Rails.application.secrets.TWILIO_TEST_TOKEN
+    
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    sms = @client.account.sms.messages.create(
+      :to => Rails.application.secrets.TWILIO_TEST_NUMBER,
+      :from => Rails.application.secrets.TWILIO_PHONE_NUMBER,
+      :body => sms_text_body
+    )
+  end
+
+  def trigger_teacher_message
+    send_message if Request.board_empty_for?(5.minutes)
   end
 end
