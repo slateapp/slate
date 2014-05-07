@@ -65,8 +65,19 @@ class Request < ActiveRecord::Base
   # create callback to send sms when some of these conditions are true
 
   def self.board_empty_for?(length_of_time)
-    # length_of_time = Request.last(:solved_at) - Request.new(:created_at)
-
-    length_of_time >= 5
+    return true if count.zero?
+    self.last.solved_at.to_i - self.create.created_at.to_i >= length_of_time
   end
+
+  def save_or_send_message
+    send_message if Request.board_empty_for?(5)
+    save
+  end
+
 end
+
+    # last_request_solved_at = Request.last.solved_at.to_i
+    # new_request_created_at = Request.create.created_at.to_i
+
+    # length_of_time.to_i >= last_request_solved_at - new_request_created_at
+    # # send_sms if self.board_empty? && length_of_time => 5.minutes : do_nothing

@@ -40,21 +40,24 @@ describe 'Request board' do
 	end
 
 	context 'The board has been empty for more than five minutes' do
+     let(:ruby) {create :category}
+		
+		before do
+			@now = Time.now.beginning_of_minute
+      postgresql = create :postgresql
+      create :request, {category: ruby, solved: true, created_at: @now - 10.minutes, solved_at: @now - 5.minutes}
+		end
+
 		it 'knows the time between a solved and new request is greater than 5 minutes' do
 			expect(Request.board_empty_for?(5)).to be_true
 		end
 
-		it 'knows the time between a solved and new request is less than 5 minutes' do
-			expect(Request.board_empty_for?(4)).to be_false
+		it 'should subtract the time between a solved and new request' do
+			Request.last.solved_at.to_i - Request.create.created_at.to_i
+
+			expect(Request.board_empty_for?(5)).to be_true
 		end
 
-		it 'should subtract the time between a solved and new request' do 
-			Request.last
-		end
 	end
-
-
-
-
 
 end

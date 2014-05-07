@@ -29,7 +29,7 @@ class RequestsController < ApplicationController
 			@request.student = current_student
 			@request.category = Category.find params[:request][:category] if !params[:request][:category].empty?
 
-			if @request.save
+			if @request.save_or_send_message
 				WebsocketRails[:request_created].trigger 'new', @request
 				redirect_to students_dashboard_path, :notice => "Your request has been created."
 			else
