@@ -1,10 +1,10 @@
 <ul id='example'>
 </ul>
 
-<div class="waitingList" id="<%= cohort_name %>">
+<div class="waitingList">
   <div class="curtain">
   </div>
-  <div class="scroll">
+  <div class="scroll <%= cohort_name.split(" ").join("_").downcase %>">
     <ul>
       <% if requests.empty? %>
         <h1 class="NoRequests">No requests</h1>
