@@ -80,6 +80,7 @@ class Request < ActiveRecord::Base
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
     [{name: "Average Time to Solve", data: this_weeks_requests.for_cohort(cohort).solved_requests.group_by_hour(:solved_at).count},
     {name: "Average Queue", data: this_weeks_requests.for_cohort(cohort).group_by_hour(:created_at).count}]
+  end
 
   def self.board_empty?
     where(solved: false).none?

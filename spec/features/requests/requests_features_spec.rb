@@ -1,17 +1,7 @@
 require 'spec_helper'
 
 describe 'requests page' do
-<<<<<<< HEAD:spec/features/requests_features_spec.rb
-=======
-	# check repetition in requests_board_features_spec.rb
-	context 'no requests' do
-		it 'shows a message', js: true do
-			visit '/requests'
-			expect(page).to have_content 'No requests'
-		end
-	end
 
->>>>>>> sarah-twilio-tests:spec/features/requests/requests_features_spec.rb
 	describe 'adding requests' do
 		it "throws an error if the user doesn't pick a category" do
 			sign_in_as_student_alex
