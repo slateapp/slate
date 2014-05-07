@@ -30,6 +30,30 @@ class StudentsController < ApplicationController
     @cohort_options = cohort_options
 	end
 
+  def batch_change
+    if params[:batch_action] == "Approve"
+      unapproved_students = Student.where(approved: false)
+      if unapproved_students.count == 0
+        flash[:error] = "There are no students to approve"
+        redirect_to students_teachers_path
+      else
+        unapproved_students.update_all(approved: true)
+        flash[:success] = "You successfully approved all the students"
+        redirect_to students_teachers_path(approved: true)
+      end
+    else
+      approved_students = Student.where(approved: true)
+      if approved_students.count == 0
+        flash[:error] = "There are no students to approve"
+        redirect_to students_teachers_path(approved: true)
+      else
+        approved_students.update_all(approved: false)
+        flash[:success] = "You successfully unapproved all the students"
+        redirect_to students_teachers_path
+      end
+    end
+  end
+
 	def update
     student = from_teacher? ? (Student.find params[:id]) : current_student
     if params[:cohort]

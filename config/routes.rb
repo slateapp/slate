@@ -30,7 +30,11 @@
     end
   end
 
-  resources :students
+  resources :students do
+    collection do
+      patch 'batch_change'
+    end
+  end
   resources :requests do
     collection do 
       get 'solved'
