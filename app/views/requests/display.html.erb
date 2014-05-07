@@ -1,0 +1,6 @@
+<h1><%= @cohort_one.name %></h1>
+<h2><%= @requests_for_cohort_one.count%></h2>
+<%= render partial: "list2", locals: {requests: @requests_for_cohort_one, cohort_name: @cohort_one.name} %>
+<h1><%= @cohort_two.name %></h1>
+<h2><%= @requests_for_cohort_two.count%></h2>
+<%= render partial: "list2", locals: {requests: @requests_for_cohort_two, cohort_name: @cohort_two.name} %>

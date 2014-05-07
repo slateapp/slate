@@ -25,6 +25,10 @@ class CohortsController < ApplicationController
     @cohort = Cohort.find params[:id]
   end
 
+  def current_cohorts
+    @cohorts = Cohort.where(selected: true)
+  end
+
   def selected_cohorts
     cohort1 = params[:cohort1][:id]
     cohort2 = params[:cohort2][:id]

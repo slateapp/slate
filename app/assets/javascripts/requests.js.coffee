@@ -7,6 +7,11 @@ $(document).ready ->
 		event.preventDefault()
 		$.post url
 
+	if window.location.pathname == "/requests/display"
+		$.get(window.location.origin + '/cohorts/current_cohorts.json', (data) ->
+			console.log(data)
+		)
+
 	getParams = ->
 		query = window.location.search.substring(1)
 		raw_vars = query.split("&")

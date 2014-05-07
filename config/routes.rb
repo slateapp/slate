@@ -26,6 +26,7 @@
   resources :cohorts,     only:[:index, :new, :create, :edit, :update, :destroy] do
     collection do
       patch 'selected_cohorts'
+      get 'current_cohorts'
     end
   end
 
@@ -33,6 +34,7 @@
   resources :requests do
     collection do 
       get 'solved'
+      get 'display'
     end
   end
 
