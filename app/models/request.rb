@@ -11,7 +11,7 @@ class Request < ActiveRecord::Base
   validates :category, :description, :presence => true
   scope :todays_solved_requests, -> { where(solved: true, solved_at: Time.now.beginning_of_day..Time.now) }
   scope :todays_requests, ->(minute) { where(created_at: Time.now.beginning_of_day..minute) }
-  scope :this_weeks_requests, -> {where(created_at: (Date.today.beginning_of_week)..Time.now)}
+  scope :this_weeks_requests, -> {where(created_at: Date.today.beginning_of_week..Time.now)}
   scope :solved_by, ->(teacher) {where(teacher: teacher)}
   scope :categorised_by, ->(category) {where(category: category)}
   scope :for_cohort, ->(cohort) {where(student:Student.where(cohort: cohort))}
@@ -55,10 +55,15 @@ class Request < ActiveRecord::Base
 
   def self.todays_average_queue_for(cohort)
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
+    return 0 if todays_requests(Time.now).for_cohort(cohort).unsolved_requests.count == 0
     queue_lengths = []
-    return 0 if todays_solved_requests.for_cohort(cohort).count == 0
-    todays_requests(Time.now).for_cohort(cohort).group_by_minute(:created_at).count.each{|key,value| queue_lengths << value }
-    queue_lengths.reject!{|queue_length| queue_length == 0}
+    minute = todays_requests(Time.now).for_cohort(cohort).first.created_at - 1
+    while minute < Time.now do
+      queue_length = todays_requests(minute).for_cohort(cohort).unsolved_requests.count
+      queue_lengths << queue_length unless queue_length == 0
+      minute += 60
+    end
+    return 0 if queue_lengths.count == 0
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
   end
 

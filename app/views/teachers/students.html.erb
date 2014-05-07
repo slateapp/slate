@@ -7,6 +7,7 @@
 <%= link_to("Approved (#{@approved.count})", students_teachers_path(approved: true)) %>
 
 <div class="students-container">
+  <%= link_to(@switch + " All", batch_change_students_path(batch_action: @switch) , {data: {confirm: "Are you sure?"}, class: "btn btn-danger", method: :patch}) if @students.count > 0 %>
   <table class="table table-hover">
   <th>Name</th><th>Cohort</th><th>Actions</th>
   <% if @students.count == 0 %>
