@@ -7,6 +7,8 @@ class RequestsController < ApplicationController
 	end
 
 	def display
+		flash[:error] = "Please ask a teacher to select current cohorts"
+		redirect_to root_path if Cohort.where(selected: true).count != 2
 		@cohort_one = Cohort.where(selected: true).first
 		@cohort_two = Cohort.where(selected: true).second
 
