@@ -1,4 +1,12 @@
-<h1><%= @cohort_one.name %></h1>
-<%= render partial: "list2", locals: {requests: @requests_for_cohort_one, cohort_name: @cohort_one.name} %>
-<h1><%= @cohort_two.name %></h1>
-<%= render partial: "list2", locals: {requests: @requests_for_cohort_two, cohort_name: @cohort_two.name} %>
+<div class="display">
+	<div class="cohort_tab">
+		<h3><%= @cohort_one.name %></h3>
+	</div>
+	<%= render partial: "list2", locals: {requests: @requests_for_cohort_one, cohort_name: @cohort_one.name} %>
+</div>
+<div class="display">
+	<div class="cohort_tab">
+		<h3><%= @cohort_two.name %></h3>
+	</div>
+	<%= render partial: "list2", locals: {requests: @requests_for_cohort_two, cohort_name: @cohort_two.name} %>
+</div>

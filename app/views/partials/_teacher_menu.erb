@@ -1,12 +1,14 @@
 <div class="col-md-3">
-  <div class="btn-group-vertical">
-    <%= link_to("Dashboard", dashboard_teachers_path , class: 'btn btn-default') %>
-    <%= link_to("Cohorts", cohorts_path , class: 'btn btn-default') %>
-    <%= link_to("Students", students_teachers_path , class: 'btn btn-default') %>
-    <%= link_to("Categories", categories_path , class: 'btn btn-default') %>
-    <%= link_to("Global Statistics", statistics_teachers_path , class: 'btn btn-default') %>
-    <%= link_to("Account Settings", edit_teacher_registration_path , class: 'btn btn-default') %>
-  </div>
+	<h4>Welcome <%= @user.name %></h4>
+	<%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
+	<div class="btn-group-vertical">
+		<%= link_to("Dashboard", dashboard_teachers_path , class: 'btn btn-default') %>
+		<%= link_to("Cohorts", cohorts_path , class: 'btn btn-default') %>
+		<%= link_to("Students", students_teachers_path , class: 'btn btn-default') %>
+		<%= link_to("Categories", categories_path , class: 'btn btn-default') %>
+		<%= link_to("Global Statistics", statistics_teachers_path , class: 'btn btn-default') %>
+		<%= link_to("Account Settings", edit_teacher_registration_path , class: 'btn btn-default') %>
+	</div>
 </div>
 
 <div class="col-md-9">

@@ -128,6 +128,7 @@ background-repeat: no-repeat;
 background-size: 243px;
 float: left;
 overflow: auto;
+margin-bottom: 20px;
 }
 
 .scroll
@@ -389,8 +390,40 @@ margin-top: 120px;
 
 .btn-group-vertical
 {
-margin-top: 20px;
-margin-left: 5px;
+margin-top: 58px;
+margin-left: 0px;
+display: block;
+}
+
+.btn-group-vertical a.btn-default
+{
+width: 250px;
+height: 48px;
+padding: 14px;
+}
+
+.col-md-3
+{
+width: 270px;
+padding-top: 20px;
+padding-right: 0px;
+padding-left: 20px;
+padding-bottom: 30px;
+margin-right: 0px;
+}
+
+.col-md-3 h4
+{
+color: #7b7b7b;
+margin-top: 10px;
+margin-left: 10px;
+}
+
+.col-md-3 select
+{
+float: left;
+margin-top: 10px;
+margin-left: 10px;
 }
 
 .col-md-6
@@ -407,6 +440,11 @@ margin-top: 100px;
 .col-md-6 h3
 {
 display: inline;
+}
+
+.col-md-9 h2
+{
+margin-left: 0px;
 }
 
 .col-md-9 h3,
@@ -737,6 +775,14 @@ background-color: #a91d2a;
 background-color: #355c7a;
 }
 
+.indent h2
+{
+font-size: 2em;
+color: #b7b7b7;
+margin-left: 0px;
+margin-bottom: 20px;
+}
+
 /* Buzz Out */
 @-webkit-keyframes buzz-out {
   10% {
@@ -857,6 +903,53 @@ background-color: #355c7a;
   animation-timing-function: linear;
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
+}
+
+.Stats .text-center .col-md-5
+{
+width: 370px;
+height: 370px;
+background-color: #ffffff;
+margin-top: 20px;
+margin-right: 20px;
+padding-bottom: 15px;
+border-radius: 5px;
+}
+
+.cohortDashboard
+{
+width: 100%;
+}
+
+/* ------------------------------------------------- */
+
+.display
+{
+height: 520px;
+}
+
+.cohort_tab
+{
+width: 330px;
+padding: 20px;
+margin-top: 20px;
+margin-left: 20px;
+background-color: #355c7a;
+border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+}
+
+.display .cohort_tab h3
+{
+font-size: 1.5em;
+font-weight: normal;
+color: #ffffff;
+margin-bottom: 0px;
+}
+
+.display .waitingList
+{
+height: 450px;
 }
 
 
