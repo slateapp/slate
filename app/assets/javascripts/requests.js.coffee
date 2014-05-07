@@ -71,6 +71,11 @@ $(document).ready ->
 			getStudentsRequests(url_cohort2, list_target_cohort2)
 			subscribeToWebSockets(url_cohort1,list_target_cohort1)
 			subscribeToWebSockets(url_cohort2,list_target_cohort2)
+
+			dispatcher = new WebSocketRails(window.location.host + '/websocket');
+			channel_cohorts_updated = dispatcher.subscribe 'cohorts_updated'
+			channel_cohorts_updated.bind 'selected_cohorts', (request_id) ->
+				window.location.reload();
 		)
 	else
 

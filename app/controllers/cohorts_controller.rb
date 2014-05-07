@@ -35,6 +35,7 @@ class CohortsController < ApplicationController
     if !cohort1.empty? && !cohort2.empty? && cohort1 != cohort2
       Cohort.where(selected: true).update_all(selected: false)
       Cohort.where(id: [cohort1, cohort2]).update_all(selected: true)
+      WebsocketRails[:cohorts_updated].trigger 'selected_cohorts', params
       flash[:success] = "You successfully selected the current cohorts"
       redirect_to cohorts_path
     else
