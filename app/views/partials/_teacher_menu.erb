@@ -1,6 +1,4 @@
 <div class="col-md-3">
-	<h4>Welcome <%= @user.name %></h4>
-	<%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"},:onchange => 'changeCohort(this)' %>
 	<div class="btn-group-vertical">
 		<%= link_to("Dashboard", dashboard_teachers_path , class: 'btn btn-default') %>
 		<%= link_to("Cohorts", cohorts_path , class: 'btn btn-default') %>
