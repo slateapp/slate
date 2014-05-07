@@ -6,7 +6,7 @@
 
 	<%= f.label :category %>
 	<div class="styled-select">
-	<%= f.select :category, Category.all.map { |category| [category.name, category.id] }, :include_blank => " Select a category" %>
+	<%= f.select :category, Category.all.map { |category| [category.name, category.id] }.sort, :include_blank => " Select a category" %>
 	</div>
 	<div class="styled-submit">
 		<%= f.submit %>
