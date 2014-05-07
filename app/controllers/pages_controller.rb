@@ -5,5 +5,6 @@ class PagesController < ApplicationController
   end
 
   def require_approval
+    redirect_to students_dashboard_path if current_student.approved
   end
 end

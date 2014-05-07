@@ -8,19 +8,22 @@
 
 teacher1 = Teacher.new(
   email: "slate@makersacademy.com",
-  password: '12345678'
+  password: '12345678',
+  confirmed_at: Time.now
 )
 teacher1.save!
 
 teacher2 = Teacher.new(
   email: "khush@makersacademy.com",
-  password: '12345678'
+  password: '12345678',
+  confirmed_at: Time.now
 )
 teacher2.save!
 
 teacher3 = Teacher.new(
   email: "ross@makersacademy.com",
-  password: '12345678'
+  password: '12345678',
+  confirmed_at: Time.now
 )
 teacher3.save!
 
