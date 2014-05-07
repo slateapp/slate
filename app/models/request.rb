@@ -24,7 +24,7 @@ class Request < ActiveRecord::Base
   end
 
   def update_or_solve(attributes, user)
-    attributes[:category] = Category.find(attributes[:category])
+    attributes[:category] = Category.find(attributes[:category]) if attributes[:category]
     if attributes[:solved]
       raise StudentCannotSolve if user.is_a? Student
       solve!(user)
