@@ -25,24 +25,25 @@ $(document).ready ->
 		channel_created.bind 'new', (request) ->
 			if($(list_target).length)
 				$.get(url, (data) ->
-					newData = data.requests[data.requests.length-1]
-					newData.position = data.requests.length
-					newRequest = Mustache.render($('#request').html(),newData)
-					$(newRequest).appendTo(list_target)
-					prettyPrint();
+					if data.requests.length > $(list_target + ' li').length
+						newData = data.requests[data.requests.length-1]
+						newData.position = data.requests.length
+						newRequest = Mustache.render($('#request').html(),newData)
+						$(newRequest).appendTo(list_target)
+						prettyPrint();
 				)
 		channel_deleted = dispatcher.subscribe 'request_deleted'
 		channel_deleted.bind 'destroy', (request_id) ->
 			if($(list_target).length)
 				$("##{request_id}").remove()
-				$(list_target + 'li').each (index, request) ->
+				$(list_target + ' li').each (index, request) ->
 					$(request).find('.position').html(index+1)
 
 		channel_solved = dispatcher.subscribe 'request_solved'
 		channel_solved.bind 'solved', (request_id) ->
 			if($(list_target).length)
 				$("##{request_id}").remove()
-				$(list_target + 'li').each (index, request) ->
+				$(list_target + ' li').each (index, request) ->
 					$(request).find('.position').html(index+1)
 
 		channel_edited = dispatcher.subscribe 'request_edited'
@@ -53,7 +54,7 @@ $(document).ready ->
 						if(request.request_id == request_id)
 							editedRequest = Mustache.render($('#request').html(),request)
 							$("##{request_id}").replaceWith(editedRequest)
-							$(list_target + 'li').each (index, request) ->
+							$(list_target + ' li').each (index, request) ->
 								$(request).find('.position').html(index+1)
 					)
 					prettyPrint();
@@ -62,10 +63,14 @@ $(document).ready ->
 
 	if window.location.pathname == "/requests/display"
 		$.get(window.location.origin + '/cohorts/current_cohorts.json', (data) ->
-			# list_target =
-			getStudentsRequests(window.location.origin + '/requests.json?cohort=' + data.cohorts[0].cohort_id, ".scroll.#{data.cohorts[0].cohort_name} ul")
-			getStudentsRequests(window.location.origin + '/requests.json?cohort=' + data.cohorts[1].cohort_id, ".scroll.#{data.cohorts[1].cohort_name} ul")
-			# subscribeToWebSockets(list_target)
+			list_target_cohort1 = ".scroll.#{data.cohorts[0].cohort_name} ul"
+			list_target_cohort2 = ".scroll.#{data.cohorts[1].cohort_name} ul"
+			url_cohort1 = window.location.origin + '/requests.json?cohort=' + data.cohorts[0].cohort_id
+			url_cohort2 = window.location.origin + '/requests.json?cohort=' + data.cohorts[1].cohort_id
+			getStudentsRequests(url_cohort1, list_target_cohort1)
+			getStudentsRequests(url_cohort2, list_target_cohort2)
+			subscribeToWebSockets(url_cohort1,list_target_cohort1)
+			subscribeToWebSockets(url_cohort2,list_target_cohort2)
 		)
 	else
 
