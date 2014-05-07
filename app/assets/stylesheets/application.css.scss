@@ -341,6 +341,13 @@ margin-left: 5px;
 overflow: hidden;
 }
 
+
+.navbar-default .container-fluid ul.nav.navbar-nav.navbar-right li img
+{
+width: 40px;
+height: 40px;
+}
+
 .signInPage
 {
 width: 50%;
@@ -442,6 +449,11 @@ margin-top: 100px;
 display: inline;
 }
 
+.col-md-9
+{
+margin-bottom: 20px;
+}
+
 .col-md-9 h2
 {
 margin-left: 0px;
@@ -485,6 +497,13 @@ border: none;
 float: right;
 margin-top: -13px;
 margin-right: -20px;
+}
+
+.waitingList .scroll ul li .waiting .gravatar
+{
+width: 40px;
+height: 40px;
+background-size: cover;
 }
 
 
@@ -930,13 +949,11 @@ height: 500px;
 
 .cohort_tab
 {
-width: 320px;
+width: 250px;
 padding: 20px;
 margin-top: 20px;
-margin-left: 20px;
 background-color: #355c7a;
 border-top-right-radius: 5px;
-border-top-left-radius: 5px;
 }
 
 .display .cohort_tab h3
@@ -945,11 +962,76 @@ font-size: 1.5em;
 font-weight: normal;
 color: #ffffff;
 margin-bottom: 0px;
+margin-left: 23px;
 }
 
 .display .waitingList
 {
 height: 430px;
+padding-top: 23px;
+}
+
+.display .waitingList .curtain
+{
+height: 380px;
+}
+
+.display .waitingList .scroll ul li .waiting
+{
+width: 380px;
+height: 380px;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;
+margin-left: 3px;
+}
+
+.display .waitingList .scroll ul li .waiting h3
+{
+width: 270px;
+height: 38px;
+font-size: 2.3em;
+}
+
+.display .waitingList .scroll ul li .waiting .position
+{
+width: 55px;
+height: 55px;
+padding-top: 5px;
+font-size: 2.3em;
+margin-top: -68px;
+}
+
+.display .waitingList .scroll ul li .waiting .time,
+.display .waitingList .scroll ul li .waiting .category
+{
+font-size: 1.3em;
+}
+
+.display .waitingList .scroll ul li .waiting .gravatar,
+.display .waitingList .scroll ul li .waiting .gravatar img
+{
+width: 55px;
+height: 55px;
+border-bottom-left-radius: 0px;
+margin-right: -20px;
+}
+
+.display .waitingList .scroll ul li .waiting .codeSnippet
+{
+width: 380px;
+height: 200px;
+margin-top: 52px;
+}
+
+.display .waitingList .scroll ul li .waiting pre.prettyprint
+{
+font-size: 18px;
+}
+
+.display .waitingList .scroll ul li .waiting .solveTab
+{
+width: 380px;
+height: 70px;
 }
 
 
