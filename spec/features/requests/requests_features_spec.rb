@@ -4,7 +4,6 @@ describe 'requests page' do
 
 	# check repetition in requests_board_features_spec.rb
 	context 'no requests' do
-		# test no longer necessary: 'No Requests' is now an image not content
 		xit 'shows a message', js: true do
 			visit '/requests'
 			expect(page).to have_content 'No Requests'
