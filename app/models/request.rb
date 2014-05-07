@@ -69,15 +69,13 @@ class Request < ActiveRecord::Base
     self.last.solved_at.to_i - self.create.created_at.to_i >= length_of_time
   end
 
-  def save_or_send_message
-    send_message if Request.board_empty_for?(5)
-    save
+  def sms_message
+    "This is a test message"
   end
 
+  # def save_or_send_message
+  #   send_message if Request.board_empty_for?(5)
+  #   save
+  # end
+
 end
-
-    # last_request_solved_at = Request.last.solved_at.to_i
-    # new_request_created_at = Request.create.created_at.to_i
-
-    # length_of_time.to_i >= last_request_solved_at - new_request_created_at
-    # # send_sms if self.board_empty? && length_of_time => 5.minutes : do_nothing

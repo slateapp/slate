@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'Request board' do 
+	include SmsSpec::Helpers
 
 	context 'No requests' do 
 		it 'returns a blank board' do 
@@ -41,7 +42,7 @@ describe 'Request board' do
 
 	context 'The board has been empty for more than five minutes' do
      let(:ruby) {create :category}
-		
+     		
 		before do
 			@now = Time.now.beginning_of_minute
       postgresql = create :postgresql
@@ -52,12 +53,19 @@ describe 'Request board' do
 			expect(Request.board_empty_for?(5)).to be_true
 		end
 
-		it 'should subtract the time between a solved and new request' do
+		it 'subtracts the time between a solved and new request' do
 			Request.last.solved_at.to_i - Request.create.created_at.to_i
 
 			expect(Request.board_empty_for?(5)).to be_true
 		end
 
+	end
+
+	context 'Sends teachers an SMS' do
+		let(:request) {request = Request.create}
+		it 'creates a message' do
+			expect(request.sms_message).to eq 'This is a test message'
+		end
 	end
 
 end
