@@ -69,6 +69,7 @@ class StudentsController < ApplicationController
     student.name = params[:student][:name] if from_teacher? && params[:student]
     if approval?
       student.approved ? student.unapprove : student.approve
+      WebsocketRails[:student_approval].trigger 'student_approval', student
     end
     student.save
     flash[:notice] = "Student successfully updated" if from_teacher?
