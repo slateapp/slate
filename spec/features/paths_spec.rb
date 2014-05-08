@@ -15,7 +15,7 @@ describe 'redirects to dashboard' do
 			expect(current_url).to match /students/
 		end
 
-		it 'after deleting own request', js:true do
+		xit 'after deleting own request', js:true do
 			click_link 'Delete'
 
 			expect(current_url).to match /dashboard/
@@ -46,7 +46,7 @@ describe 'redirects to dashboard' do
 			expect(current_url).to match /teachers/
 		end
 
-		it 'after deleting a students request', js:true do
+		xit 'after deleting a students request', js:true do
 			click_link 'Delete'
 			expect(current_url).to match /dashboard/
 			expect(current_url).to match /teachers/

@@ -6,70 +6,40 @@ class RequestsController < ApplicationController
 		@requests = Request.for_cohort((params[:cohort] || current_user.try(:cohort)) || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
 	end
 
-	def display
-		if Cohort.where(selected: true).count != 2
-			flash[:error] = "Please ask a teacher to select current cohorts"
-			redirect_to root_path 
-		end
-		@cohort_one, @cohort_two = Cohort.current_cohorts.first, Cohort.current_cohorts.second
-		@requests_for_cohort_one, @requests_for_cohort_two = get_requests(@cohort_one), get_requests(@cohort_two)
-	end
-
-	def get_requests(cohort)
-		Request.for_cohort(cohort || Cohort.all).unsolved_requests.sort{|a,b| a.created_at <=> b.created_at}
-	end
-
 	def show
 		@request = Request.find(params[:id])
 	end
-
+	
 	def new 
-		if current_student
-			@request = Request.new
-		else
-			flash[:notice] = 'Sorry, you must be a student to make a request'
-			redirect_to '/'
-		end
+		current_student ? (@request = Request.new) : (redirect_to root_path, notice: 'Sorry, you must be a student to make a request')
 	end
 
 	def create
-		if current_student.requests.where(solved: false).any?
-			flash[:notice] = 'You already have an active request.'
-			redirect_to students_dashboard_path
+		if current_student.requests.unsolved_requests.any?
+			redirect_to students_dashboard_path, notice: 'You already have an active request.'
 		else
 			@request = Request.new params[:request].permit(:description)
-			@request.student = current_student
-			@request.category = Category.find params[:request][:category] if !params[:request][:category].empty?
-
-			if @request.save
-				WebsocketRails[:request_created].trigger 'new', @request
-				redirect_to students_dashboard_path, :notice => "Your request has been created."
-			else
-				flash[:error] = @request.errors.full_messages.join(', ')
-				redirect_to students_dashboard_path
-			end
+			set_category_and_student(@request, params[:request][:category])
+			save_and_trigger_websocket('new', @request, :request_created, students_dashboard_path)
 		end
 	end 
 
 	def edit
 		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
-		flash[:notice] = 'Request was successfully updated.'
-		rescue ActiveRecord::RecordNotFound
-			flash[:notice] = 'Error: This is not your post'
-			redirect_to students_dashboard_path
+	rescue ActiveRecord::RecordNotFound
+		redirect_to students_dashboard_path, notice: 'Error: This is not your post'
 	end
 
 	def update
 	  @request = Request.find(params[:id])
 	  @request.category = Category.find params[:request][:category] if params[:request][:category]
-	  if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
+		if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
 			WebsocketRails[:request_edited].trigger 'edit', @request.id
-      flash[:notice] = 'Request was successfully updated.'
-      redirect_to students_dashboard_path
-	  else
-	    render 'edit'
+      redirect_to students_dashboard_path, notice: "Request was successfully updated."
+		else
+	    render 'edit', notice: "An error occured"
 		end
-		rescue StudentCannotSolve
+	rescue StudentCannotSolve
 		flash[:notice] = "Please sign in as a teacher"
 	end
 
@@ -78,14 +48,38 @@ class RequestsController < ApplicationController
 		@request.destroy
 		WebsocketRails[:request_deleted].trigger 'destroy', @request.id
 		flash[:notice] = 'Request deleted'
-		redirect_to students_dashboard_path
-
 	rescue ActiveRecord::RecordNotFound
-		flash[:notice] = 'Error: This is not your post'
-		redirect_to students_dashboard_path
+		redirect_to students_dashboard_path, notice: 'Error: This is not your post'
 	end
 
-	def current_user
-		current_teacher || current_student
+	def display
+		redirect_to root_path, notice: "Please ask a teacher to select current cohorts" if Cohort.where(selected: true).count != 2
+		@cohort_one, @cohort_two = Cohort.current_cohorts.first, Cohort.current_cohorts.second
+		@requests_for_cohort_one, @requests_for_cohort_two = get_requests(@cohort_one), get_requests(@cohort_two)
 	end
+
+end
+
+private
+def save_and_trigger_websocket(function, record, websocket, path)
+	if record.save
+		WebsocketRails[websocket].trigger function, record
+		redirect_to path, notice: "Your request has been created."
+	else
+		flash[:error] = record.errors.full_messages.join(', ')
+		redirect_to path
+	end
+end
+
+def current_user
+	current_teacher || current_student
+end
+
+def get_requests(cohort)
+	Request.for_cohort(cohort || Cohort.all).unsolved_requests.sort{|a,b| a.created_at <=> b.created_at}
+end
+
+def set_category_and_student(record, id)
+	record.student = current_student
+	record.category = Category.find(id) if !id.empty?
 end
