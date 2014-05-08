@@ -4,6 +4,18 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_student
 
+  def create_or_update(function, record_name, record, path)
+    verb = function == "edit" ? "updated" : "created"
+    if record.save
+        current_teacher.twilio_info = record if record_name == "Twilio Information"
+        flash[:success] = "#{record_name} #{verb} successfully"
+        redirect_to path
+      else
+        record.errors.full_messages.each{ |msg| flash[:error] = msg }
+        render function
+      end
+  end
+
   def after_sign_in_path_for(resource)
     case resource
       when Teacher then dashboard_teachers_path
