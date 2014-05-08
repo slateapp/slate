@@ -341,7 +341,6 @@ button
 	overflow: hidden;
 }
 
-
 .navbar-default .container-fluid ul.nav.navbar-nav.navbar-right li img
 {
 	width: 40px;
@@ -612,6 +611,14 @@ ul.nav.navbar-nav.navbar-right li img
 	display: none;
 }
 
+.indent_request h2
+{
+	color: #b7b7b7;
+	font-size: 2em;
+	margin-left: 0px;
+	margin-bottom: 15px;
+}
+
 textarea
 {
 	width: 250px;
@@ -620,13 +627,11 @@ textarea
 	color: #aeaeae;
 	padding: 10px;
 	border-radius: 5px;
-	margin-top: 20px;
 }
 
 .styled-select
 {
 	float: left;
-	margin-top: 20px;
 	margin-left: 20px;
 }
 
@@ -656,13 +661,35 @@ textarea
 	-webkit-appearance: none;
 	background-color: #a91d2a;
 	float: left;
-	margin-top: 20px;
 	margin-left: 20px;
 }
 
 .styled-submit input:hover
 {
 	background-color: #7C151F;
+}
+
+.styled-back a
+{
+	width: 150px;
+	padding: 8px;
+	color: #ffffff;
+	font-size: 1em;
+	border-radius: 5px;
+	border: none;
+	height: 40px;
+	-webkit-appearance: none;
+	background-color: #355c7a;
+	float: left;
+	margin-left: 20px;
+	text-align: center;
+	line-height: 1.8;
+}
+
+.styled-back a:hover
+{
+	background-color: #1A3447;
+	text-decoration: none;
 }
 
 pre .typ
