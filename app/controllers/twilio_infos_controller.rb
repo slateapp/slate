@@ -9,7 +9,7 @@ class TwilioInfosController < ApplicationController
 
   def create
     @twilioinfo = TwilioInfo.new twilio_info_params
-    twilio_info_save('new')
+    create_or_update('new', "Twilio Information", @twilioinfo, twilio_infos_path)
   end
 
   def edit
@@ -19,7 +19,7 @@ class TwilioInfosController < ApplicationController
   def update
     @twilioinfo = TwilioInfo.find params[:id]
     @twilioinfo.assign_attributes twilio_info_params
-    twilio_info_save('edit')
+    create_or_update('edit', "Twilio Information", @twilioinfo, twilio_infos_path)
   end
 
   def destroy

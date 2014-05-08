@@ -18,7 +18,7 @@ class CohortsController < ApplicationController
 
   def create
     @cohort = Cohort.new cohort_params
-    cohort_save("new")
+    create_or_update('new', "Cohort", @cohort, cohorts_path)
   end
 
   def edit
@@ -47,7 +47,7 @@ class CohortsController < ApplicationController
   def update
     @cohort = Cohort.find params[:id]
     @cohort.assign_attributes cohort_params
-    cohort_save("edit")
+    create_or_update('edit', "Cohort", @cohort, cohorts_path)
   end
 
   def destroy
@@ -55,17 +55,6 @@ class CohortsController < ApplicationController
     @cohort.destroy
     redirect_to cohorts_path
   end
-end
-
-def cohort_save(function)
-  verb = function == "edit" ? "updated" : "created"
-  if @cohort.save
-      flash[:success] = "Category #{verb} successfully"
-      redirect_to cohorts_path
-    else
-      @cohort.errors.full_messages.each{ |msg| flash[:error] = msg }
-      render function
-    end
 end
 
 def cohort_params
