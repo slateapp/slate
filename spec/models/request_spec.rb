@@ -58,7 +58,6 @@ describe 'Request board' do
 
 			expect(Request.board_empty_for?(5.minutes)).to be_true
 		end
-
 	end
 
 	context 'Board sends a teacher a text reminder' do
@@ -81,9 +80,7 @@ describe 'Request board' do
 		let(:request) {build :request, {
 			category: ruby, solved: false}}
 
-		it "connects request to a cohort" do
-			expect(request.match_cohort).to be_true
-		end
+
 
 	end
 end

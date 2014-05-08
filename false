@@ -1,2 +1,2 @@
       invoke  active_record
-      create    db/migrate/20140501182822_add_solved_column_to_requests.rb
+      create    db/migrate/20140508094536_change_column.rb

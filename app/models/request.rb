@@ -1,5 +1,5 @@
 require 'twilio-ruby'
-# require 'yml'
+
 
 class StudentCannotSolve < Exception
 end
@@ -115,39 +115,16 @@ class Request < ActiveRecord::Base
   end
 
   def trigger_teacher_message
-    send_message if Request.board_empty_for?(5.minutes)
+    # ADD AN OFF SWITCH FOR WHEN MAKERS IS CLOSED!!!!!!
+    send_message if Request.board_empty_for?(5.minutes) # && student_request_cohort == teacher_cohort_id
   end
 
-  def student_request_cohort
-  end
+  # def student_request_cohort
   
-  def match_cohort(cohort)
-    trigger_teacher_message if student_request_cohort == teacher_cohort_id
-  end
+  #   Request.last.student.cohort_id
+  # end
+
+  # # def teacher_cohort_id
+  # #   Teacher.last.cohort.to_i
+  # # end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

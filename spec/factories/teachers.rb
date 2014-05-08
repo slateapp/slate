@@ -6,6 +6,7 @@ FactoryGirl.define do
     password "12345678"
     password_confirmation "12345678"
     confirmed_at Time.now
+    phone "+4407879666184"
   end
 
   factory :not_teacher, class: Teacher do

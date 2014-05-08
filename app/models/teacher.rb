@@ -4,9 +4,9 @@ class Teacher < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   has_many :requests
+  has_one :sms_alert
 
   def name
     self.email.gsub("@makersacademy.com", "").capitalize
   end
-  
 end

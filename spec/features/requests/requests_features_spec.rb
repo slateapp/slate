@@ -39,20 +39,20 @@ describe 'requests page' do
 		end
 
 		context 'with requests' do
-		    before {
-		    	sign_in_as_student_alex
-		    	create_request
-		    }
+	    before {
+	    	sign_in_as_student_alex
+	    	create_request
+	    }
 
-		    it 'displays the request', js: true do
-		      visit '/requests'
-					expect(page).to have_content 'Postgresql'
-		    end
+	    it 'displays the request', js: true do
+	      visit '/requests'
+				expect(page).to have_content 'Postgresql'
+	    end
 
-		    it 'displays the request time' do
-		    	visit '/requests'
-		    	expect(page).to have_content 'time'
-		    end
+	    it 'displays the request time' do
+	    	visit '/requests'
+	    	expect(page).to have_content 'time'
+	    end
 		end
 
 		context 'teacher tries to create request' do
