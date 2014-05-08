@@ -136,7 +136,7 @@ class Request < ActiveRecord::Base
 
   def teacher_twilio
     cohort = student.cohort
-    teacher_phone = Teacher.find_by(cohort: cohort.month.to_s).twilio_info
+    teacher_phone = Teacher.find_by(cohort: cohort.id.to_s).twilio_info
   end
 
   def sms_enabled?
