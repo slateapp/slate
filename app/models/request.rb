@@ -118,14 +118,14 @@ class Request < ActiveRecord::Base
   end
 
   def send_message
-    account_sid = Rails.application.secrets.TWILIO_SID
-    auth_token = Rails.application.secrets.TWILIO_TOKEN
+    account_sid = Rails.application.secrets.twilio_sid
+    auth_token = Rails.application.secrets.twilio_token
     
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     sms = @client.account.sms.messages.create(
       :to => teacher_twilio.phone_number,
-      :from => Rails.application.secrets.TWILIO_PHONE_NUMBER,
+      :from => Rails.application.secrets.twilio_phone_number,
       :body => sms_text_body
     )
   end
