@@ -366,7 +366,7 @@ button
 
 .reading_panel
 {
-	height: 1200px;
+	height: 950px;
 	width: 100%;
 	padding-top: 30px;
 	overflow: hidden;
@@ -375,7 +375,7 @@ button
 .animation
 {
 	width: 80%;
-	height: 1200px;
+	height: 950px;
 	margin-right: auto;
 	margin-left: auto;
 	background-image: image-url("waiting_animation.png");
@@ -385,12 +385,12 @@ button
 
 .animation img
 {
+	position: relative;
 	background-color: transparent;
-	position: initial;
 	width: 11%;
 	margin-top: 8%;
 	margin-left: 12%;
-	border-radius: 0px;
+	z-index: 10000;
 }
 
 .tagline_panel
@@ -567,6 +567,12 @@ button
 	border-top-left-radius: 5px;
 	float: left;
 	z-index: 30;
+}
+
+
+.display .waitingList .scroll ul li:nth-child(2) .waiting
+{
+	margin-left: 420px;
 }
 
 .curtain
@@ -1169,30 +1175,32 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 
 .banner_wrapper
 {
-	width: 924px;
-	height: 300px;
 	overflow: hidden;
-	margin-top: 0px;
-	border-right: solid white 8px;
+	position: absolute;
+	width: 52.89%;
+	height: 167px;
+	margin-top: -8.69%;
+	margin-left: 18%;
+	z-index: 1;
 }
 
 .banner
 {
-	width: 2526px;
-	height: 300px;
-	background-color: #a80000;
-	float: left;
-	margin-right: 30px;
-	margin-left: 30px;
-	border-left: solid white 8px;
-	overflow: hidden;
+	width: 1000%;
+	height: 100%;
+	z-index: 1;
 }
 
 .banner img
 {
-	height: 300px;
-	width: 1263px;
+	max-height: 100%;
+	height: 99.8%;
+	width: 9.8%;
 	float: left;
+	position: inherit;
+	margin-top: 0px;
+	margin-left: 0px;
+	z-index: 1;
 }
 
 .first {
@@ -1208,7 +1216,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     margin-left: 0px;
  }
  100% {
-    margin-left: -1263px;
+    margin-left: -1331px;
  }
  
 }
@@ -1218,7 +1226,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1263px;
+   margin-left: -1331px;
  }
  
 }
@@ -1228,7 +1236,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1263px;
+   margin-left: -1331px;
  }
  
 }
@@ -1238,7 +1246,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1263px;
+   margin-left: -1331px;
  }
  
 }
@@ -1248,7 +1256,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1263px;
+   margin-left: -1331px;
  }
 
 }
