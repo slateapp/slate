@@ -1,0 +1,8 @@
+<%= render 'partials/teacher_menu' %>
+<%= form_for @twilioinfo do |f| %>
+  <%= f.label :phone_number, "Phone Number" %>
+  <%= f.text_field :phone_number, autofocus: true %>
+  <%= f.check_box :enabled %>
+  <%= f.submit "Update Twilio Info" %>
+<% end %>
+</div>

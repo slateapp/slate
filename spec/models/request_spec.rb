@@ -69,18 +69,18 @@ describe 'Request board' do
 			expect(request.sms_text_body).to eq 'Teacher you have a new request'
 		end
 
-		it 'sends an SMS message' do
+		xit 'sends an SMS message' do
 			expect(request).to receive(:send_message)
 			request.save
 		end
 	end
 
-	context 'Board sends texts to designated teachers' do
-		let(:ruby) {create :category}
-		let(:request) {build :request, {
-			category: ruby, solved: false}}
+	# context 'Board sends texts to designated teachers' do
+	# 	let(:ruby) {create :category}
+	# 	let(:request) {build :request, {
+	# 		category: ruby, solved: false}}
 
 
 
-	end
+	# end
 end

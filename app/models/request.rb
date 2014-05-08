@@ -116,7 +116,7 @@ class Request < ActiveRecord::Base
 
   def trigger_teacher_message
     # ADD AN OFF SWITCH FOR WHEN MAKERS IS CLOSED!!!!!!
-    send_message if Request.board_empty_for?(5.minutes) # && student_request_cohort == teacher_cohort_id
+    # send_message if Request.board_empty_for?(5.minutes) # && student_request_cohort == teacher_cohort_id
   end
 
   # def student_request_cohort

@@ -12,7 +12,7 @@
   get '/students/require_approval' => "pages#require_approval"
   
   devise_for :teachers
-  resources :teachers, only:[:update] do
+  resources :teachers, only:[:update] do 
     collection do
       get 'dashboard'
       get 'students'
@@ -22,7 +22,7 @@
   end
 
   resources :categories,  only:[:index, :new, :create, :edit, :update, :destroy]
-
+  resources :twilio_infos
   resources :cohorts,     only:[:index, :new, :create, :edit, :update, :destroy] do
     collection do
       patch 'selected_cohorts'

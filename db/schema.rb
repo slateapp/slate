@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140508104237) do
+ActiveRecord::Schema.define(version: 20140508120820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,9 @@ ActiveRecord::Schema.define(version: 20140508104237) do
     t.datetime "updated_at"
     t.string   "phone_number"
     t.boolean  "enabled",      default: false
+    t.integer  "teacher_id"
   end
+
+  add_index "twilio_infos", ["teacher_id"], name: "index_twilio_infos_on_teacher_id", using: :btree
 
 end
