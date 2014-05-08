@@ -4,3 +4,7 @@
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
+
+task delete_unsolved: :environment do
+  Request.where(solved: false).delete_all
+end
