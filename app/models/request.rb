@@ -81,14 +81,14 @@ class Request < ActiveRecord::Base
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
     this_weeks_requests.for_cohort(cohort).map{|request|
       [request.category.name, Request.this_weeks_requests.categorised_by(request.category).count]
-    }.uniq
+    }.uniq.compact
   end
 
   def self.leaderboard_for(cohort)
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
     this_weeks_requests.for_cohort(cohort).map{|request|
       [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count] if request.solved
-    }.uniq
+    }.uniq.compact
   end
 
   def self.weekly_issues_average_over_day_for(cohort)
