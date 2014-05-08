@@ -20,7 +20,7 @@ class RequestsController < ApplicationController
 		else
 			@request = Request.new params[:request].permit(:description)
 			set_category_and_student(@request, params[:request][:category])
-			save_and_trigger_websocket('new', @request, :request_created, students_dashboard_path)
+			create_and_trigger_websocket('new', @request, :request_created, students_dashboard_path)
 		end
 	end 
 
@@ -32,13 +32,8 @@ class RequestsController < ApplicationController
 
 	def update
 	  @request = Request.find(params[:id])
-	  @request.category = Category.find params[:request][:category] if params[:request][:category]
-		if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
-			WebsocketRails[:request_edited].trigger 'edit', @request.id
-      redirect_to students_dashboard_path, notice: "Request was successfully updated."
-		else
-	    render 'edit', notice: "An error occured"
-		end
+	  set_category(@request, params[:request][:category])
+		update_and_trigger_websocket((params[:request].permit(:description, :category, :solved)), 'edit', @request, :request_edited, students_dashboard_path)
 	rescue StudentCannotSolve
 		flash[:notice] = "Please sign in as a teacher"
 	end
@@ -61,13 +56,22 @@ class RequestsController < ApplicationController
 end
 
 private
-def save_and_trigger_websocket(function, record, websocket, path)
+def create_and_trigger_websocket(function, record, websocket, path)
 	if record.save
 		WebsocketRails[websocket].trigger function, record
 		redirect_to path, notice: "Your request has been created."
 	else
 		flash[:error] = record.errors.full_messages.join(', ')
 		redirect_to path
+	end
+end
+
+def update_and_trigger_websocket(params, function, record, websocket, path)
+	if @request.update_or_solve(params, current_user)
+		WebsocketRails[websocket].trigger function, record.id
+    redirect_to path, notice: "Request was successfully updated."
+	else
+    render 'edit', notice: "An error occured"
 	end
 end
 
@@ -81,5 +85,10 @@ end
 
 def set_category_and_student(record, id)
 	record.student = current_student
-	record.category = Category.find(id) if !id.empty?
+	set_category(record, id)
+end
+
+def set_category(record, id)
+	return if !id || id.try(:empty?)
+	record.category = Category.find(id)
 end

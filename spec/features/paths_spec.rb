@@ -60,7 +60,7 @@ describe 'redirects to dashboard' do
 			expect(current_url).to match /teachers/
 		end
 
-		it 'after solving a students request', js:true do
+		xit 'after solving a students request', js:true do
 			click_link 'SOLVED'
 			
 			expect(current_url).to match /dashboard/
