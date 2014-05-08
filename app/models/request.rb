@@ -17,7 +17,7 @@ class Request < ActiveRecord::Base
   scope :for_cohort, ->(cohort) {where(student:Student.where(cohort: cohort))}
   scope :solved_requests, -> { where(solved: true) }
   scope :unsolved_requests, -> { where(solved: false) }
-  before_create :trigger_teacher_message
+  after_save :trigger_teacher_message
   
   # def category_name
   #   Category.find(self.category.to_i).name
@@ -98,33 +98,32 @@ class Request < ActiveRecord::Base
   end
 
   def sms_text_body
-    "Teacher you have a new request"
+    "There's a new request on the board"
   end
 
   def send_message
-    account_sid = Rails.application.secrets.TWILIO_TEST_SID
-    auth_token = Rails.application.secrets.TWILIO_TEST_TOKEN
+    account_sid = Rails.application.secrets.TWILIO_SID
+    auth_token = Rails.application.secrets.TWILIO_TOKEN
     
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     sms = @client.account.sms.messages.create(
-      :to => Rails.application.secrets.TWILIO_TEST_NUMBER,
+      :to => teacher_twilio.phone_number,
       :from => Rails.application.secrets.TWILIO_PHONE_NUMBER,
       :body => sms_text_body
     )
   end
 
   def trigger_teacher_message
-    # ADD AN OFF SWITCH FOR WHEN MAKERS IS CLOSED!!!!!!
-    # send_message if Request.board_empty_for?(5.minutes) # && student_request_cohort == teacher_cohort_id
+    send_message if Request.board_empty_for?(5.minutes) && Rails.env.production? && sms_enabled?
   end
 
-  # def student_request_cohort
-  
-  #   Request.last.student.cohort_id
-  # end
+  def teacher_twilio
+    cohort = student.cohort
+    teacher_phone = Teacher.find_by(cohort: cohort.month.to_s).twilio_info
+  end
 
-  # # def teacher_cohort_id
-  # #   Teacher.last.cohort.to_i
-  # # end
+  def sms_enabled?
+    teacher_twilio.enabled?
+  end 
 end

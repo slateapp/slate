@@ -62,25 +62,23 @@ describe 'Request board' do
 
 	context 'Board sends a teacher a text reminder' do
 		let(:ruby) {create :category}
-		let(:request) {build :request, {
-			category: ruby, solved: false}}
-		
+		let(:feb) { create :february}
+		let!(:teacher) { create :teacher, cohort: 'February', twilio_info: create(:twilio_info) }
+
+		let(:request) {build :request, {category: ruby, solved: false, student: create(:student, cohort: feb)}}
+		let(:twilio_info) {create :twilio_info, {enabled: true}}
+
 		it 'creates a message' do
-			expect(request.sms_text_body).to eq 'Teacher you have a new request'
+			expect(request.sms_text_body).to eq "There's a new request on the board"
 		end
 
-		xit 'sends an SMS message' do
+		it 'sends an SMS message' do
+			Request.stub(:board_empty_for?).and_return(true)
+			environment = double :env, production?: true
+			# request.stub(:sms_enabled?).and_return(true)
+			Rails.stub(:env).and_return(environment)
 			expect(request).to receive(:send_message)
 			request.save
 		end
 	end
-
-	# context 'Board sends texts to designated teachers' do
-	# 	let(:ruby) {create :category}
-	# 	let(:request) {build :request, {
-	# 		category: ruby, solved: false}}
-
-
-
-	# end
 end
