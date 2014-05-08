@@ -113,7 +113,7 @@ class Request < ActiveRecord::Base
   end
 
   def sms_text_body
-    "Teacher you have a new request"
+    "Teacher you have a new request!"
   end
 
   def send_message
