@@ -5,7 +5,7 @@ class TeachersController < ApplicationController
     @user, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @cohort = Cohort.find(selected_cohort) if selected_cohort
-    @students = Student.where(cohort: selected_cohort, approved: true).sort_by(&:requests)
+    @students = Student.where(cohort: selected_cohort, approved: true)
     # raise "#{Request.todays_average_wait_time_for(selected_cohort)}"
     @stats = {
       todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
