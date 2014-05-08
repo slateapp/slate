@@ -7,4 +7,8 @@ class PagesController < ApplicationController
   def require_approval
     redirect_to students_dashboard_path if current_student.approved
   end
+
+  def current_user
+    render json: current_student
+  end
 end

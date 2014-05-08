@@ -37,6 +37,7 @@ class StudentsController < ApplicationController
         flash[:error] = "There are no students to approve"
         redirect_to students_teachers_path
       else
+        WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', unapproved_students
         unapproved_students.update_all(approved: true)
         flash[:success] = "You successfully approved all the students"
         redirect_to students_teachers_path(approved: true)
@@ -47,6 +48,7 @@ class StudentsController < ApplicationController
         flash[:error] = "There are no students to approve"
         redirect_to students_teachers_path(approved: true)
       else
+        WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', approved_students
         approved_students.update_all(approved: false)
         flash[:success] = "You successfully unapproved all the students"
         redirect_to students_teachers_path
@@ -69,6 +71,7 @@ class StudentsController < ApplicationController
     student.name = params[:student][:name] if from_teacher? && params[:student]
     if approval?
       student.approved ? student.unapprove : student.approve
+      WebsocketRails[:student_approval].trigger 'student_approval', student
     end
     student.save
     flash[:notice] = "Student successfully updated" if from_teacher?

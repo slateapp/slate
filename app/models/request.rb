@@ -9,6 +9,7 @@ class Request < ActiveRecord::Base
   belongs_to :category
 	belongs_to :teacher
   validates :category, :description, :presence => true
+  validate :time_creation
   scope :todays_solved_requests, -> { where(solved: true, solved_at: Time.now.beginning_of_day..Time.now) }
   scope :todays_requests, ->(minute) { where(created_at: Time.now.beginning_of_day..minute) }
   scope :this_weeks_requests, -> {where(created_at: Date.today.beginning_of_week..Time.now)}
@@ -18,6 +19,15 @@ class Request < ActiveRecord::Base
   scope :solved_requests, -> { where(solved: true) }
   scope :unsolved_requests, -> { where(solved: false) }
   before_create :trigger_teacher_message
+
+  def time_creation
+    t = Date.today
+    request_from = Time.new(t.year, t.month, t.day, 6)
+    request_until = Time.new(t.year, t.month, t.day, 22)
+    if Time.now > request_until || Time.now < request_from
+      errors.add(:created_at, "You can only create a request between #{request_from.strftime("%H:%M")} and #{request_until.strftime("%H:%M")}, please try again later.")
+    end
+  end
   
   # def category_name
   #   Category.find(self.category.to_i).name
