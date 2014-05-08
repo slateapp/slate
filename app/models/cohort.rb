@@ -2,6 +2,7 @@ class Cohort < ActiveRecord::Base
 	has_many :students
   validates :month, :year, presence: true
   validate :cohort_uniqueness
+  scope :current_cohorts, -> { where(selected: true).sort{|a,b| a.created_at <=> b.created_at} }
 
   def cohort_uniqueness
     existing_record = Cohort.where(month: month, year: year).count

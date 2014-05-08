@@ -11,11 +11,12 @@ class RequestsController < ApplicationController
 			flash[:error] = "Please ask a teacher to select current cohorts"
 			redirect_to root_path 
 		end
-		@cohort_one = Cohort.where(selected: true).first
-		@cohort_two = Cohort.where(selected: true).second
+		@cohort_one, @cohort_two = Cohort.current_cohorts.first, Cohort.current_cohorts.second
+		@requests_for_cohort_one, @requests_for_cohort_two = get_requests(@cohort_one), get_requests(@cohort_two)
+	end
 
-		@requests_for_cohort_one = Request.for_cohort(@cohort_one || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
-		@requests_for_cohort_two = Request.for_cohort(@cohort_two || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
+	def get_requests(cohort)
+		Request.for_cohort(cohort || Cohort.all).unsolved_requests
 	end
 
 	def show
