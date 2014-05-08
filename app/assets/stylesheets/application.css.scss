@@ -372,27 +372,6 @@ button
 	overflow: hidden;
 }
 
-.animation
-{
-	width: 80%;
-	height: 950px;
-	margin-right: auto;
-	margin-left: auto;
-	background-image: image-url("waiting_animation.png");
-	background-repeat: no-repeat;
-	background-size: 100%;
-}
-
-.animation img
-{
-	position: relative;
-	background-color: transparent;
-	width: 11%;
-	margin-top: 8%;
-	margin-left: 12%;
-	z-index: 10000;
-}
-
 .tagline_panel
 {
 	height: 280px;
@@ -1173,12 +1152,32 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 
 /* ------------------------------------------------- */
 
+.animation
+{
+	width: 80%;
+	height: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	background-image: image-url("waiting_animation.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+.animation img
+{
+	position: relative;
+	background-color: transparent;
+	width: 11%;
+	margin-top: 8%;
+	margin-left: 12%;
+	z-index: 10000;
+}
+
 .banner_wrapper
 {
 	overflow: hidden;
 	position: absolute;
 	width: 52.89%;
-	height: 167px;
 	margin-top: -8.69%;
 	margin-left: 18%;
 	z-index: 1;
@@ -1194,8 +1193,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 .banner img
 {
 	max-height: 100%;
-	height: 99.8%;
-	width: 9.8%;
+	width: 9.7%;
 	float: left;
 	position: inherit;
 	margin-top: 0px;
@@ -1204,11 +1202,11 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 }
 
 .first {
-    -webkit-animation: bannermove 25s linear infinite;
-       -moz-animation: bannermove 25s linear infinite;
-        -ms-animation: bannermove 25s linear infinite;
-         -o-animation: bannermove 25s linear infinite;
-            animation: bannermove 25s linear infinite;
+    -webkit-animation: bannermove 15s linear infinite;
+       -moz-animation: bannermove 15s linear infinite;
+        -ms-animation: bannermove 15s linear infinite;
+         -o-animation: bannermove 15s linear infinite;
+            animation: bannermove 15s linear infinite;
 }
  
 @keyframes "bannermove" {
@@ -1216,7 +1214,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     margin-left: 0px;
  }
  100% {
-    margin-left: -1331px;
+    margin-left: -960px;
  }
  
 }
@@ -1226,7 +1224,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1331px;
+   margin-left: -960px;
  }
  
 }
@@ -1236,7 +1234,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1331px;
+   margin-left: -960px;
  }
  
 }
@@ -1246,7 +1244,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1331px;
+   margin-left: -960px;
  }
  
 }
@@ -1256,7 +1254,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1331px;
+   margin-left: -960px;
  }
 
 }
