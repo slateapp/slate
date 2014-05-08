@@ -17,4 +17,32 @@ class ApplicationController < ActionController::Base
   rescue ActiveRecord::RecordNotFound
     session[:student_id] = nil
   end
+
+  def deny_to_unapproved
+    unless current_teacher
+      unless current_student.approved == true
+        flash[:error] = "Error: you are still awaiting approval"
+        redirect_to root_path
+      end
+    end
+  end
+
+  def authenticate!
+    unless current_student || current_teacher
+      flash[:notice] = 'You need to sign in'
+      redirect_to students_dashboard_path
+    end
+  end
+
+  def cohorts_in_order
+    Cohort.all.sort_by(&:name_to_date).reverse
+  end
+
+  def cohort_options
+    cohorts_in_order.map { |cohort| [cohort.name, cohort.id] }  
+  end
+
+  def selected_cohort
+    params[:cohort] || @user.try(:cohort)
+  end
 end

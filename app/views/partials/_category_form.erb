@@ -1,0 +1,7 @@
+<%= render 'partials/teacher_menu' %>
+<%= form_for @category do |f| %>
+  <%= f.label :name, "Category" %>
+  <%= f.text_field :name, autofocus: true %>
+  <%= f.submit %>
+<% end %>
+</div>

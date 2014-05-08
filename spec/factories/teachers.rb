@@ -5,6 +5,7 @@ FactoryGirl.define do
     email "evgeny@makersacademy.com"
     password "12345678"
     password_confirmation "12345678"
+    confirmed_at Time.now
   end
 
   factory :not_teacher, class: Teacher do

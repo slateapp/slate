@@ -1,0 +1,43 @@
+<ul id='example'>
+</ul>
+
+<div class="waitingList">
+  <div class="curtain">
+  </div>
+  <div class="scroll <%= cohort_name.split(" ").join("_").downcase %>">
+    <ul></ul>
+  </div>
+</div>
+<br />
+
+<template id="request">
+  <li id="{{ request_id }}">
+    <div class="waiting">
+      <h3>{{ student_name }}</h3>
+      <div class="position">{{ position }}</div>
+      <p class="time">{{ time }}</p>
+      <p class="category">{{ category }}</p>
+      <div class="gravatar" style="background-image: url('{{gravatar_url}}');"></div>
+      <div class="codeSnippet prettyprint"><pre class="prettyprint">{{ description }}</pre></div>
+      <div class="solveTab"></div>
+    </div>
+  </li>
+</template>
+
+
+<script>
+  $(document).ready(function(){
+
+    $('.waiting').on('click', '.close', function() {
+      $(this).parent().parent().remove();
+    })
+
+  })
+
+  $(function() {
+    $('.waiting').click(function() {
+      $(this).find('waitingOpen').slideToggle();
+    });
+  });
+
+</script>

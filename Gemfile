@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.1.0'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
@@ -25,10 +27,19 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 
+gem 'mustache-js-rails'
+gem 'json'
+gem 'websocket-rails'
 gem 'devise' 
 gem 'omniauth-github'
 gem 'bootstrap-sass'
 gem 'gravtastic'
+gem 'thin'
+gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
+gem "chartkick"
+gem 'groupdate'
+gem 'twilio-ruby'
+
 
 group :development, :test do
 
@@ -38,7 +49,11 @@ group :development, :test do
 	gem 'poltergeist'
 	gem 'spring'
 	gem 'database_cleaner'
+	gem 'sms-spec'
+end
 
+group :production do 
+	gem 'rails_12factor'
 end
 
 # Use ActiveModel has_secure_password

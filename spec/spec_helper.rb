@@ -11,6 +11,10 @@ Capybara.javascript_driver = :poltergeist
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, js_errors: false)
 end
+Capybara.server do |app, port|
+  require 'rack/handler/thin'
+  Rack::Handler::Thin.run(app, :Port => port)
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -35,11 +39,17 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    if Capybara.current_driver == :rack_test
+      DatabaseCleaner.strategy = :transaction
+    else
+      DatabaseCleaner.strategy = :truncation
+    end
     DatabaseCleaner.start
   end
 
   config.after(:each) do
     DatabaseCleaner.clean
+    Capybara.reset_sessions!
   end
 
   # ## Mock Framework
@@ -60,7 +70,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -72,17 +82,36 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  SmsSpec.driver = :"twilio-ruby"
 end
 
 def sign_in_as_student_alex
   set_omniauth
   visit '/'
   click_link 'Sign in with GitHub'
+  student = Student.last
+  student.cohort = create(:february)
+  student.approve
+  visit '/'
+end
+
+def sign_in_as_unapproved_student
+  unapproved_student
+  visit '/'
+  click_link 'Sign in with GitHub'
+end
+
+def sign_out_as_student_alex
+  set_omniauth
+  visit '/'
+  click_link 'Sign Out'
 end
 
 def create_request
-  visit '/requests/new'
+  create :postgresql
+  visit '/students/dashboard'
   fill_in 'Description', with: 'Migration issue'
-  fill_in 'Category', with: 'Postgresql'
+  select('Postgresql', from: 'Category')
   click_button 'Create Request'
 end

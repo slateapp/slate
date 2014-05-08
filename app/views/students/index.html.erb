@@ -1,1 +1,7 @@
-Hello world
+<%= render 'requests/list' %>
+
+<% unless current_student.requests.where(solved: false).any? %>
+	<%= render 'requests/new' %>
+<% end %>
+
+

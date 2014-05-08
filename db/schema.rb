@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429161147) do
+ActiveRecord::Schema.define(version: 20140507115129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,21 +26,34 @@ ActiveRecord::Schema.define(version: 20140429161147) do
 
   add_index "authorizations", ["student_id"], name: "index_authorizations_on_student_id", using: :btree
 
-  create_table "cohorts", force: true do |t|
+  create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "cohorts", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "month"
+    t.string   "year"
+    t.boolean  "selected",   default: false
   end
 
   create_table "requests", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
-    t.string   "category"
     t.integer  "student_id"
+    t.boolean  "solved",      default: false
+    t.datetime "solved_at"
+    t.integer  "category_id"
+    t.integer  "teacher_id"
   end
 
+  add_index "requests", ["category_id"], name: "index_requests_on_category_id", using: :btree
   add_index "requests", ["student_id"], name: "index_requests_on_student_id", using: :btree
+  add_index "requests", ["teacher_id"], name: "index_requests_on_teacher_id", using: :btree
 
   create_table "students", force: true do |t|
     t.string   "name"
@@ -67,8 +80,12 @@ ActiveRecord::Schema.define(version: 20140429161147) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cohort"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
+  add_index "teachers", ["confirmation_token"], name: "index_teachers_on_confirmation_token", unique: true, using: :btree
   add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true, using: :btree
   add_index "teachers", ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true, using: :btree
 

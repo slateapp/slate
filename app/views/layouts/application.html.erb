@@ -7,16 +7,15 @@
 
 	<%= csrf_meta_tags %>
 	<%= stylesheet_link_tag 'application' %>
-
+	<%= favicon_link_tag 'sl8.png' %>
 </head>
 <body>
 <%= render 'partials/header' %>
 <% flash do |key, value| %>
-  <div class="alert <%= flash_class(key) %>"><button type="button" class="close" data-dismiss="alert">&times;</button><%= value %></div>
+  <div class="alert <%= flash_class(key) %>"><%= value %></div>
 <% end %>
 
 	<%= javascript_include_tag 'application' %>
 	<%= yield %>
-
 </body>
 </html>

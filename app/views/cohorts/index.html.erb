@@ -1,10 +1,21 @@
+<%= render 'requests/list' %>
 <%= render 'partials/teacher_menu' %>
 
-<%= form_tag teacher_path(current_teacher), method: :patch do %>
+  <%= form_tag teacher_path(current_teacher), method: :patch do %>
     <%= label :name, "Cohort" %>
-    <%= select("cohort", "id", Cohort.all.collect {|cohort| [ cohort.name, cohort.id ] }, selected: current_teacher.cohort || nil) %>
+    <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"} %>
     <%= submit_tag'Set as default' if Cohort.count > 0 %>
   <% end %>
+  <%= form_tag selected_cohorts_cohorts_path, method: :patch do %>
+    <%= select "cohort1", "id", @cohort_options, {selected: (@cohort1.try(:id) || 0), :include_blank => "Select a cohort"} %>
+    <%= select "cohort2", "id", @cohort_options, {selected: (@cohort2.try(:id) || 0), :include_blank => "Select a cohort"} %>
+    <%= submit_tag'Update Current Cohorts' if Cohort.count > 0 %>
+  <% end %>
+  <div>
+    <h4>Current cohorts</h4>
+    <div id="cohort1_option"><%= "Cohort 1: #{@cohort1.try(:name) || "Not set"}" %></div>
+    <div id="cohort2_option"><%= "Cohort 2: #{@cohort2.try(:name) || "Not set"}" %></div>
+  </div>
   <br>
 <%= link_to("Add Cohort", new_cohort_path , class: "btn btn-default") %>
 <table class="table table-hover">
@@ -12,7 +23,8 @@
   <% @cohorts.each do |cohort| %>
     <tr>
       <td><%= cohort.name %></td>
-      <td><%= link_to("Edit", edit_cohort_path(cohort), class: "btn btn-default") %><%= link_to("Delete", cohort_path(cohort), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-default") %></td>
+      <td><%= link_to("Edit", edit_cohort_path(cohort), class: "btn btn-edit") %>
+      <%= link_to("Delete", cohort_path(cohort), {method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger"}) %></td>
     </tr>
   <% end %>
 </table>

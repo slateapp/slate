@@ -1,3 +1,4 @@
+<%= render 'requests/list' %>
 <%= render 'partials/teacher_menu' %>
   <h4>Students</h4>
   
@@ -6,33 +7,20 @@
 <%= link_to("Approved (#{@approved.count})", students_teachers_path(approved: true)) %>
 
 <div class="students-container">
+  <%= link_to(@switch + " All", batch_change_students_path(batch_action: @switch) , {data: {confirm: "Are you sure?"}, class: "btn btn-danger", method: :patch}) if @students.count > 0 %>
   <table class="table table-hover">
-  <% if @switch == "unapproved" %>
-    <th>Name</th><th>Actions</th>
-    <% if @students.count == 0 %>
-      <tr><td><%= "No Students requiring approval" %></td><tr>
-    <% end %>
-    <% @students.each do |student| %>
-      <tr>
-        <td><%= student.name %></td>
-        <td><%= link_to("Approve", approve_student_teachers_path(id: student), class: "btn btn-default") %>
-        <%= link_to("Delete", delete_student_teachers_path(id: student), class: "btn btn-default") %></td>
-      </tr>
-    <% end %>
-  <% else %>
-    <th>Name</th><th>Cohort</th><th>Actions</th>
-    <% if @students.count == 0 %>
-      <tr><td><%= "No Students requiring approval" %></td><tr>
-    <% end %>
-    <% @students.each do |student| %>
-      <tr>
-        <td><%= student.name %></td>
-        <td><%= student.cohort ? student.cohort.name : "No cohort assigned"%></td>
-        <td><%= link_to("Unapprove", unapprove_student_teachers_path(id: student), class: "btn btn-default") %>
-        <%= link_to("Edit", edit_student_teachers_path(id: student), class: "btn btn-default") %>
-        <%= link_to("Delete", delete_student_teachers_path(id: student), class: "btn btn-default") %></td>
-      </tr>
-    <% end %>
+  <th>Name</th><th>Cohort</th><th>Actions</th>
+  <% if @students.count == 0 %>
+    <tr><td><%= "No Students requiring approval" %></td><tr>
+  <% end %>
+  <% @students.each do |student| %>
+    <tr>
+      <td><%= student.name %></td>
+      <td><%= student.cohort ? student.cohort.name : "No cohort assigned"%></td>
+      <td><%= link_to(@switch, student_path(id: student, teacher: true, approve: true), {class: "btn btn-edit", method: :patch}) %>
+      <%= link_to("Edit", edit_student_teachers_path(id: student), class: "btn btn-edit") %>
+      <%= link_to("Delete", student_path(id: student, teacher: true), {data: {confirm: "Are you sure?"}, class: "btn btn-danger", method: :delete}) %></td>
+    </tr>
   <% end %>
   </table>
 </div>

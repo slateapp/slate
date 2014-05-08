@@ -1,6 +1,7 @@
-<h1>Editing post</h1>
+<div class="indent_request">
+  <h2>Editing post</h2>
 
-<%= form_for(@request) do |f| %>
+  <%= form_for(@request) do |f| %>
 
   <p>
     <%= f.label :description %>
@@ -8,12 +9,19 @@
   </p>
   <p>
     <%= f.label :category %>
-    <%= f.text_field :category %>
+    <div class="styled-select">
+      <%= f.select :category, Category.all.map { |category| [category.name, category.id] }, {selected: @request.category_id || 0, :include_blank => "Select a category"} %>
+    </div>
   </p>
   <p>
-    <%= f.submit "Edit" %>
+    <div class="styled-submit">
+      <%= f.submit "Update" %>
+    </div>
   </p>
-<% end %>
-
-
-<%= link_to 'Back', requests_path %>
+  <p>
+    <div class="styled-back">
+      <%= link_to 'Back', requests_path %>
+    </div>
+  </p>
+  <% end %>
+</div>

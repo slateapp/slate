@@ -1,7 +1,21 @@
 class RequestsController < ApplicationController
-
+	before_action :authenticate!, only: [:new, :create, :destroy, :edit]
+  before_filter :deny_to_unapproved, only: [:new, :create, :edit, :update, :destroy]
+	
 	def index
-		@requests = Request.all
+		@requests = Request.for_cohort((params[:cohort] || current_user.try(:cohort)) || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
+	end
+
+	def display
+		if Cohort.where(selected: true).count != 2
+			flash[:error] = "Please ask a teacher to select current cohorts"
+			redirect_to root_path 
+		end
+		@cohort_one = Cohort.where(selected: true).first
+		@cohort_two = Cohort.where(selected: true).second
+
+		@requests_for_cohort_one = Request.for_cohort(@cohort_one || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
+		@requests_for_cohort_two = Request.for_cohort(@cohort_two || Cohort.all).where(solved: false).sort {|a,b| a.created_at <=> b.created_at}
 	end
 
 	def show
@@ -9,45 +23,68 @@ class RequestsController < ApplicationController
 	end
 
 	def new 
-		raise 'No' unless current_student
-		@request = Request.new
-	end
-
-	def create
-		@request = Request.new params[:request].permit(:description, :category)
-		@request.student = current_student
-
-		if @request.save
-			redirect_to '/requests', :notice => "Your request has been created."
+		if current_student
+			@request = Request.new
 		else
-			render "new"
+			flash[:notice] = 'Sorry, you must be a student to make a request'
+			redirect_to '/'
 		end
 	end
 
+	def create
+		if current_student.requests.where(solved: false).any?
+			flash[:notice] = 'You already have an active request.'
+			redirect_to students_dashboard_path
+		else
+			@request = Request.new params[:request].permit(:description)
+			@request.student = current_student
+			@request.category = Category.find params[:request][:category] if !params[:request][:category].empty?
+
+			if @request.save
+				WebsocketRails[:request_created].trigger 'new', @request
+				redirect_to students_dashboard_path, :notice => "Your request has been created."
+			else
+				flash[:error] = @request.errors.full_messages.join(', ')
+				redirect_to students_dashboard_path
+			end
+		end
+	end 
+
 	def edit
-		@request = Request.find(params[:id])
+		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
+		flash[:notice] = 'Request was successfully updated.'
+		rescue ActiveRecord::RecordNotFound
+			flash[:notice] = 'Error: This is not your post'
+			redirect_to students_dashboard_path
 	end
 
 	def update
 	  @request = Request.find(params[:id])
-
-	    if @request.update_attributes(params[:request].permit(:description, :category))
-	      flash[:notice] = 'Request was successfully updated.'
-	      redirect_to requests_path
-	    else
-	      render 'edit'
+	  @request.category = Category.find params[:request][:category] if params[:request][:category]
+	  if @request.update_or_solve((params[:request].permit(:description, :category, :solved)), current_user)
+			WebsocketRails[:request_edited].trigger 'edit', @request.id
+      flash[:notice] = 'Request was successfully updated.'
+      redirect_to students_dashboard_path
+	  else
+	    render 'edit'
 		end
+		rescue StudentCannotSolve
+		flash[:notice] = "Please sign in as a teacher"
 	end
 
 	def destroy
-		@request = Request.find params[:id]
+		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
 		@request.destroy
-
+		WebsocketRails[:request_deleted].trigger 'destroy', @request.id
 		flash[:notice] = 'Request deleted'
+		redirect_to students_dashboard_path
 
-		redirect_to '/requests'
+	rescue ActiveRecord::RecordNotFound
+		flash[:notice] = 'Error: This is not your post'
+		redirect_to students_dashboard_path
 	end
 
-
-
+	def current_user
+		current_teacher || current_student
+	end
 end

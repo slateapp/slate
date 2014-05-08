@@ -1,0 +1,16 @@
+<div class="indent_request">
+	<%= form_for Request.new do |f| %>
+
+	<%= f.label :description %>
+	<%= f.text_area :description, :placeholder => "Describe problem or paste code snippet here..." %>
+
+	<%= f.label :category %>
+	<div class="styled-select">
+	<%= f.select :category, Category.all.map { |category| [category.name, category.id] }.sort, :include_blank => " Select a category" %>
+	</div>
+	<div class="styled-submit">
+		<%= f.submit %>
+	</div>
+
+	<% end %>
+</div>

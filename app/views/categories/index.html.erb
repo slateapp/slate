@@ -1,0 +1,15 @@
+<%= render 'requests/list' %>
+<%= render 'partials/teacher_menu' %>
+
+<%= link_to("Add Category", new_category_path , class: "btn btn-default") %>
+<table class="table table-hover">
+  <th class="table_title">Name</th><th class="table_title">Actions</th>
+  <% @categories.each do |category| %>
+    <tr>
+      <td class="vert_fix"><%= category.name %></td>
+      <td><%= link_to("Edit", edit_category_path(category), class: "btn btn-edit") %>
+      <%= link_to("Delete", category_path(category), {data: {confirm: "Are you sure?"}, method: :delete, class: "btn btn-danger"}) %></td>
+    </tr>
+  <% end %>
+</table>
+</div>

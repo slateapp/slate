@@ -12,9 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require websocket_rails/main
+//= require prettify
 //= require_tree .
 //= require bootstrap
+//= require jsapi
+//= require chartkick
 
 var li = '';
 $(document.body).on('click', '.del' ,function(){
@@ -30,3 +33,10 @@ $(document.body).on('click', '#delButton' ,function(){
 $(document.body).on('click', '#giveupButton' ,function(){
     $('#sterge').popup("close");
 });
+
+$(document).ready(function(){
+	// $('.alert').animate({ top: '-=100px' }, 600, 'easeInSine', function () {
+		$('.alert').delay( 3000 ).fadeOut( 1000 );
+	// })
+});
+

@@ -1,55 +1,57 @@
 class TeachersController < ApplicationController
-  before_action :authenticate_teacher!, only: [:dashboard, :update, :students, :approve_student]
+  before_action :authenticate_teacher!, only: [:dashboard, :update, :students, :edit_student]
+
   def dashboard
-    @teacher = current_teacher
-    @default = Cohort.find(@teacher.cohort) if @teacher.cohort
-    @students = Student.where(cohort: @teacher.cohort, approved: true)
+    @user, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
+    @requests = Request.for_cohort(selected_cohort || Cohort.all)
+    @cohort = Cohort.find(selected_cohort) if selected_cohort
+    @students = Student.where(cohort: selected_cohort, approved: true)
+    # raise "#{Request.todays_average_wait_time_for(selected_cohort)}"
+    @stats = {
+      todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
+      todays_queue: Request.todays_average_queue_for(selected_cohort).round,
+      weekly_requests: Request.for_cohort(selected_cohort || Cohort.all).group_by_day(:created_at, last: 7).count,
+      pie: Request.weekly_request_categories_for(selected_cohort),
+      leaderboard: Request.leaderboard_for(selected_cohort),
+      weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort)
+    }
+  end
+
+  def statistics
+    @user, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
+    @requests = Request.for_cohort(selected_cohort || Cohort.all)
+    @stats = {
+      todays_wait_time: Request.todays_average_wait_time_for(nil).round,
+      todays_queue: Request.todays_average_queue_for(nil).round,
+      weekly_requests: Request.for_cohort(Cohort.all).group_by_day(:created_at, last: 7).count,
+      pie: Request.weekly_request_categories_for(nil),
+      leaderboard: Request.leaderboard_for(nil),
+      weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(nil)
+    }
   end
 
   def update
-    @teacher = current_teacher
-    @cohort = Cohort.find params[:cohort][:id]
-    @teacher.cohort = @cohort
-    @teacher.save
-    redirect_to dashboard_teachers_path
-  end
-
-  def students
-    if params[:approved]
-      @approved = Student.where(approved: true)
-      @unapproved = Student.where(approved: false)
-      @students = @approved
-      @switch = "approved"
+    teacher = current_teacher
+    teacher.cohort = Cohort.find params[:cohort][:id]
+    if teacher.save
+      flash[:success] = "Default cohort updated successfully"
+      redirect_to cohorts_path
     else
-      @approved = Student.where(approved: true)
-      @unapproved = Student.where(approved: false)
-      @students = @unapproved
-      @switch = "unapproved"
+      teacher.errors.full_messages.each{ |msg| flash[:error] = msg }
+      redirect_to dashboard_teachers_path
     end
   end
 
-  def approve_student
-    @student = Student.find params[:id]
-    @student.approve
-    flash[:notice] = "#{@student.name} has been approved!"
-    redirect_to students_teachers_path
-  end
-
-  def unapprove_student
-    @student = Student.find params[:id]
-    @student.unapprove
-    flash[:notice] = "#{@student.name} has been unapproved!"
-    redirect_to students_teachers_path(approved: true)
-  end
-
-  def delete_student
-    @student = Student.find params[:id]
-    @student.destroy
-    flash[:notice] = "#{@student.name} has been deleted!"
-    redirect_to :back
+  def students
+    @user = current_teacher
+    @requests = Request.for_cohort(selected_cohort || Cohort.all)
+    @approved = Student.where(approved: true).sort_by(&:cohort).reverse
+    @unapproved = Student.where(approved: false).sort_by(&:cohort).reverse
+    params[:approved] ? (@students, @switch = @approved, "Unapprove") : (@students, @switch = @unapproved, "Approve")
   end
 
   def edit_student
     @student = Student.find params[:id]
+    @cohort_options = cohort_options
   end
 end
