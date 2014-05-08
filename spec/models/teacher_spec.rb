@@ -1,4 +1,1 @@
-require 'spec helper'
-
-class Teacher < ActiveRecord::Base
-end
+require 'spec_helper'
