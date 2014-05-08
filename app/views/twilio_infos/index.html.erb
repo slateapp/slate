@@ -4,8 +4,8 @@
 	<%= link_to "Add Number", new_twilio_info_path %>
 <% else %>
 	<%= link_to "Edit Number", edit_twilio_info_path(current_teacher.twilio_info) %>
-	<%= link_to "Delete Number", twilio_info_path(current_teacher.twilio_info), {data: {confirm: "Are you sure?"}, method: :destroy}  %>
+	<%= link_to "Delete Number", twilio_info_path(current_teacher.twilio_info), {data: {confirm: "Are you sure?"}, method: :delete}  %>
 <% end %>
 <p>Phone number: <%= @twilioinfo.try(:phone_number) || "Not set" %></p>
-<p>Twilio Alerts: <%= @twilioinfo.try(:enabled) || "Not enabled" %></p>
+<p>Twilio Alerts: <%= @twilioinfo.try(:enabled) || "Not set" %></p>
 </div>

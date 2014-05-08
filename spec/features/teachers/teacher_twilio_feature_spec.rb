@@ -12,7 +12,7 @@ describe 'Twilio feature specs' do
 		specify "they do not have twillio alerts enabled" do
 			login_as (create :teacher)
 			visit twilio_infos_path
-			expect(page).to have_content 'Twilio Alerts: Not enabled'
+			expect(page).to have_content 'Twilio Alerts: Not set'
 		end
 	end
 
@@ -69,6 +69,14 @@ describe 'Twilio feature specs' do
 			click_button 'Update Twilio Info'
 			expect(page).to have_content 'Twilio Alerts: true'
 		end
+	end
+
+	it "can delete their twilio information" do
+		login_as (create :teacher, twilio_info: (create :twilio_info))
+		visit twilio_infos_path
+		click_link "Delete Number"
+		expect(page).to have_content 'Phone number: Not set'
+		expect(page).to have_content 'Twilio Alerts: Not set'
 	end
 
 end
