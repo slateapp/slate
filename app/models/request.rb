@@ -9,15 +9,25 @@ class Request < ActiveRecord::Base
   belongs_to :category
 	belongs_to :teacher
   validates :category, :description, :presence => true
+  validate :time_creation
   scope :todays_solved_requests, -> { where(solved: true, solved_at: Time.now.beginning_of_day..Time.now) }
   scope :todays_requests, ->(minute) { where(created_at: Time.now.beginning_of_day..minute) }
-  scope :this_weeks_requests, -> {where(created_at: (Date.today.beginning_of_week)..Time.now)}
+  scope :this_weeks_requests, -> {where(created_at: Date.today.beginning_of_week..Time.now)}
   scope :solved_by, ->(teacher) {where(teacher: teacher)}
   scope :categorised_by, ->(category) {where(category: category)}
   scope :for_cohort, ->(cohort) {where(student:Student.where(cohort: cohort))}
   scope :solved_requests, -> { where(solved: true) }
   scope :unsolved_requests, -> { where(solved: false) }
-  before_create :trigger_teacher_message
+  # before_create :trigger_teacher_message
+
+  def time_creation
+    t = Date.today
+    request_from = Time.new(t.year, t.month, t.day, 6)
+    request_until = Time.new(t.year, t.month, t.day, 22)
+    if Time.now > request_until || Time.now < request_from
+      errors.add(:created_at, "You can only create a request between #{request_from.strftime("%H:%M")} and #{request_until.strftime("%H:%M")}, please try again later.")
+    end
+  end
   
   # def category_name
   #   Category.find(self.category.to_i).name
@@ -55,10 +65,15 @@ class Request < ActiveRecord::Base
 
   def self.todays_average_queue_for(cohort)
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
+    return 0 if todays_requests(Time.now).for_cohort(cohort).unsolved_requests.count == 0
     queue_lengths = []
-    return 0 if todays_solved_requests.for_cohort(cohort).count == 0
-    todays_requests(Time.now).for_cohort(cohort).group_by_minute(:created_at).count.each{|key,value| queue_lengths << value }
-    queue_lengths.reject!{|queue_length| queue_length == 0}
+    minute = todays_requests(Time.now).for_cohort(cohort).first.created_at - 1
+    while minute < Time.now do
+      queue_length = todays_requests(minute).for_cohort(cohort).unsolved_requests.count
+      queue_lengths << queue_length unless queue_length == 0
+      minute += 60
+    end
+    return 0 if queue_lengths.count == 0
     queue_lengths.inject{|sum,length| sum + length}/queue_lengths.count
   end
 
@@ -66,20 +81,21 @@ class Request < ActiveRecord::Base
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
     this_weeks_requests.for_cohort(cohort).map{|request|
       [request.category.name, Request.this_weeks_requests.categorised_by(request.category).count]
-    }.uniq
+    }.uniq.compact
   end
 
   def self.leaderboard_for(cohort)
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
     this_weeks_requests.for_cohort(cohort).map{|request|
       [request.teacher.name, Request.this_weeks_requests.solved_by(request.teacher).count] if request.solved
-    }.uniq
+    }.uniq.compact
   end
 
   def self.weekly_issues_average_over_day_for(cohort)
     cohort = cohort ? Cohort.find(cohort) : Cohort.all
     [{name: "Average Time to Solve", data: this_weeks_requests.for_cohort(cohort).solved_requests.group_by_hour(:solved_at).count},
     {name: "Average Queue", data: this_weeks_requests.for_cohort(cohort).group_by_hour(:created_at).count}]
+  end
 
   def self.board_empty?
     where(solved: false).none?
@@ -97,7 +113,7 @@ class Request < ActiveRecord::Base
   end
 
   def sms_text_body
-    "Teacher you have a new request"
+    "Teacher you have a new request!"
   end
 
   def send_message

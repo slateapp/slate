@@ -16,8 +16,20 @@
 	<h3><%= link_to("Sign in with GitHub", '/auth/github', class: "buzz-out")  %></h3>
 </div>
 
+<div class="tagline_panel">
+	<h3>Improve productivity in the classroom</h3>
+</div>
+
 <div class="reading_panel">
-	<%= image_tag "mock-up-screenshot3.jpg" %>
+	<div class="animation">
+		<%= image_tag "waiting_first.png", {class: 'bummer'} %>
+		<div class="banner_wrapper">
+			<div class="banner">
+				<%= image_tag "waiting_list1.png", {class: "first"} %>
+				<%= image_tag "waiting_list2.png" %>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="tagline_panel">
 	<h3>Improve productivity in your work environment</h3>

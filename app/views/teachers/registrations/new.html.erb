@@ -1,25 +1,24 @@
-<h2>Sign up</h2>
-<br />
+<div class="border-form-div">
+		<h2>Sign up</h2>
+		<br />
+		<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+		  <%= devise_error_messages! %>
 
-<div class="indent">
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+		  <div><%= f.label :email %><br />
+		  <%= f.email_field :email, autofocus: true %></div>
+		<br />
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
-<br />
+		  <div><%= f.label :password %><br />
+		    <%= f.password_field :password, autocomplete: "off" %></div>
+		<br />
 
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
-<br />
+		  <div><%= f.label :password_confirmation %><br />
+		    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+		<br />
 
-  <div><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
-<br />
+		  <div><%= f.submit "Sign up", :class=>'btn btn-primary' %></div>
+		<% end %>
+		<br />
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
-<br />
-
-<%= render "teachers/shared/links" %>
+		<%= render "teachers/shared/links" %>
 </div>

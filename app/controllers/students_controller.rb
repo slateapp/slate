@@ -18,7 +18,7 @@ class StudentsController < ApplicationController
   end
 
   def failure
-	  render :text => "Sorry, but you didn't allow access to our app!"
+	  render :text => "Sorry, but you haven't allowed SL8 to access your GitHub so we cannot sign you up!"
 	end
 
   def destroy
@@ -29,6 +29,32 @@ class StudentsController < ApplicationController
 		@cohorts_list = Cohort.all.sort_by(&:name_to_date).reverse
     @cohort_options = cohort_options
 	end
+
+  def batch_change
+    if params[:batch_action] == "Approve"
+      unapproved_students = Student.where(approved: false)
+      if unapproved_students.count == 0
+        flash[:error] = "There are no students to approve"
+        redirect_to students_teachers_path
+      else
+        WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', unapproved_students
+        unapproved_students.update_all(approved: true)
+        flash[:success] = "You successfully approved all the students"
+        redirect_to students_teachers_path(approved: true)
+      end
+    else
+      approved_students = Student.where(approved: true)
+      if approved_students.count == 0
+        flash[:error] = "There are no students to approve"
+        redirect_to students_teachers_path(approved: true)
+      else
+        WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', approved_students
+        approved_students.update_all(approved: false)
+        flash[:success] = "You successfully unapproved all the students"
+        redirect_to students_teachers_path
+      end
+    end
+  end
 
 	def update
     student = from_teacher? ? (Student.find params[:id]) : current_student
@@ -45,6 +71,7 @@ class StudentsController < ApplicationController
     student.name = params[:student][:name] if from_teacher? && params[:student]
     if approval?
       student.approved ? student.unapprove : student.approve
+      WebsocketRails[:student_approval].trigger 'student_approval', student
     end
     student.save
     flash[:notice] = "Student successfully updated" if from_teacher?
@@ -76,7 +103,7 @@ end
 
 def create_new_session(authorization)
   student = authorization.student
-  flash[:notice] = "Hi #{student.name}! Awesome, welcome back."
+  flash[:notice] = "Welcome back #{student.name}."
   redirect_to students_dashboard_path
   student
 end
@@ -85,14 +112,14 @@ def create_new_student(auth_hash)
   student = Student.new :name => auth_hash["info"]["name"], :email => auth_hash["info"]["email"]
   student.authorizations.build :provider => auth_hash["provider"], :uid => auth_hash["uid"]
   student.save
-  flash[:notice] = "Hi #{student.name}! Awesome, you've signed up!"
+  flash[:notice] = "Hi #{student.name}, welcome to SL8."
   redirect_to get_cohort_path
   student
 end
 
 def destroy_session
   session[:student_id] = nil
-  flash[:notice] = "You have now signed out!"
+  flash[:notice] = "You have successfully signed out!"
   redirect_to root_path
 end
 

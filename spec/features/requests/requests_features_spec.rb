@@ -1,21 +1,13 @@
 require 'spec_helper'
 
 describe 'requests page' do
-	# check repetition in requests_board_features_spec.rb
-	context 'no requests' do
-		xit 'shows a message', js: true do
-			visit '/requests'
-			expect(page).to have_content 'No Requests'
-		end
-	end
-
 	describe 'adding requests' do
 		it "throws an error if the user doesn't pick a category" do
 			sign_in_as_student_alex
 			visit '/students/dashboard'
 		  fill_in 'Description', with: 'Migration issue'
 		  click_button 'Create Request'
-		  expect(page).to have_content 'Error: Please fill out all fields'
+		  expect(page).to have_content "Category can't be blank"
 		end
 
 		it "throws an error if the user doesn't enter a description" do
@@ -24,7 +16,7 @@ describe 'requests page' do
 			visit '/students/dashboard'
 		  select('Postgresql', from: 'Category')
 		  click_button 'Create Request'
-		  expect(page).to have_content 'Error: Please fill out all fields'
+		  expect(page).to have_content "Description can't be blank"
 		end
 
 		context '1 valid post' do

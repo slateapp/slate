@@ -10,6 +10,7 @@
   get '/students/cohort' => "students#cohort", :as => :get_cohort
   get '/students/dashboard' => "students#index"
   get '/students/require_approval' => "pages#require_approval"
+  get '/current_user' => "pages#current_user"
   
   devise_for :teachers
   resources :teachers, only:[:update] do
@@ -30,7 +31,11 @@
     end
   end
 
-  resources :students
+  resources :students do
+    collection do
+      patch 'batch_change'
+    end
+  end
   resources :requests do
     collection do 
       get 'solved'
