@@ -2,42 +2,33 @@ require 'spec_helper'
 
 describe "Request Timing Features" do
 	let(:t) { Date.today }
-  context "creating a request between 08:30 and 21:00" do
-  	it "is successful at 8:30" do
-	  	time_now = Time.zone.local(t.year, t.month, t.day, 8, 30)
+  context "creating a request between 08:30 and 22:00" do
+  	it "is successful at 6:00" do
+	  	time_now = Time.zone.local(t.year, t.month, t.day, 6, 00)
 	    Time.stub(:now).and_return(time_now)
 	    create :request
 	    expect(Request.count).to eq 1
   	end
 
-  	it "is successful at 21:00" do
-	  	time_now = Time.zone.local(t.year, t.month, t.day, 21, 00)
+  	it "is successful at 22:00" do
+	  	time_now = Time.zone.local(t.year, t.month, t.day, 22, 00)
 	    Time.stub(:now).and_return(time_now)
 	    create :request
 	    expect(Request.count).to eq 1
   	end
   end
 
-  context "creating a request between 21:00 and 08:30" do
+  context "creating a request between 22:00 and 06:00" do
   	it "returns an error at 8:29" do
-	  	time_now = Time.zone.local(t.year, t.month, t.day, 8, 29)
+	  	time_now = Time.zone.local(t.year, t.month, t.day, 5, 59)
 	    Time.stub(:now).and_return(time_now)
 	    expect{create :request}.to raise_error(ActiveRecord::RecordInvalid)
 	    expect(Request.count).to eq 0
   	end
 
-  	it "returns an error at 21:01" do
-	  	time_now = Time.zone.local(t.year, t.month, t.day, 21, 01)
+  	it "returns an error at 22:01" do
+	  	time_now = Time.zone.local(t.year, t.month, t.day, 22, 01)
 	    Time.stub(:now).and_return(time_now)
-	    expect{create :request}.to raise_error(ActiveRecord::RecordInvalid)
-	    expect(Request.count).to eq 0
-  	end
-  end
-
-  context "creating a request on a weekend" do
-  	it "returns an error" do
-	  	time_now = Time.zone.local(2014, 05, 10, 21, 01)
-	  	Time.stub(:now).and_return(time_now)
 	    expect{create :request}.to raise_error(ActiveRecord::RecordInvalid)
 	    expect(Request.count).to eq 0
   	end
