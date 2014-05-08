@@ -7,7 +7,7 @@ describe 'requests page' do
 			visit '/students/dashboard'
 		  fill_in 'Description', with: 'Migration issue'
 		  click_button 'Create Request'
-		  expect(page).to have_content 'Error: Please fill out all fields'
+		  expect(page).to have_content "Category can't be blank"
 		end
 
 		it "throws an error if the user doesn't enter a description" do
@@ -16,7 +16,7 @@ describe 'requests page' do
 			visit '/students/dashboard'
 		  select('Postgresql', from: 'Category')
 		  click_button 'Create Request'
-		  expect(page).to have_content 'Error: Please fill out all fields'
+		  expect(page).to have_content "Description can't be blank"
 		end
 
 		context '1 valid post' do
