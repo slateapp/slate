@@ -131,7 +131,7 @@ class Request < ActiveRecord::Base
   end
 
   def trigger_teacher_message
-    send_message if Request.board_empty_for?(5.minutes) && Rails.env.production? && sms_enabled?
+    send_message if Request.board_empty_for?(30.seconds) && Rails.env.production? && sms_enabled?
   end
 
   def teacher_twilio
