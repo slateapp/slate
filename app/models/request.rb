@@ -118,25 +118,25 @@ class Request < ActiveRecord::Base
   end
 
   def send_message
-    account_sid = Rails.application.secrets.TWILIO_SID
-    auth_token = Rails.application.secrets.TWILIO_TOKEN
+    account_sid = Rails.application.secrets.twilio_sid
+    auth_token = Rails.application.secrets.twilio_token
     
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     sms = @client.account.sms.messages.create(
       :to => teacher_twilio.phone_number,
-      :from => Rails.application.secrets.TWILIO_PHONE_NUMBER,
+      :from => Rails.application.secrets.twilio_phone_number,
       :body => sms_text_body
     )
   end
 
   def trigger_teacher_message
-    send_message if Request.board_empty_for?(5.minutes) && Rails.env.production? && sms_enabled?
+    send_message if Request.board_empty_for?(30.seconds) && Rails.env.production? && sms_enabled?
   end
 
   def teacher_twilio
-    cohort = student.cohort
-    teacher_phone = Teacher.find_by(cohort: cohort.month.to_s).twilio_info
+    cohort = student.cohort_id
+    teacher_phone = Teacher.find_by(cohort: cohort.month.to_s).twilio_info # for some reason it doesn't look like twilio_info is connection to Teacher
   end
 
   def sms_enabled?
