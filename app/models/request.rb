@@ -18,7 +18,7 @@ class Request < ActiveRecord::Base
   scope :for_cohort, ->(cohort) {where(student:Student.where(cohort: cohort))}
   scope :solved_requests, -> { where(solved: true) }
   scope :unsolved_requests, -> { where(solved: false) }
-  before_create :trigger_teacher_message
+  # before_create :trigger_teacher_message
 
   def time_creation
     t = Date.today
