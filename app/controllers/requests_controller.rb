@@ -16,7 +16,7 @@ class RequestsController < ApplicationController
 	end
 
 	def get_requests(cohort)
-		Request.for_cohort(cohort || Cohort.all).unsolved_requests
+		Request.for_cohort(cohort || Cohort.all).unsolved_requests.sort{|a,b| a.created_at <=> b.created_at}
 	end
 
 	def show
