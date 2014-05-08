@@ -44,7 +44,7 @@ class RequestsController < ApplicationController
 				WebsocketRails[:request_created].trigger 'new', @request
 				redirect_to students_dashboard_path, :notice => "Your request has been created."
 			else
-				flash[:error] = "Error: Please fill out all fields"
+				flash[:error] = @request.errors.full_messages.join(', ')
 				redirect_to students_dashboard_path
 			end
 		end
