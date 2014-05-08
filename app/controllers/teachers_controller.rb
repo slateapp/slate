@@ -42,12 +42,16 @@ class TeachersController < ApplicationController
     end
   end
 
-  def students
-    @user = current_teacher
-    @requests = Request.for_cohort(selected_cohort || Cohort.all)
+  def approval
     @approved = Student.where(approved: true).sort_by(&:cohort).reverse
     @unapproved = Student.where(approved: false).sort_by(&:cohort).reverse
     params[:approved] ? (@students, @switch = @approved, "Unapprove") : (@students, @switch = @unapproved, "Approve")
+  end
+
+  def students
+    @user = current_teacher
+    @requests = Request.for_cohort(selected_cohort || Cohort.all)
+    approval
   end
 
   def edit_student
