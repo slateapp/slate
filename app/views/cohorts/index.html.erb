@@ -1,15 +1,16 @@
 <%= render 'requests/list' %>
 <%= render 'partials/teacher_menu' %>
-
+<div class="border-form-div" style='float: left;'>
   <%= form_tag teacher_path(current_teacher), method: :patch do %>
     <%= label :name, "Cohort" %>
     <%= select "cohort", "id", @cohort_options, {selected: params[:cohort] || (current_teacher.cohort || 0), :include_blank => "Select a cohort"} %>
-    <%= submit_tag'Set as default' if Cohort.count > 0 %>
+    <%= submit_tag'Set as default' , class: "btn btn-default" if Cohort.count > 0 %>
   <% end %>
   <%= form_tag selected_cohorts_cohorts_path, method: :patch do %>
     <%= select "cohort1", "id", @cohort_options, {selected: (@cohort1.try(:id) || 0), :include_blank => "Select a cohort"} %>
     <%= select "cohort2", "id", @cohort_options, {selected: (@cohort2.try(:id) || 0), :include_blank => "Select a cohort"} %>
-    <%= submit_tag'Update Current Cohorts' if Cohort.count > 0 %>
+    <p></p>
+    <%= submit_tag'Update Current Cohorts' , class: "btn btn-default" if Cohort.count > 0 %>
   <% end %>
   <div>
     <h4>Current cohorts</h4>
@@ -18,6 +19,7 @@
   </div>
   <br>
 <%= link_to("Add Cohort", new_cohort_path , class: "btn btn-default") %>
+</div>
 <table class="table table-hover">
   <th>Name</th><th>Actions</th>
   <% @cohorts.each do |cohort| %>
@@ -28,4 +30,4 @@
     </tr>
   <% end %>
 </table>
-</div>
+
