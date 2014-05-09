@@ -36,7 +36,7 @@ class Request < ActiveRecord::Base
   	end
   end
 
-  def teacher
-    Teacher.by_cohort(student.cohort.id.to_s)
+  def teachers
+    Teacher.where(cohort: student.cohort.id.to_s) if student && student.cohort
   end
 end

@@ -5,7 +5,6 @@ class Teacher < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   has_many :requests
   has_one :twilio_info
-  scope :by_cohort, ->(cohort) { find_by(cohort: cohort) }
   scope :sms_enabled?, -> {  }
 
   def name
