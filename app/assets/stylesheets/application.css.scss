@@ -227,6 +227,13 @@ img
 	word-wrap: break-word;
 }
 
+pre.prettyprint.prettyprinted::-webkit-scrollbar{ width: 0 !important }
+
+pre.prettyprint.prettyprinted
+{
+	-ms-overflow-style: none;
+}
+
 .position
 {
 	width: 40px;
@@ -1345,6 +1352,18 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 	{
 		width: 40%;
 	}
+}
+
+@media all and (max-width: 991px) {
+	.col-md-9 .Stats .text-center .col-md-5
+	{
+		padding-top: 1px;
+	}
+}
+
+.col-md-9 form#new_twilio_info.new_twilio_info input#twilio_info_enabled
+{
+	margin: 4px 20px 0;
 }
 
 

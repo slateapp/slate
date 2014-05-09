@@ -19,7 +19,7 @@ describe 'Students sign in and out' do
 			visit '/'
 			click_link 'Sign in with GitHub'
 
-			expect(page).to have_content "Hi Alex Peattie, welcome to SL8."
+			expect(page).to have_content "Hi, Alex Peattie! Welcome to SL8."
 		end
 
 		it 'is redirected from GitHub to select cohort page' do
