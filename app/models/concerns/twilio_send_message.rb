@@ -19,15 +19,16 @@ module TwilioSendMessage
     account_sid = Rails.application.secrets.twilio_sid
     auth_token = Rails.application.secrets.twilio_token
     @client = Twilio::REST::Client.new account_sid, auth_token
-    sms = @client.account.sms.messages.create(
-      to: teacher.phone_number,
-      from: Rails.application.secrets.twilio_phone_number,
-      body: sms_text_body
-    )
+    teachers.each{|teacher|
+      sms = @client.account.sms.messages.create(
+        to: teacher.phone_number,
+        from: Rails.application.secrets.twilio_phone_number,
+        body: sms_text_body
+      )
+    }
   end
 
   def trigger_teacher_message
-    puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
     send_message if Request.board_empty_for?(30.seconds) && Rails.env.production? && teacher.sms_enabled?
   end
 end
