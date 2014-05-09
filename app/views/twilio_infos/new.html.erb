@@ -2,6 +2,8 @@
 <%= form_for @twilioinfo do |f| %>
   <%= f.label :phone_number, "Phone Number" %>
   <%= f.text_field :phone_number, autofocus: true %>
+  <br />
+  <%= f.label :phone_number, "Enabled" %>
   <%= f.check_box :enabled %>
   <%= f.submit "Update Twilio Info" %>
 <% end %>
