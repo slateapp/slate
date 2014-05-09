@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new category_params
-    category_save('new')
+    create_or_update('new', "Category", @category, categories_path)
   end
 
   def edit
@@ -23,7 +23,7 @@ class CategoriesController < ApplicationController
   def update
     @category = Category.find params[:id]
     @category.assign_attributes category_params
-    category_save('edit')
+    create_or_update('edit', "Category", @category, categories_path)
   end
 
   def destroy
@@ -32,17 +32,6 @@ class CategoriesController < ApplicationController
     flash[:success] = "Category deleted successfully"
     redirect_to categories_path
   end
-end
-
-def category_save(function)
-  verb = function == "edit" ? "updated" : "created"
-  if @category.save
-      flash[:success] = "Category #{verb} successfully"
-      redirect_to categories_path
-    else
-      @category.errors.full_messages.each{ |msg| flash[:error] = msg }
-      render function
-    end
 end
 
 def category_params

@@ -5,8 +5,18 @@ class Teacher < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   has_many :requests
   has_one :twilio_info
+  scope :by_cohort, ->(cohort) { find_by(cohort: cohort) }
+  scope :sms_enabled?, -> {  }
 
   def name
     self.email.gsub("@makersacademy.com", "").capitalize
+  end
+
+  def sms_enabled?
+    twilio_info.enabled?
+  end
+
+  def phone_number
+    twilio_info.phone_number
   end
 end

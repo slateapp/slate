@@ -15,7 +15,7 @@ describe 'editing requests' do
 		click_link 'Edit'
 
 		fill_in 'Description', with: 'Migration issue'
-    	select('Ruby', from: 'Category')
+    select('Ruby', from: 'Category')
 		click_button 'Update'
 
 		expect(current_path).to eq students_dashboard_path
@@ -51,7 +51,8 @@ describe 'editing requests' do
 				create(:request, student: alex, category: Category.last)
 				visit students_dashboard_path
 				click_link 'Edit'
-
+				fill_in 'Description', with: 'Edited issue'
+				click_button 'Update'
 				expect(page).to have_content 'Request was successfully updated.'
 			end
 		end

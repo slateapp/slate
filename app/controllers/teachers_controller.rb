@@ -6,7 +6,6 @@ class TeachersController < ApplicationController
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @cohort = Cohort.find(selected_cohort) if selected_cohort
     @students = Student.where(cohort: selected_cohort, approved: true)
-    # raise "#{Request.todays_average_wait_time_for(selected_cohort)}"
     @stats = {
       todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
       todays_queue: Request.todays_average_queue_for(selected_cohort).round,
@@ -42,12 +41,16 @@ class TeachersController < ApplicationController
     end
   end
 
-  def students
-    @user = current_teacher
-    @requests = Request.for_cohort(selected_cohort || Cohort.all)
+  def approval
     @approved = Student.where(approved: true).sort_by(&:cohort).reverse
     @unapproved = Student.where(approved: false).sort_by(&:cohort).reverse
     params[:approved] ? (@students, @switch = @approved, "Unapprove") : (@students, @switch = @unapproved, "Approve")
+  end
+
+  def students
+    @user = current_teacher
+    @requests = Request.for_cohort(selected_cohort || Cohort.all)
+    approval
   end
 
   def edit_student
