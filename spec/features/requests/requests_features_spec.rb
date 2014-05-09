@@ -4,9 +4,9 @@ describe 'requests page' do
 
 	# check repetition in requests_board_features_spec.rb
 	context 'no requests' do
-		xit 'shows a message', js: true do
+		it 'shows a message', js: true do
 			visit '/requests'
-			expect(page).to have_content 'No Requests'
+			expect(page).not_to have_css 'div.waitingList div.waiting'
 		end
 	end
 
