@@ -1,7 +1,7 @@
 module TwilioSendMessage
   extend ActiveSupport::Concern
   def Request.board_empty?
-    unsolved_requests.count == 1
+    unsolved_requests.count == 1 || unsolved_requests.count == 0
   end
 
   def Request.board_empty_for?(length_of_time)
@@ -12,7 +12,7 @@ module TwilioSendMessage
   end
 
   def sms_text_body
-    "There's a new request on the board"
+    "There's a new request on the board, from #{student.name} about #{category.name}."
   end
 
   def send_message(teacher)
