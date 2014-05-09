@@ -30,7 +30,7 @@ module TwilioSendMessage
     if teachers
       teachers.each{|teacher|
         if teacher.twilio_info
-          send_message(teacher) if Request.board_empty_for?(5.seconds) && Rails.env.production? && teacher.sms_enabled?
+          send_message(teacher) if Request.board_empty_for?(5.minutes) && Rails.env.production? && teacher.sms_enabled?
         end
       }
     end
