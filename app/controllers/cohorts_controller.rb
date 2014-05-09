@@ -30,18 +30,34 @@ class CohortsController < ApplicationController
   end
 
   def selected_cohorts
+    cohort1
+    cohort2
+    selected_disparate_cohorts ? !cohort1.empty? && !cohort2.empty? && cohort1 != cohort2 : selected_same_cohorts_error
+  end
+
+  def cohort1
     cohort1 = params[:cohort1][:id]
+  end
+
+  def cohort2
     cohort2 = params[:cohort2][:id]
-    if !cohort1.empty? && !cohort2.empty? && cohort1 != cohort2
-      Cohort.where(selected: true).update_all(selected: false)
-      Cohort.where(id: [cohort1, cohort2]).update_all(selected: true)
-      WebsocketRails[:cohorts_updated].trigger 'selected_cohorts', params
-      flash[:success] = "You successfully selected the current cohorts"
-      redirect_to cohorts_path
-    else
-      flash[:error] = "You need to select cohorts that are not the same before continuing"
-      redirect_to cohorts_path
-    end
+  end
+
+  def filter_cohorts
+    Cohort.update_all(selected: false)
+    Cohort.where(id: [cohort1, cohort2]).update_all(selected: true)
+    WebsocketRails[:cohorts_updated].trigger 'selected_cohorts', params
+  end
+
+  def selected_disparate_cohorts
+    filter_cohorts
+    flash[:success] = "You successfully selected the current cohorts."
+    redirect_to cohorts_path
+  end
+
+  def selected_same_cohorts_error
+    flash[:error] = "You need to select cohorts that are not the same before continuing."
+    redirect_to cohorts_path
   end
 
   def update

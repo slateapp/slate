@@ -25,7 +25,7 @@ class TwilioInfosController < ApplicationController
   def destroy
     @twilioinfo = TwilioInfo.find params[:id]
     @twilioinfo.destroy
-    flash[:success] = "Twilio Information deleted successfully"
+    flash[:success] = "Twilio Information deleted successfully."
     redirect_to twilio_infos_path
   end
 end
@@ -34,7 +34,7 @@ def twilio_info_save(function)
   verb = function == "edit" ? "updated" : "created"
   if @twilioinfo.save
   	current_teacher.twilio_info = @twilioinfo
-    flash[:success] = "Twilio Information #{verb} successfully"
+    flash[:success] = "Twilio Information #{verb}d successfully."
     redirect_to twilio_infos_path
   else
     @twilioinfo.errors.full_messages.each{ |msg| flash[:error] = msg }

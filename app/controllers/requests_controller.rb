@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
 	end
 	
 	def new 
-		current_student ? (@request = Request.new) : (redirect_to root_path, notice: 'Sorry, you must be a student to make a request')
+		current_student ? (@request = Request.new) : (redirect_to root_path, notice: 'Sorry, you must be a student to make a request!')
 	end
 
 	def create
@@ -27,7 +27,7 @@ class RequestsController < ApplicationController
 	def edit
 		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
 	rescue ActiveRecord::RecordNotFound
-		redirect_to students_dashboard_path, notice: 'Error: This is not your post'
+		redirect_to students_dashboard_path, notice: 'Error: This is not your post!'
 	end
 
 	def update
@@ -35,20 +35,21 @@ class RequestsController < ApplicationController
 	  set_category(@request, params[:request][:category])
 		update_and_trigger_websocket((params[:request].permit(:description, :category, :solved)), 'edit', @request, :request_edited, students_dashboard_path)
 	rescue StudentCannotSolve
-		flash[:notice] = "Please sign in as a teacher"
+		flash[:notice] = "Please sign in as a teacher!"
 	end
 
 	def destroy
 		@request = current_student ? (current_student.requests.find params[:id]) : (Request.find params[:id])
 		@request.destroy
 		WebsocketRails[:request_deleted].trigger 'destroy', @request.id
-		flash[:notice] = 'Request deleted'
+		flash[:notice] = 'Request deleted.'
+		redirect_to students_dashboard_path
 	rescue ActiveRecord::RecordNotFound
-		redirect_to students_dashboard_path, notice: 'Error: This is not your post'
+		redirect_to students_dashboard_path, notice: 'Error: This is not your post!'
 	end
 
 	def display
-		redirect_to root_path, notice: "Please ask a teacher to select current cohorts" if Cohort.where(selected: true).count != 2
+		redirect_to root_path, notice: "Please ask a teacher to select current cohorts." if Cohort.where(selected: true).count != 2
 		@cohort_one, @cohort_two = Cohort.current_cohorts.first, Cohort.current_cohorts.second
 		@requests_for_cohort_one, @requests_for_cohort_two = get_requests(@cohort_one), get_requests(@cohort_two)
 	end
