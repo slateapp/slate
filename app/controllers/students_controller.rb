@@ -31,29 +31,7 @@ class StudentsController < ApplicationController
 	end
 
   def batch_change
-    if params[:batch_action] == "Approve"
-      unapproved_students = Student.where(approved: false)
-      if unapproved_students.count == 0
-        flash[:error] = "There are no students to approve"
-        redirect_to students_teachers_path
-      else
-        WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', unapproved_students
-        unapproved_students.update_all(approved: true)
-        flash[:success] = "You successfully approved all the students"
-        redirect_to students_teachers_path(approved: true)
-      end
-    else
-      approved_students = Student.where(approved: true)
-      if approved_students.count == 0
-        flash[:error] = "There are no students to approve"
-        redirect_to students_teachers_path(approved: true)
-      else
-        WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', approved_students
-        approved_students.update_all(approved: false)
-        flash[:success] = "You successfully unapproved all the students"
-        redirect_to students_teachers_path
-      end
-    end
+    params[:batch_action] == "Approve" ? approve_all : unapprove_all
   end
 
   def update
@@ -67,6 +45,30 @@ class StudentsController < ApplicationController
 end
 
 private 
+
+def approve_all
+  students = Student.where(approved: false)
+  if students.count == 0
+    redirect_to students_teachers_path, notice: "There are no students to approve"
+  else
+    WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', students
+    students.update_all(approved: true)
+    flash[:success] = "You successfully approved all the students"
+    redirect_to students_teachers_path(approved: true)
+  end
+end
+
+def unapprove_all
+  students = Student.where(approved: true)
+  if students.count == 0
+    redirect_to students_teachers_path(approved: true), notice: "There are no students to unapprove"
+  else
+    WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', students
+    students.update_all(approved: false)
+    flash[:success] = "You successfully unapproved all the students"
+    redirect_to students_teachers_path
+  end
+end
 
 def set_cohort(student)
   return redirect_to edit_student_teachers_path(id: params[:id]), notice: "No cohort selected, please select a cohort" if params[:cohort][:id].empty?
