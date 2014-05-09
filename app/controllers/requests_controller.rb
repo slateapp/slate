@@ -43,6 +43,7 @@ class RequestsController < ApplicationController
 		@request.destroy
 		WebsocketRails[:request_deleted].trigger 'destroy', @request.id
 		flash[:notice] = 'Request deleted.'
+		redirect_to students_dashboard_path
 	rescue ActiveRecord::RecordNotFound
 		redirect_to students_dashboard_path, notice: 'Error: This is not your post!'
 	end

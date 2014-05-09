@@ -227,6 +227,13 @@ img
 	word-wrap: break-word;
 }
 
+pre.prettyprint.prettyprinted::-webkit-scrollbar{ width: 0 !important }
+
+pre.prettyprint.prettyprinted
+{
+	-ms-overflow-style: none;
+}
+
 .position
 {
 	width: 40px;
