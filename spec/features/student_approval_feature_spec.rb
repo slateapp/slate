@@ -14,8 +14,9 @@ describe "An unapproved student" do
     select('February 2014', :from => 'cohort_id')
     click_button "Submit"
   end
+  
   it "is redirected with an error if they access their dashboard" do
-    expect(page).to have_content 'Approval Required'
+    expect(page).to have_content "Almost there.. Once a teacher approves your request, you'll be ready to go."
   end
 
   it "is redirected with an error if they try to make a new request" do

@@ -39,7 +39,7 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 gem "chartkick"
 gem 'groupdate'
 gem 'twilio-ruby'
-
+gem "codeclimate-test-reporter", group: :test, require: nil
 
 group :development, :test do
 
@@ -50,6 +50,7 @@ group :development, :test do
 	gem 'spring'
 	gem 'database_cleaner'
 	gem 'sms-spec'
+	
 end
 
 group :production do 

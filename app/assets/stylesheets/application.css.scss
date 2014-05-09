@@ -18,6 +18,7 @@
 body
 {
 	width: 100%;
+	height: 100%;
 	margin: 0px;
 	padding: 0px;
 	background-color: #ecf0f1;
@@ -366,31 +367,10 @@ button
 
 .reading_panel
 {
-	height: 1200px;
 	width: 100%;
 	padding-top: 30px;
+	padding-bottom: 30px;
 	overflow: hidden;
-}
-
-.animation
-{
-	width: 80%;
-	height: 1200px;
-	margin-right: auto;
-	margin-left: auto;
-	background-image: image-url("waiting_animation.png");
-	background-repeat: no-repeat;
-	background-size: 100%;
-}
-
-.animation img
-{
-	background-color: transparent;
-	position: initial;
-	width: 11%;
-	margin-top: 8%;
-	margin-left: 12%;
-	border-radius: 0px;
 }
 
 .tagline_panel
@@ -567,6 +547,12 @@ button
 	border-top-left-radius: 5px;
 	float: left;
 	z-index: 30;
+}
+
+
+.display .waitingList .scroll ul li:nth-child(2) .waiting
+{
+	margin-left: 420px;
 }
 
 .curtain
@@ -1160,47 +1146,63 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 	height: 70px;
 }
 
-
-
-
-
-
 /* ------------------------------------------------- */
+
+.animation
+{
+	width: 80%;
+	height: 47vw;
+	margin-right: auto;
+	margin-left: auto;
+	background-image: image-url("waiting_animation.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+.animation img
+{
+	position: relative;
+	background-color: transparent;
+	width: 11%;
+	margin-top: 8%;
+	margin-left: 12%;
+	z-index: 10000;
+}
 
 .banner_wrapper
 {
-	width: 924px;
-	height: 300px;
 	overflow: hidden;
-	margin-top: 0px;
-	border-right: solid white 8px;
+	position: absolute;
+	width: 52.89%;
+	margin-top: -8.69%;
+	margin-left: 18%;
+	z-index: 1;
 }
 
 .banner
 {
-	width: 2526px;
-	height: 300px;
-	background-color: #a80000;
-	float: left;
-	margin-right: 30px;
-	margin-left: 30px;
-	border-left: solid white 8px;
-	overflow: hidden;
+	width: 1000%;
+	height: 100%;
+	z-index: 1;
 }
 
 .banner img
 {
-	height: 300px;
-	width: 1263px;
+	max-height: 100%;
+	width: 9.7%;
 	float: left;
+	position: inherit;
+	margin-top: 0px;
+	margin-left: 0px;
+	z-index: 1;
 }
 
 .first {
-    -webkit-animation: bannermove 25s linear infinite;
-       -moz-animation: bannermove 25s linear infinite;
-        -ms-animation: bannermove 25s linear infinite;
-         -o-animation: bannermove 25s linear infinite;
-            animation: bannermove 25s linear infinite;
+    -webkit-animation: bannermove 15s linear infinite;
+       -moz-animation: bannermove 15s linear infinite;
+        -ms-animation: bannermove 15s linear infinite;
+         -o-animation: bannermove 15s linear infinite;
+            animation: bannermove 15s linear infinite;
 }
  
 @keyframes "bannermove" {
@@ -1208,7 +1210,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
     margin-left: 0px;
  }
  100% {
-    margin-left: -1263px;
+    margin-left: -9.7%;
  }
  
 }
@@ -1218,7 +1220,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1263px;
+    margin-left: -9.7%;
  }
  
 }
@@ -1228,7 +1230,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1263px;
+    margin-left: -9.7%;
  }
  
 }
@@ -1238,7 +1240,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1263px;
+    margin-left: -9.7%;
  }
  
 }
@@ -1248,7 +1250,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
    margin-left: 0px;
  }
  100% {
-   margin-left: -1263px;
+    margin-left: -9.7%;
  }
 
 }

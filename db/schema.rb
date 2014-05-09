@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140507115129) do
+ActiveRecord::Schema.define(version: 20140508120820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,5 +88,15 @@ ActiveRecord::Schema.define(version: 20140507115129) do
   add_index "teachers", ["confirmation_token"], name: "index_teachers_on_confirmation_token", unique: true, using: :btree
   add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true, using: :btree
   add_index "teachers", ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true, using: :btree
+
+  create_table "twilio_infos", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "phone_number"
+    t.boolean  "enabled",      default: false
+    t.integer  "teacher_id"
+  end
+
+  add_index "twilio_infos", ["teacher_id"], name: "index_twilio_infos_on_teacher_id", using: :btree
 
 end
