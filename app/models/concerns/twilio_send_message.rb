@@ -1,7 +1,7 @@
 module TwilioSendMessage
   extend ActiveSupport::Concern
   def Request.board_empty?
-    unsolved_requests.count == 1
+    unsolved_requests.count == 1 || unsolved_requests.count == 0
   end
 
   def Request.board_empty_for?(length_of_time)

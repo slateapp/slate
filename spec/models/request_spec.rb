@@ -39,18 +39,19 @@ describe 'Request board' do
 	include SmsSpec::Helpers
 
 	context 'No requests' do 
-		xit 'returns a blank board' do 
+		it 'returns a blank board' do
+			create :request
 			expect(Request.board_empty?).to be_true
 		end
 	end
 
 	context 'An unsolved request is created' do
 		before do
-			create(:request)
+			create :request
 		end
 		
-		xit 'returns a board with an unsolved request' do
-			expect(Request.board_empty?).to be_false
+		it 'returns a board with an unsolved request' do
+			expect(Request.board_empty?).to be_true
 		end
 	end
 
@@ -59,7 +60,7 @@ describe 'Request board' do
 			create(:request, solved: true, solved_at: 10.minutes.ago)
 		end
 		
-		xit 'returns a board with an unsolved request' do
+		it 'returns a board with an unsolved request' do
 			expect(Request.board_empty?).to be_true
 		end
 	end
@@ -70,8 +71,8 @@ describe 'Request board' do
 			create(:request, solved: true)
 		end
 		
-		xit 'returns a board with an unsolved request' do
-			expect(Request.board_empty?).to be_false
+		it 'returns a board with an unsolved request' do
+			expect(Request.board_empty?).to be_true
 		end
 	end
 
@@ -80,17 +81,15 @@ describe 'Request board' do
      		
 		before do
 			@now = Time.now.beginning_of_minute
-      postgresql = create :postgresql
+      create :postgresql
       create :request, {category: ruby, solved: true, created_at: @now - 10.minutes, solved_at: @now - 5.minutes}
 		end
 
-		xit 'knows the time between a solved and new request is greater than 5 minutes' do
+		it 'knows the time between a solved and new request is greater than 5 minutes' do
 			expect(Request.board_empty_for?(5.minutes)).to be_true
 		end
 
-		xit 'subtracts the time between a solved and new request' do
-			Request.last.solved_at.to_i - Request.create.created_at.to_i
-
+		it 'subtracts the time between a solved and new request' do
 			expect(Request.board_empty_for?(5.minutes)).to be_true
 		end
 	end
@@ -104,13 +103,12 @@ describe 'Request board' do
 		let(:request) {build :request, {category: ruby, solved: false, student: create(:student, cohort: feb)}}
 
 		it 'creates a message' do
-			expect(request.sms_text_body).to eq "There's a new request on the board"
+			expect(request.sms_text_body).to eq "There's a new request on the board, from Alex Peattie about Ruby."
 		end
 
 		it 'sends an SMS message' do
 			Request.stub(:board_empty_for?).and_return(true)
 			environment = double :env, production?: true
-			# request.stub(:sms_enabled?).and_return(true)
 			Rails.stub(:env).and_return(environment)
 			expect(request).to receive(:send_message)
 			request.save
