@@ -56,33 +56,26 @@ class StudentsController < ApplicationController
     end
   end
 
-	def update
+  def update
     student = from_teacher? ? (Student.find params[:id]) : current_student
-    if params[:cohort]
-      if params[:cohort][:id].empty?
-        flash[:error] = "No cohort selected, please select a cohort"
-        redirect_to edit_student_teachers_path(id: params[:id])
-        return false
-      else
-        cohort = Cohort.find params[:cohort][:id]
-      end
-    end
-    student.cohort = cohort if cohort
+    set_cohort(student) if params[:cohort]
     student.name = params[:student][:name] if from_teacher? && params[:student]
-    if approval?
-      student.approved ? student.unapprove : student.approve
-      WebsocketRails[:student_approval].trigger 'student_approval', student
-    end
+    approval(student)
     student.save
-    flash[:notice] = "Student successfully updated" if from_teacher?
     redirection
   end
 end
 
 private 
 
+def set_cohort(student)
+  return redirect_to edit_student_teachers_path(id: params[:id]), notice: "No cohort selected, please select a cohort" if params[:cohort][:id].empty?
+  student.cohort = Cohort.find params[:cohort][:id]
+end
+
 def redirection
-  if from_teacher? && approval?
+  flash[:notice] = "Student successfully updated" if from_teacher?
+  if from_teacher? && params[:approve]
     redirect_to :back
   elsif from_teacher?
     redirect_to students_teachers_path(approved: true)
@@ -97,8 +90,11 @@ def from_teacher?
   params[:teacher]
 end
 
-def approval?
-  params[:approve]
+def approval(student)
+  if params[:approve]
+    student.approved ? student.unapprove : student.approve
+    WebsocketRails[:student_approval].trigger 'student_approval', student
+  end
 end
 
 def create_new_session(authorization)
