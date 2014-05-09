@@ -370,12 +370,13 @@ button
 	width: 100%;
 	padding-top: 30px;
 	padding-bottom: 30px;
+	background-color: #355c7a;
 	overflow: hidden;
 }
 
 .tagline_panel
 {
-	height: 280px;
+	height: 250px;
 	width: 100%;
 	color: #ffffff;
 	background-color: #ffffff;
@@ -387,7 +388,7 @@ button
 	color: #b7b7b7;
 	text-align: center;
 	font-size: 3em;
-	margin-top: 120px;
+	margin-top: 100px;
 }
 
 .btn-group-vertical
@@ -801,9 +802,6 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 .studentSign h3 a
 {
 	color: #ffffff;
-	margin-top: 0px;
-	margin-right: 20px;
-	margin-left: 20px;
 	display: inline-block;
 	-webkit-transform: translateZ(0);
 	transform: translateZ(0);
@@ -834,34 +832,34 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 }
 
 .border-form-div {
-  max-width: 400px;
-  padding-top: 20px;
-  padding-bottom: 30px; 
-  padding-left: 50px;
-  padding-right: 50px;
-/*  padding: 5px 29px 29px;*/
-  margin: 0 auto 20px;
-  margin-top: 19px;
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-          box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	max-width: 400px;
+	padding-top: 20px;
+	padding-bottom: 30px; 
+	padding-left: 50px;
+	padding-right: 50px;
+	/*  padding: 5px 29px 29px;*/
+	margin: 0 auto 20px;
+	margin-top: 19px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 .border-form-div .form-signin-heading,
 .border-form-div .checkbox {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 .border-form-div input[type="text"],
 .border-form-div input[type="email"],
 .border-form-div input[type="password"] {
-  font-size: 16px;
-  height: auto;
-  margin-bottom: 15px;
-  padding: 7px 9px;
+	font-size: 16px;
+	height: auto;
+	margin-bottom: 15px;
+	padding: 7px 9px;
 }
 
 .border-form-div .btn-primary
@@ -1198,59 +1196,157 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 }
 
 .first {
-    -webkit-animation: bannermove 15s linear infinite;
-       -moz-animation: bannermove 15s linear infinite;
-        -ms-animation: bannermove 15s linear infinite;
-         -o-animation: bannermove 15s linear infinite;
-            animation: bannermove 15s linear infinite;
+	-webkit-animation: bannermove 15s linear infinite;
+	-moz-animation: bannermove 15s linear infinite;
+	-ms-animation: bannermove 15s linear infinite;
+	-o-animation: bannermove 15s linear infinite;
+	animation: bannermove 15s linear infinite;
 }
- 
+
 @keyframes "bannermove" {
- 0% {
-    margin-left: 0px;
- }
- 100% {
-    margin-left: -9.7%;
- }
- 
-}
- 
-@-moz-keyframes bannermove {
- 0% {
-   margin-left: 0px;
- }
- 100% {
-    margin-left: -9.7%;
- }
- 
-}
- 
-@-webkit-keyframes "bannermove" {
- 0% {
-   margin-left: 0px;
- }
- 100% {
-    margin-left: -9.7%;
- }
- 
-}
- 
-@-ms-keyframes "bannermove" {
- 0% {
-   margin-left: 0px;
- }
- 100% {
-    margin-left: -9.7%;
- }
- 
-}
- 
-@-o-keyframes "bannermove" {
- 0% {
-   margin-left: 0px;
- }
- 100% {
-    margin-left: -9.7%;
- }
+	0% {
+		margin-left: 0px;
+	}
+	100% {
+		margin-left: -9.7%;
+	}
 
 }
+
+@-moz-keyframes bannermove {
+	0% {
+		margin-left: 0px;
+	}
+	100% {
+		margin-left: -9.7%;
+	}
+
+}
+
+@-webkit-keyframes "bannermove" {
+	0% {
+		margin-left: 0px;
+	}
+	100% {
+		margin-left: -9.7%;
+	}
+
+}
+
+@-ms-keyframes "bannermove" {
+	0% {
+		margin-left: 0px;
+	}
+	100% {
+		margin-left: -9.7%;
+	}
+
+}
+
+@-o-keyframes "bannermove" {
+	0% {
+		margin-left: 0px;
+	}
+	100% {
+		margin-left: -9.7%;
+	}
+
+}
+
+.teacherSign h3 a,
+.studentSign h3 a
+{
+	font-size: 0.8em;
+	padding: 12px;
+	display: inline-block;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	background-color: #ffffff;
+	border-radius: 5px;
+}
+
+.teacherSign h3 a
+{
+	color: #a91d2a;
+}
+
+
+.studentSign h3 a
+{
+	color: #355c7a;
+}
+
+.border-form-div .btn-primary
+{
+	margin: 10px 0 10px;
+}
+
+@media all and (max-width: 1048px) {
+	.teacherSign h1, .studentSign h1
+	{
+		font-size: 2.5em;
+	}
+
+	.display .cohort_tab h3
+	{
+		margin-top: 11px;
+	}
+
+	.btn-group-vertical
+	{
+		margin-top: 69px;
+	}
+
+	.col-md-3,
+	.col-md-9
+	{
+		float: left;
+	}
+
+	.col-md-9
+	{
+		width: 42%;
+	}
+
+	.col-md-9 h2.dashboardCohortName
+	{
+		font-size: 3em;
+		padding-bottom: 10px;
+		margin-top: -56px;
+		margin-right: -285px;
+	}
+
+	.col-md-9 .border-form-div
+	{
+		margin-top: 89px;
+	}
+
+	.cohortDashboard
+	{
+		width: 40%;
+	}
+
+	.styled-select select
+	{
+		width: 170px;
+	}
+
+	textarea
+	{
+		width: 378px
+	}
+
+	.styled-submit input
+	{
+		width: 150px;
+	}
+
+	.alert
+	{
+		width: 40%;
+	}
+}
+
+
+
+
