@@ -10,8 +10,8 @@ class Request < ActiveRecord::Base
   validates :category, :description, :presence => true
   validate :time_creation
   scope :todays_requests, ->(minute) { where(created_at: Time.now.beginning_of_day..minute) }
-  scope :this_minutes_created_requests, ->(minute) { where(created_at: minute-1..minute) }
-  scope :this_minutes_solved_requests, ->(minute) { where(solved_at: minute-1..minute) }
+  scope :created_requests_count_for, ->(minute) { where(created_at: minute-1..minute).count }
+  scope :solved_requests_count_for, ->(minute) { where(solved_at: minute-1..minute).count }
   scope :this_weeks_requests, -> {where(created_at: Date.today.beginning_of_week..Time.now)}
   scope :solved_by, ->(teacher) {where(teacher: teacher)}
   scope :categorised_by, ->(category) {where(category: category)}
@@ -58,21 +58,26 @@ class Request < ActiveRecord::Base
     cohort ? Cohort.find(cohort) : Cohort.all
   end
 
+  def self.total_wait_time(cohort)
+    todays_requests(Time.now).solved_requests.for_cohort(cohort).inject(0){|sum, request|
+      sum + request.time_to_solve
+    }
+  end
+
   def self.todays_average_wait_time_for(cohort)
     cohort = get_cohort(cohort)
     return 0 if todays_requests(Time.now).solved_requests.for_cohort(cohort).count == 0
-    total_wait_time = self.todays_requests(Time.now).solved_requests.for_cohort(cohort).inject(0){|sum, request| sum + request.time_to_solve}
-    (total_wait_time/self.todays_requests(Time.now).solved_requests.for_cohort(cohort).count)/60
+    (total_wait_time(cohort)/self.todays_requests(Time.now).solved_requests.for_cohort(cohort).count)/60
   end
 
   def self.first_request_time(cohort)
-    todays_requests(Time.now).for_cohort(cohort).first.created_at - 1
+    (todays_requests(Time.now).for_cohort(cohort).first.created_at - 1).to_i
   end
 
   def self.queue_lengths_for(cohort)
-    (first_request_time(cohort).to_i..DateTime.now.to_i).step(1.minute).map{|minute|
+    (first_request_time(cohort)..DateTime.now.to_i).step(1.minute).map{|minute|
       minute = Time.at(minute).to_datetime
-      this_minutes_created_requests(minute).count - this_minutes_solved_requests(minute).count
+      created_requests_count_for(minute) - solved_requests_count_for(minute)
     }.compact
   end
 
