@@ -16,7 +16,7 @@ describe "An unapproved student" do
   end
   
   it "is redirected with an error if they access their dashboard" do
-    expect(page).to have_content "Almost there.. Once a teacher approves your request, you'll be ready to go."
+    expect(page).to have_content "Almost there... Once a teacher approves your request, you'll be ready to go."
   end
 
   it "is redirected with an error if they try to make a new request" do
