@@ -31,7 +31,6 @@ class StudentsController < ApplicationController
 	end
 
   def batch_change
-    # params[:batch_action] == "Approve" ? approve_all : unapprove_all
     params[:batch_action] == "Approve" ? approve_or_unapprove_all(true, "approve") : approve_or_unapprove_all(false, "unapprove")
   end
 
@@ -46,29 +45,6 @@ class StudentsController < ApplicationController
 end
 
 private 
-
-# def approve_all
-#   students = Student.where(approved: false)
-#   if students.count == 0
-#     redirect_to students_teachers_path, notice: "There are no students to approve"
-#   else
-#     WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', students
-#     students.update_all(approved: true)
-#     redirect_to students_teachers_path(approved: true), notice: "You successfully approved all the students"
-#   end
-# end
-
-# def unapprove_all
-#   students = Student.where(approved: true)
-#   if students.count == 0
-#     redirect_to students_teachers_path(approved: true), notice: "There are no students to unapprove"
-#   else
-#     WebsocketRails[:student_batch_approval].trigger 'student_batch_approval', students
-#     students.update_all(approved: false)
-#     redirect_to students_teachers_path, notice: "You successfully unapproved all the students"
-#   end
-# end
-
 def approve_or_unapprove_all(function, verb)
   students = Student.where(approved: !function)
   if students.count == 0
