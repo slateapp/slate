@@ -39,7 +39,7 @@ describe 'Request board' do
 	include SmsSpec::Helpers
 
 	context 'No requests' do 
-		it 'returns a blank board' do 
+		xit 'returns a blank board' do 
 			expect(Request.board_empty?).to be_true
 		end
 	end
@@ -49,7 +49,7 @@ describe 'Request board' do
 			create(:request)
 		end
 		
-		it 'returns a board with an unsolved request' do
+		xit 'returns a board with an unsolved request' do
 			expect(Request.board_empty?).to be_false
 		end
 	end
@@ -59,7 +59,7 @@ describe 'Request board' do
 			create(:request, solved: true, solved_at: 10.minutes.ago)
 		end
 		
-		it 'returns a board with an unsolved request' do
+		xit 'returns a board with an unsolved request' do
 			expect(Request.board_empty?).to be_true
 		end
 	end
@@ -70,7 +70,7 @@ describe 'Request board' do
 			create(:request, solved: true)
 		end
 		
-		it 'returns a board with an unsolved request' do
+		xit 'returns a board with an unsolved request' do
 			expect(Request.board_empty?).to be_false
 		end
 	end
@@ -84,11 +84,11 @@ describe 'Request board' do
       create :request, {category: ruby, solved: true, created_at: @now - 10.minutes, solved_at: @now - 5.minutes}
 		end
 
-		it 'knows the time between a solved and new request is greater than 5 minutes' do
+		xit 'knows the time between a solved and new request is greater than 5 minutes' do
 			expect(Request.board_empty_for?(5.minutes)).to be_true
 		end
 
-		it 'subtracts the time between a solved and new request' do
+		xit 'subtracts the time between a solved and new request' do
 			Request.last.solved_at.to_i - Request.create.created_at.to_i
 
 			expect(Request.board_empty_for?(5.minutes)).to be_true
