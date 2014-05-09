@@ -1354,6 +1354,13 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 	}
 }
 
+@media all and (max-width: 991px) {
+	.col-md-9 .Stats .text-center .col-md-5
+	{
+		padding-top: 1px;
+	}
+}
+
 
 
 
