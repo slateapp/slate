@@ -11,7 +11,7 @@
   <table class="table table-hover">
   <th>Name</th><th>Cohort</th><th>Actions</th>
   <% if @students.count == 0 %>
-    <tr><td><%= "No Students requiring approval" %></td><tr>
+    <tr><td><%= "No students requiring approval" %></td><tr>
   <% end %>
   <% @students.each do |student| %>
     <tr>
