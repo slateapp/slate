@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     verb = function == "edit" ? "updated" : "created"
     if record.save
         current_teacher.twilio_info = record if record_name == "Twilio Information"
-        flash[:success] = "#{record_name} #{verb} successfully"
+        flash[:success] = "#{record_name} #{verb} successfully."
         redirect_to path
       else
         record.errors.full_messages.each{ |msg| flash[:error] = msg }
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   def deny_to_unapproved
     unless current_teacher
       unless current_student.approved == true
-        flash[:error] = "Error: you are still awaiting approval"
+        flash[:error] = "Error: you are still awaiting approval!"
         redirect_to root_path
       end
     end
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate!
     unless current_student || current_teacher
-      flash[:notice] = 'You need to sign in'
+      flash[:notice] = 'You need to sign in!'
       redirect_to students_dashboard_path
     end
   end

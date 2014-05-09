@@ -26,7 +26,7 @@ class TeachersController < ApplicationController
     teacher = current_teacher
     teacher.cohort = Cohort.find params[:cohort][:id]
     if teacher.save
-      flash[:success] = "Default cohort updated successfully"
+      flash[:success] = "Default cohort updated successfully."
       redirect_to cohorts_path
     else
       teacher.errors.full_messages.each{ |msg| flash[:error] = msg }

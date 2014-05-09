@@ -51,12 +51,12 @@ class CohortsController < ApplicationController
 
   def selected_disparate_cohorts
     filter_cohorts
-    flash[:success] = "You successfully selected the current cohorts"
+    flash[:success] = "You successfully selected the current cohorts."
     redirect_to cohorts_path
   end
 
   def selected_same_cohorts_error
-    flash[:error] = "You need to select cohorts that are not the same before continuing"
+    flash[:error] = "You need to select cohorts that are not the same before continuing."
     redirect_to cohorts_path
   end
 
