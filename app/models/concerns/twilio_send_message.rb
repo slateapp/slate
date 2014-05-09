@@ -1,12 +1,12 @@
 module TwilioSendMessage
   extend ActiveSupport::Concern
   def Request.board_empty?
-    unsolved_requests.none?
+    unsolved_requests.count == 1
   end
 
   def Request.board_empty_for?(length_of_time)
     last_solved_request = solved_requests.last
-    return true if count.zero?
+    return true if !last_solved_request
     return true if last_solved_request && board_empty? && last_solved_request.solved_at && last_solved_request.solved_at < length_of_time.ago
     false
   end
@@ -16,12 +16,12 @@ module TwilioSendMessage
   end
 
   def send_message
-    account_sid = Rails.application.secrets.TWILIO_SID
-    auth_token = Rails.application.secrets.TWILIO_TOKEN
+    account_sid = Rails.application.secrets.twilio_sid
+    auth_token = Rails.application.secrets.twilio_token
     @client = Twilio::REST::Client.new account_sid, auth_token
     sms = @client.account.sms.messages.create(
       to: teacher.phone_number,
-      from: Rails.application.secrets.TWILIO_PHONE_NUMBER,
+      from: Rails.application.secrets.twilio_phone_number,
       body: sms_text_body
     )
   end
