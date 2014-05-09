@@ -98,10 +98,10 @@ describe 'Request board' do
 	context 'Board sends a teacher a text reminder' do
 		let(:ruby) {create :category}
 		let(:feb) { create :february}
-		let!(:teacher) { create :teacher, cohort: 'February', twilio_info: create(:twilio_info) }
+		let(:twilio_info) {create :twilio_info, {enabled: true}}
+		let!(:teacher) { create :teacher, cohort: feb, twilio_info: twilio_info }
 
 		let(:request) {build :request, {category: ruby, solved: false, student: create(:student, cohort: feb)}}
-		let(:twilio_info) {create :twilio_info, {enabled: true}}
 
 		it 'creates a message' do
 			expect(request.sms_text_body).to eq "There's a new request on the board"

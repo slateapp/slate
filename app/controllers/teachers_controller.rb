@@ -6,15 +6,7 @@ class TeachersController < ApplicationController
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @cohort = Cohort.find(selected_cohort) if selected_cohort
     @students = Student.where(cohort: selected_cohort, approved: true)
-    # raise "#{Request.todays_average_wait_time_for(selected_cohort)}"
-    @stats = {
-      todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
-      todays_queue: Request.todays_average_queue_for(selected_cohort).round,
-      weekly_requests: Request.for_cohort(selected_cohort || Cohort.all).group_by_day(:created_at, last: 7).count,
-      pie: Request.weekly_request_categories_for(selected_cohort),
-      leaderboard: Request.leaderboard_for(selected_cohort),
-      weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort)
-    }
+    @stats = statistics_data
   end
 
   def statistics
@@ -43,9 +35,13 @@ class TeachersController < ApplicationController
   end
 
   def approval
-    @approved = Student.where(approved: true).sort_by(&:cohort).reverse
-    @unapproved = Student.where(approved: false).sort_by(&:cohort).reverse
-    params[:approved] ? (@students, @switch = @approved, "Unapprove") : (@students, @switch = @unapproved, "Approve")
+    @approved, @unapproved = student_selection(true), student_selection(false)
+
+    if params[:approved]
+      @students, @switch = @approved, "Unapprove"
+    else
+      @students, @switch = @unapproved, "Approve"
+    end
   end
 
   def students
@@ -58,4 +54,19 @@ class TeachersController < ApplicationController
     @student = Student.find params[:id]
     @cohort_options = cohort_options
   end
+end
+
+private
+def statistics_data
+  {todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
+    todays_queue: Request.todays_average_queue_for(selected_cohort).round,
+    weekly_requests: Request.for_cohort(selected_cohort || Cohort.all).group_by_day(:created_at, last: 7).count,
+    pie: Request.weekly_request_categories_for(selected_cohort),
+    leaderboard: Request.leaderboard_for(selected_cohort),
+    weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort)
+  }
+end
+
+def student_selection(approved)
+  Student.where(approved: approved).sort_by(&:cohort).reverse
 end

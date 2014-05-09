@@ -40,7 +40,6 @@ gem "chartkick"
 gem 'groupdate'
 gem 'twilio-ruby'
 
-
 group :development, :test do
 
 	gem 'rspec-rails'
@@ -50,6 +49,7 @@ group :development, :test do
 	gem 'spring'
 	gem 'database_cleaner'
 	gem 'sms-spec'
+	
 end
 
 group :production do 
