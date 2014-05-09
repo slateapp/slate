@@ -35,7 +35,8 @@ module Statistics
     cohort = get_cohort(cohort)
     return 0 if todays_requests(Time.now).for_cohort(cohort).count == 0
     return 0 if queue_lengths_for(cohort).count == 0
-    queue_lengths_for(cohort).inject{|sum,length| sum + length}/queue_lengths_for(cohort).count
+    average = queue_lengths_for(cohort).inject{|sum,length| sum + length}/queue_lengths_for(cohort).count
+    average <= 0 ? 0 : average
   end
 
   def Request.weekly_request_categories_for(cohort)
