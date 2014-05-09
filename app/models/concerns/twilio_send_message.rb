@@ -15,20 +15,22 @@ module TwilioSendMessage
     "There's a new request on the board"
   end
 
-  def send_message
+  def send_message(teacher)
     account_sid = Rails.application.secrets.twilio_sid
     auth_token = Rails.application.secrets.twilio_token
     @client = Twilio::REST::Client.new account_sid, auth_token
-    teachers.each{|teacher|
-      sms = @client.account.sms.messages.create(
-        to: teacher.phone_number,
-        from: Rails.application.secrets.twilio_phone_number,
-        body: sms_text_body
-      )
-    }
+    sms = @client.account.sms.messages.create(
+      to: teacher.phone_number,
+      from: Rails.application.secrets.twilio_phone_number,
+      body: sms_text_body
+    )
   end
 
   def trigger_teacher_message
-    send_message if Request.board_empty_for?(30.seconds) && Rails.env.production? && teacher.sms_enabled?
+    if teachers
+      teachers.each{|teacher|
+        send_message(teacher) if Request.board_empty_for?(30.seconds) && Rails.env.production? && teacher.sms_enabled?
+      }
+    end
   end
 end
