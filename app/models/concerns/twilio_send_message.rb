@@ -27,6 +27,7 @@ module TwilioSendMessage
   end
 
   def trigger_teacher_message
+    puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
     send_message if Request.board_empty_for?(30.seconds) && Rails.env.production? && teacher.sms_enabled?
   end
 end
