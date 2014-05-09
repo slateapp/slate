@@ -35,9 +35,13 @@ class TeachersController < ApplicationController
   end
 
   def approval
-    @approved = Student.where(approved: true).sort_by(&:cohort).reverse
-    @unapproved = Student.where(approved: false).sort_by(&:cohort).reverse
-    params[:approved] ? (@students, @switch = @approved, "Unapprove") : (@students, @switch = @unapproved, "Approve")
+    @approved, @unapproved = student_selection(true), student_selection(false)
+
+    if params[:approved]
+      @students, @switch = @approved, "Unapprove"
+    else
+      @students, @switch = @unapproved, "Approve"
+    end
   end
 
   def students
@@ -61,4 +65,8 @@ def statistics_data
     leaderboard: Request.leaderboard_for(selected_cohort),
     weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort)
   }
+end
+
+def student_selection(approved)
+  Student.where(approved: approved).sort_by(&:cohort).reverse
 end
