@@ -3,14 +3,14 @@ require 'spec_helper'
 describe "Request Timing Features" do
 	let(:t) { Date.today }
   context "creating a request between 08:30 and 22:00" do
-  	xit "is successful at 6:00" do
+  	it "is successful at 6:00" do
 	  	time_now = Time.zone.local(t.year, t.month, t.day, 6, 00)
 	    Time.stub(:now).and_return(time_now)
 	    create :request
 	    expect(Request.count).to eq 1
   	end
 
-  	xit "is successful at 22:00" do
+  	it "is successful at 22:00" do
 	  	time_now = Time.zone.local(t.year, t.month, t.day, 22, 00)
 	    Time.stub(:now).and_return(time_now)
 	    create :request
@@ -19,14 +19,14 @@ describe "Request Timing Features" do
   end
 
   context "creating a request between 22:00 and 06:00" do
-  	xit "returns an error at 8:29" do
+  	it "returns an error at 8:29" do
 	  	time_now = Time.zone.local(t.year, t.month, t.day, 5, 59)
 	    Time.stub(:now).and_return(time_now)
 	    expect{create :request}.to raise_error(ActiveRecord::RecordInvalid)
 	    expect(Request.count).to eq 0
   	end
 
-  	xit "returns an error at 22:01" do
+  	it "returns an error at 22:01" do
 	  	time_now = Time.zone.local(t.year, t.month, t.day, 22, 01)
 	    Time.stub(:now).and_return(time_now)
 	    expect{create :request}.to raise_error(ActiveRecord::RecordInvalid)
@@ -39,7 +39,7 @@ describe 'Request board' do
 	include SmsSpec::Helpers
 
 	context 'No requests' do 
-		xit 'returns a blank board' do 
+		it 'returns a blank board' do 
 			expect(Request.board_empty?).to be_true
 		end
 	end
@@ -49,7 +49,7 @@ describe 'Request board' do
 			create(:request)
 		end
 		
-		xit 'returns a board with an unsolved request' do
+		it 'returns a board with an unsolved request' do
 			expect(Request.board_empty?).to be_false
 		end
 	end
@@ -59,7 +59,7 @@ describe 'Request board' do
 			create(:request, solved: true, solved_at: 10.minutes.ago)
 		end
 		
-		xit 'returns a board with an unsolved request' do
+		it 'returns a board with an unsolved request' do
 			expect(Request.board_empty?).to be_true
 		end
 	end
@@ -70,7 +70,7 @@ describe 'Request board' do
 			create(:request, solved: true)
 		end
 		
-		xit 'returns a board with an unsolved request' do
+		it 'returns a board with an unsolved request' do
 			expect(Request.board_empty?).to be_false
 		end
 	end
@@ -84,11 +84,11 @@ describe 'Request board' do
       create :request, {category: ruby, solved: true, created_at: @now - 10.minutes, solved_at: @now - 5.minutes}
 		end
 
-		xit 'knows the time between a solved and new request is greater than 5 minutes' do
+		it 'knows the time between a solved and new request is greater than 5 minutes' do
 			expect(Request.board_empty_for?(5.minutes)).to be_true
 		end
 
-		xit 'subtracts the time between a solved and new request' do
+		it 'subtracts the time between a solved and new request' do
 			Request.last.solved_at.to_i - Request.create.created_at.to_i
 
 			expect(Request.board_empty_for?(5.minutes)).to be_true
@@ -103,7 +103,7 @@ describe 'Request board' do
 
 		let(:request) {build :request, {category: ruby, solved: false, student: create(:student, cohort: feb)}}
 
-		xit 'creates a message' do
+		it 'creates a message' do
 			expect(request.sms_text_body).to eq "There's a new request on the board"
 		end
 

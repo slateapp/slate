@@ -39,45 +39,4 @@ class Request < ActiveRecord::Base
   def teacher
     Teacher.by_cohort(student.cohort.id.to_s)
   end
-
-  def self.board_empty_for?(length_of_time)
-    last_solved_request = where(solved: true).last
-    return true if count.zero?
-
-    if last_solved_request && board_empty? && last_solved_request.solved_at && last_solved_request.solved_at < length_of_time.ago
-      return true
-    end
-
-    false
-  end
-
-  def sms_text_body
-    "There's a new request on the board"
-  end
-
-  def send_message
-    account_sid = Rails.application.secrets.twilio_sid
-    auth_token = Rails.application.secrets.twilio_token
-    
-    @client = Twilio::REST::Client.new account_sid, auth_token
-
-    sms = @client.account.sms.messages.create(
-      :to => teacher_twilio.phone_number,
-      :from => Rails.application.secrets.twilio_phone_number,
-      :body => sms_text_body
-    )
-  end
-
-  def trigger_teacher_message
-    send_message if Request.board_empty_for?(30.seconds) && Rails.env.production? && sms_enabled?
-  end
-
-  def teacher_twilio
-    cohort = student.cohort_id
-    teacher_phone = Teacher.find_by(cohort: cohort.month.to_s).twilio_info # for some reason it doesn't look like twilio_info is connection to Teacher
-  end
-
-  def sms_enabled?
-    teacher_twilio.enabled?
-  end 
 end
