@@ -39,6 +39,8 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 gem "chartkick"
 gem 'groupdate'
 gem 'twilio-ruby'
+gem 'emoji-rspec'
+gem 'smooth-jazz-nyan-cat-formatter'
 
 group :development, :test do
 

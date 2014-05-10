@@ -1,2 +1,2 @@
--fn
--c
+--require emoji-rspec 
+--format NyanCatFormatter

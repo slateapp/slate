@@ -11,7 +11,7 @@ class Request < ActiveRecord::Base
   def time_creation
     t = Date.today
     request_from = Time.new(t.year, t.month, t.day, 6)
-    request_until = Time.new(t.year, t.month, t.day, 22)
+    request_until = Time.new(t.year, t.month, t.day, 23, 59)
     if Time.now > request_until || Time.now < request_from
       errors.add(:created_at, "You can only create a request between #{request_from.strftime("%H:%M")} and #{request_until.strftime("%H:%M")}, please try again later.")
     end

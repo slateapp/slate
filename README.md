@@ -16,7 +16,7 @@ to understand problem areas.
 * [Khushkaran Singh Bajwa](https://github.com/khushkaran)
 
 # The History
-write here about the whiteboard
+SL8 originated in a desire to write a labor-saving program that could improve the existing method students used to ask for help and provide teachers with data-driven feedback. 
 
 # The Project
 write here about the functionality of slate
