@@ -18,6 +18,8 @@ to understand problem areas.
 # The History
 SL8 originated in a desire to write a labor-saving program that could improve the existing method students used to ask for help and provide teachers with data-driven feedback. 
 
+Before SL8, students would write their name and, occasionally, a specific question on a whiteboard to notify teachers if they were stuck on a problem. The whiteboard functioned as a waiting list for each cohort of students, as each problem was solved a teacher would erase the name from the board and move on to the next student. 
+
 # The Project
 write here about the functionality of slate
 
