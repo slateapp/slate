@@ -3,7 +3,7 @@ Slate (SL8) [![Code Climate](https://codeclimate.com/github/slateapp/slate.png)]
 ![](screenshot.png?raw=true)
 This project was built as our final project at [Makers
 Academy](http://www.makersacademy.com). Slate is a web
-application allows students to get assistance from
+application that allows students to get assistance from
 educators and in turn assists teachers by helping them
 to understand problem areas.
 
