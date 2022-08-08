@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
+# CohortsController
 class CohortsController < ApplicationController
-  before_action :authenticate_teacher!, only: [:index, :new, :create, :edit, :update, :destroy]
-  
+  before_action :authenticate_teacher!, only: %i[index new create edit update destroy]
+
   def index
     @user = current_teacher
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
@@ -18,7 +21,7 @@ class CohortsController < ApplicationController
 
   def create
     @cohort = Cohort.new cohort_params
-    create_or_update('new', "Cohort", @cohort, cohorts_path)
+    create_or_update('new', 'Cohort', @cohort, cohorts_path)
   end
 
   def edit
@@ -51,19 +54,19 @@ class CohortsController < ApplicationController
 
   def selected_disparate_cohorts
     filter_cohorts
-    flash[:success] = "You successfully selected the current cohorts."
+    flash[:success] = 'You successfully selected the current cohorts.'
     redirect_to cohorts_path
   end
 
   def selected_same_cohorts_error
-    flash[:error] = "You need to select cohorts that are not the same before continuing."
+    flash[:error] = 'You need to select cohorts that are not the same before continuing.'
     redirect_to cohorts_path
   end
 
   def update
     @cohort = Cohort.find params[:id]
     @cohort.assign_attributes cohort_params
-    create_or_update('edit', "Cohort", @cohort, cohorts_path)
+    create_or_update('edit', 'Cohort', @cohort, cohorts_path)
   end
 
   def destroy

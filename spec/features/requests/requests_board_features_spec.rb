@@ -1,15 +1,16 @@
+# frozen_string_literal: true
 
 # require 'spec_helper'
 
-# describe 'Request board' do 
+# describe 'Request board' do
 
-# 	before do 
+# 	before do
 # 		sign_in_as_student_alex
 # 		visit students_dashboard_path
 # 	end
 
-# 	context 'No requests' do 
-# 		it 'returns a blank board' do 
+# 	context 'No requests' do
+# 		it 'returns a blank board' do
 # 			expect(Request.board_empty?).to be_true
 # 		end
 # 	end

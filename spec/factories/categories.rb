@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :category do
-    name "Ruby"
+    name { 'Ruby' }
   end
 
   factory :postgresql, class: Category do
-    name "Postgresql"
+    name { 'Postgresql' }
   end
 end

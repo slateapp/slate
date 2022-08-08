@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :request do
-  	description 'hello'
-  	solved false
-  	category
+    description { 'hello' }
+    solved { false }
+    category
   end
 end

@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
+# Teacher model
 class Teacher < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable
   has_many :requests
   has_one :twilio_info
-  scope :sms_enabled?, -> {  }
+  scope :sms_enabled?, -> {}
 
   def name
-    self.email.gsub("@makersacademy.com", "").capitalize
+    email.gsub('@makersacademy.com', '').capitalize
   end
 
   def sms_enabled?

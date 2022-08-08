@@ -1,13 +1,19 @@
+# frozen_string_literal: true
+
+# TwilioSendMessage module
 module TwilioSendMessage
   extend ActiveSupport::Concern
   def Request.board_empty?
-    unsolved_requests.count == 1 || unsolved_requests.count == 0
+    unsolved_requests.count == 1 || unsolved_requests.count.zero?
   end
 
   def Request.board_empty_for?(length_of_time)
     last_solved_request = solved_requests.last
-    return true if !last_solved_request
-    return true if last_solved_request && board_empty? && last_solved_request.solved_at && last_solved_request.solved_at < length_of_time.ago
+    return true unless last_solved_request
+    if last_solved_request && board_empty? && last_solved_request.solved_at && last_solved_request.solved_at < length_of_time.ago
+      return true
+    end
+
     false
   end
 
@@ -28,11 +34,9 @@ module TwilioSendMessage
 
   def trigger_teacher_message
     if teachers
-      teachers.each{|teacher|
-        if teacher.twilio_info
-          send_message(teacher) if Request.board_empty_for?(5.minutes) && teacher.sms_enabled?
-        end
-      }
+      teachers.each do |teacher|
+        send_message(teacher) if teacher.twilio_info && (Request.board_empty_for?(5.minutes) && teacher.sms_enabled?)
+      end
     end
   end
 end
