@@ -1,57 +1,43 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-ruby '2.5.3'
+ruby '3.1.2'
 
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.6'
-# Use postgresql as the database for Active Record
-gem 'pg', '0.21.0'
-# Use SCSS for stylesheets
-gem 'sass-rails'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer',  platforms: :ruby
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc',          group: :doc
-
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-
-gem 'mustache-js-rails'
-gem 'json'
-gem 'websocket-rails'
-gem 'devise'
-gem 'omniauth-github'
 gem 'bootstrap-sass'
+gem 'chartkick'
+gem 'coffee-rails'
+gem 'deprecated', '~> 3.0', '>= 3.0.1'
+gem 'devise'
 gem 'gravtastic'
-gem 'thin'
-gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
-gem "chartkick"
 gem 'groupdate'
-gem 'twilio-ruby'
-gem 'emoji-rspec'
+gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
+gem 'jbuilder'
+gem 'jquery-rails'
+gem 'json'
+gem 'mini_racer', '~> 0.6.2'
+gem 'mustache-js-rails'
+gem 'omniauth-github'
+gem 'pg'
+gem 'rails', '~> 6.1', '>= 6.1.6.1'
+gem 'sass-rails'
+gem 'sdoc', group: :doc
 gem 'smooth-jazz-nyan-cat-formatter'
+gem 'thin'
+gem 'turbolinks'
+gem 'twilio-ruby'
+gem 'uglifier'
+gem 'websocket-rails', '~> 0.7.0'
 
 group :development, :test do
-
-  gem 'rspec-rails'
   gem 'capybara'
-  gem 'factory_girl_rails'
-  gem 'poltergeist'
-  gem 'spring'
   gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'poltergeist'
+  gem 'rspec-legacy_formatters'
+  gem 'rspec-rails'
   gem 'sms-spec'
-
+  gem 'spring'
 end
 
 group :production do

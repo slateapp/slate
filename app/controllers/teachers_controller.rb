@@ -1,8 +1,13 @@
+# frozen_string_literal: true
+
+# TeachersController
 class TeachersController < ApplicationController
-  before_action :authenticate_teacher!, only: [:dashboard, :update, :students, :edit_student]
+  before_action :authenticate_teacher!, only: %i[dashboard update students edit_student]
 
   def dashboard
-    @user, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
+    @user = current_teacher
+    @cohorts = cohorts_in_order
+    @cohort_options = cohort_options
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @cohort = Cohort.find(selected_cohort) if selected_cohort
     @students = Student.where(cohort: selected_cohort, approved: true)
@@ -10,7 +15,9 @@ class TeachersController < ApplicationController
   end
 
   def statistics
-    @user, @cohorts, @cohort_options = current_teacher, cohorts_in_order, cohort_options
+    @user = current_teacher
+    @cohorts = cohorts_in_order
+    @cohort_options = cohort_options
     @requests = Request.for_cohort(selected_cohort || Cohort.all)
     @stats = {
       todays_wait_time: Request.todays_average_wait_time_for(nil).round,
@@ -26,21 +33,24 @@ class TeachersController < ApplicationController
     teacher = current_teacher
     teacher.cohort = Cohort.find params[:cohort][:id]
     if teacher.save
-      flash[:success] = "Default cohort updated successfully."
+      flash[:success] = 'Default cohort updated successfully.'
       redirect_to cohorts_path
     else
-      teacher.errors.full_messages.each{ |msg| flash[:error] = msg }
+      teacher.errors.full_messages.each { |msg| flash[:error] = msg }
       redirect_to dashboard_teachers_path
     end
   end
 
   def approval
-    @approved, @unapproved = student_selection(true), student_selection(false)
+    @approved = student_selection(true)
+    @unapproved = student_selection(false)
 
     if params[:approved]
-      @students, @switch = @approved, "Unapprove"
+      @students = @approved
+      @switch = 'Unapprove'
     else
-      @students, @switch = @unapproved, "Approve"
+      @students = @unapproved
+      @switch = 'Approve'
     end
   end
 
@@ -57,14 +67,14 @@ class TeachersController < ApplicationController
 end
 
 private
+
 def statistics_data
-  {todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
+  { todays_wait_time: Request.todays_average_wait_time_for(selected_cohort).round,
     todays_queue: Request.todays_average_queue_for(selected_cohort).round,
     weekly_requests: Request.for_cohort(selected_cohort || Cohort.all).group_by_day(:created_at, last: 7).count,
     pie: Request.weekly_request_categories_for(selected_cohort),
     leaderboard: Request.leaderboard_for(selected_cohort),
-    weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort)
-  }
+    weekly_issues_average_over_day: Request.weekly_issues_average_over_day_for(selected_cohort) }
 end
 
 def student_selection(approved)
